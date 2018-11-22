@@ -17,12 +17,6 @@ app.use(
 
 app.use(cors(corsOptions));
 
-// Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/sfdc-event'));
-app.get('/*', function(req,res) {
-  res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
-});
-
 app.route('/api/login').get( (req, res) => {
   console.log('DEBUG: /api/login', req.body);
   res.status(200).send({
