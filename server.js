@@ -18,7 +18,7 @@ app.use(
 
 app.use(cors(corsOptions));
 
-app.use(express.static(__dirname + './dist/sfdc-event'));
+app.use(express.static(__dirname + '/dist/sfdc-event'));
 app.get('/*', function(req,res) {
   res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
 });
