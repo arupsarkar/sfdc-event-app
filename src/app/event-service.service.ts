@@ -4,7 +4,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import OAuthCreds from './model/token';
+import {LoginOAuth} from './model/LoginOAuth';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,10 +27,10 @@ export class EventServiceService {
   //       catchError (this.handleError)
   //     );
   // }
-  login(): Observable<OAuthCreds[]> {
-    // const apiURL = 'http://localhost:8000/api/login';
-    const apiURL =  'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
-    return this.http.get(apiURL, httpOptions)
+  login(): Observable<LoginOAuth[]> {
+    const apiURL = 'http://localhost:8000/api/login';
+    // const apiURL =  'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
+    return this.http.get<LoginOAuth[]>(apiURL, httpOptions)
       .pipe ( map ( res => res ));
   }
 

@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/dist/sfdc-event'));
 app.route('/api/login').get( (req, res) => {
   console.log('DEBUG: /api/login', req.body);
   res.status(200).send({
-    login: [{token: 'abcd'}, {instanceURL: 'login.salesforce.com'}]
+    login: [{accessToken: 'abcd'}, {instanceURL: 'login.salesforce.com'}]
   });
 });
 

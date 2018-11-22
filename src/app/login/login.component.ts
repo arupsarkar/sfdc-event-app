@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import event service
 import { EventServiceService} from '../event-service.service';
+import {LoginOAuth} from '../model/LoginOAuth';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { EventServiceService} from '../event-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public results: OAuthCreds[];
+    results: LoginOAuth[];
 
   constructor(private eventService: EventServiceService) {
     console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit {
       this.eventService.login().subscribe( data => {
         // this.results = data.login[0].token;
         this.results = data;
-        console.log('DEBUG: LoginComponent token : ', this.results.login[0].token);
-        console.log('DEBUG: LoginComponent instanceURL : ', this.results.login[1].instanceURL);
+        console.log('DEBUG: LoginComponent token : ', this.results);
+        console.log('DEBUG: LoginComponent instanceURL : ', this.results);
       });
 
   }
