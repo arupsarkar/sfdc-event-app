@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 
 const corsOptions = {
-  origin: 'https://sfdc-api-app.herokuapp.com',
+  origin: 'https://sfdc-api-app.herokuapp.com/api',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
