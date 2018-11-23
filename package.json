@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "node server.js --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -12,13 +12,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/compiler-cli": "^7.0.4",
     "@angular-devkit/build-angular": "~0.10.0",
-    "typescript": "~3.1.1",
-    "@angular/cli": "^7.0.6",
     "@angular/animations": "~7.0.0",
+    "@angular/cli": "^7.0.6",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
+    "@angular/compiler-cli": "^7.0.4",
     "@angular/core": "~7.0.0",
     "@angular/forms": "~7.0.0",
     "@angular/http": "~7.0.0",
@@ -29,7 +28,9 @@
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "jsforce": "^1.9.1",
     "rxjs": "~6.3.3",
+    "typescript": "~3.1.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
