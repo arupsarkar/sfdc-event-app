@@ -1,7 +1,10 @@
 {
   "/api/*": {
-    "target": "https://sfdc-api-app.herokuapp.com/api/*",
-    "secure": true,
+    "target": {
+      "host": "sfdc-api-app.herokuapp.com",
+      "protocol": "https:"
+    },
+    "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   }
