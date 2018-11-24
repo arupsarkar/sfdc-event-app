@@ -14,6 +14,7 @@ const httpOptions = {
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
   })
 };
+//     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
 //  'Authorization': 'my-auth-token'
 
 @Injectable({
@@ -30,8 +31,8 @@ export class EventServiceService {
   //     );
   // }
   login(): Observable<LoginOAuth[]> {
-    // const apiURL = 'http://localhost:3000/api/login';
-    const apiURL =  '/oauth2/login';
+    // const apiURL = 'http://localhost:8000/api/login';
+    const apiURL = 'https://sfdc-event-app.herokuapp.com/api/login';
     return this.http.get<LoginOAuth[]>(apiURL, httpOptions)
       .pipe ( map ( res => res ));
   }

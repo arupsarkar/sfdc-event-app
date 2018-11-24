@@ -1,11 +1,10 @@
 {
-  "/api/*": {
-    "target": {
-      "host": "sfdc-api-app.herokuapp.com",
-      "protocol": "https:"
+  "/api": {
+    "target": "http://localhost:8000",
+    "secure": true,
+    "pathRewrite": {
+      "^/api": ""
     },
-    "secure": false,
-    "logLevel": "debug",
     "changeOrigin": true
   }
 }
