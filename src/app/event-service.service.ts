@@ -8,12 +8,11 @@ import {LoginOAuth} from './model/LoginOAuth';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+    'Access-Control-Allow-Origin': '*'
   })
 };
 //     'Content-Type':  'application/json',
-
+//     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
 //    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
 //  'Authorization': 'my-auth-token'
 
@@ -34,7 +33,7 @@ export class EventServiceService {
     // const apiURL = 'http://localhost:8000/api/login';
     const apiURL = 'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
     // const apiURL = 'https://sfdc-event-app.herokuapp.com/api/login';
-    return this.http.get<LoginOAuth[]>(apiURL)
+    return this.http.get<LoginOAuth[]>(apiURL, httpOptions)
       .pipe ( map ( res => res ));
   }
 
