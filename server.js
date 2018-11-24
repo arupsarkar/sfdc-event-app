@@ -15,11 +15,12 @@ const path = require('path');
 //   console.log("Request made to /api/");
 // });
 
-var originsWhitelist = [
+const originsWhitelist = [
   'https://sfdc-event-app.herokuapp.com',      //this is my front-end url for development
-  'https://sfdc-api-app.herokuapp.com'
+  'https://sfdc-api-app.herokuapp.com',
+  'http://localhost:4200'
 ];
-var corsOptions = {
+const corsOptions = {
   origin: function(origin, callback){
     var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
     callback(null, isWhitelisted);
@@ -39,10 +40,10 @@ app.use(
 );
 
 
-// app.use(express.static(__dirname + '/dist/sfdc-event'));
-// app.get('/*', function(req,res) {
-//   res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
-// });
+app.use(express.static(__dirname + '/dist/sfdc-event'));
+app.get('/*', function(req,res) {
+  res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
+});
 
 app.route('/api/login').get( (req, res) => {
   console.log('DEBUG: /api/login', req.body);
