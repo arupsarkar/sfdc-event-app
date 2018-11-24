@@ -15,25 +15,26 @@ const path = require('path');
 //   console.log("Request made to /api/");
 // });
 
-const originsWhitelist = [
-  'https://sfdc-event-app.herokuapp.com',      //this is my front-end url for development
-  'https://sfdc-api-app.herokuapp.com',
-  'http://localhost:4200',
-  'https://login.salesforce.com'
-];
-const corsOptions = {
-  origin: function(origin, callback){
-    var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
-    callback(null, isWhitelisted);
-  },
-  credentials:true
-};
+// const originsWhitelist = [
+//   'https://sfdc-event-app.herokuapp.com',      //this is my front-end url for development
+//   'https://sfdc-api-app.herokuapp.com',
+//   'http://localhost:4200',
+//   'https://login.salesforce.com'
+// ];
+// const corsOptions = {
+//   origin: function(origin, callback){
+//     var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+//     callback(null, isWhitelisted);
+//   },
+//   credentials:true
+// };
+app.use(cors());
 app.options('*', cors());
 // const corsOptions = {
 //   origin: 'https://localhost:4200',
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // };
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
