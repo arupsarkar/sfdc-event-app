@@ -8,11 +8,12 @@ import {LoginOAuth} from './model/LoginOAuth';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
   })
 };
+//     'Content-Type':  'application/json',
+
 //    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
 //  'Authorization': 'my-auth-token'
 
