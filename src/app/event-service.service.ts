@@ -33,7 +33,7 @@ export class EventServiceService {
     // const apiURL = 'http://localhost:8000/api/login';
     const apiURL = 'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
     // const apiURL = 'https://sfdc-event-app.herokuapp.com/api/login';
-    return this.http.get<LoginOAuth[]>(apiURL, httpOptions)
+    return this.http.get<LoginOAuth[]>(apiURL)
       .pipe ( map ( res => res ));
   }
 

@@ -18,7 +18,8 @@ const path = require('path');
 const originsWhitelist = [
   'https://sfdc-event-app.herokuapp.com',      //this is my front-end url for development
   'https://sfdc-api-app.herokuapp.com',
-  'http://localhost:4200'
+  'http://localhost:4200',
+  'https://login.salesforce.com'
 ];
 const corsOptions = {
   origin: function(origin, callback){
@@ -27,6 +28,7 @@ const corsOptions = {
   },
   credentials:true
 };
+app.options('*', cors());
 // const corsOptions = {
 //   origin: 'https://localhost:4200',
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
