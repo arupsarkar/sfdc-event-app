@@ -29,8 +29,8 @@ export class EventServiceService {
   // }
   login(): Observable<LoginOAuth[]> {
     // const apiURL = 'http://localhost:8000/api/login';
-    // const apiURL = 'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
-    const apiURL = '/api/login';
+    const apiURL = 'https://sfdc-api-app.herokuapp.com/api/oauth2/login';
+    // const apiURL = '/api/login';
     return this.http.get<LoginOAuth[]>(apiURL, httpOptions)
       .pipe ( map ( res => res ));
   }
