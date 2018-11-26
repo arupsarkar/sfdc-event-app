@@ -27,7 +27,7 @@ export class ApiService {
     const localURL = 'https://sfdc-event-app.herokuapp.com/api/oauth2/login';
     console.log('DEBUG: ApiService login URL : ', `${environment.baseUrl}/${URL}`.toString());
     // return this.http.get(`${environment.baseUrl}/${URL}`)
-    return this.http.get(localURL)
+    return this.http.get(localURL, httpOptions)
       .pipe( map( res => res ));
   }
 }
