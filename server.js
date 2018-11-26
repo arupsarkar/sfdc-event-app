@@ -8,15 +8,15 @@ const path = require('path');
 
 const app = express();
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // // Enable CORS
-// app.use(cors());
-// app.options('*', cors()); // include before other routes
+app.use(cors());
+app.options('*', cors()); // include before other routes
 // const whitelist = ['http://localhost:3000', 'https://login.salesforce.com'];
 // const corsOptions = {
 //   origin: function (origin, callback) {
