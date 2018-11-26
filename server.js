@@ -9,6 +9,7 @@ const path = require('path');
 const app = express();
 // Enable CORS
 app.use(cors());
+app.options('*', cors()); // include before other routes
 // const whitelist = ['http://localhost:3000', 'https://login.salesforce.com'];
 // const corsOptions = {
 //   origin: function (origin, callback) {
