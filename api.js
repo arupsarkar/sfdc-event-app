@@ -15,7 +15,7 @@ const oauth2 = new jsforce.OAuth2({
   clientId : '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx',
   clientSecret : '8963738011040646967',
   // redirectUri : 'http://localhost:3000/api/oauth2/callback'
-  redirectUri : 'https://sfdc-api-app.herokuapp.com/api/oauth2/callback'
+  redirectUri : 'https://sfdc-event-app.herokuapp.com/api/oauth2/callback'
 });
 
 // Use this api URL from the client for logging in salesforce using OAuth2.0
