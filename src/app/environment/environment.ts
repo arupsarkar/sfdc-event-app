@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: '' // <-- no 'API'/' prefix needed
+  baseUrl: 'api' // <-- no 'API'/' prefix needed
 };
