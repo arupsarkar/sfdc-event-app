@@ -14,13 +14,16 @@ const oauth2 = new jsforce.OAuth2({
   //clientId and Secret will be provided when you create a new connected app in your SF developer account
   clientId : '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx',
   clientSecret : '8963738011040646967',
-  redirectUri : 'http://localhost:3000/api/oauth2/callback'
-  //redirectUri : 'https://sfdc-api-app.herokuapp.com/api/oauth2/callback'
+  // redirectUri : 'http://localhost:3000/api/oauth2/callback'
+  redirectUri : 'https://sfdc-api-app.herokuapp.com/api/oauth2/callback'
 });
 
 // Use this api URL from the client for logging in salesforce using OAuth2.0
 router.get("/oauth2/login", (req, res) => {
-  console.log('/oauth2/login', req.query.code);
+  console.log('DEBUG: api.js /oauth2/login : ', req.headers);
+  res.header('Access-Control-Allow-Headers: Content-Type');
+  res.header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Origin: *');
   // Redirect to Salesforce login/authorization page
   res.redirect(oauth2.getAuthorizationUrl({scope: 'api id web refresh_token'}));
 });
