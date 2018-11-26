@@ -21,9 +21,6 @@ const oauth2 = new jsforce.OAuth2({
 // Use this api URL from the client for logging in salesforce using OAuth2.0
 router.get("/oauth2/login", (req, res) => {
   console.log('DEBUG: api.js /oauth2/login : ', req.headers);
-  res.header('Access-Control-Allow-Headers: Content-Type');
-  res.header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Origin: *');
   // Redirect to Salesforce login/authorization page
   res.redirect(oauth2.getAuthorizationUrl({scope: 'api id web refresh_token'}));
 });
