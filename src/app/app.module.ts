@@ -10,17 +10,17 @@ import { ApiService } from './api.service';
 
 // Define the routes
 
-const ROUTES = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  }
-];
+// const ROUTES = [
+//   {
+//     path: '',
+//     redirectTo: 'login',
+//     pathMatch: 'full'
+//   },
+//   {
+//     path: 'login',
+//     component: LoginComponent
+//   }
+// ];
 
 
 @NgModule({
@@ -30,8 +30,8 @@ const ROUTES = [
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(ROUTES) // Add routes to the app
+    HttpClientModule
+    // RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
