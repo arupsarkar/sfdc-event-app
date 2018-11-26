@@ -19,11 +19,6 @@ app.use(cors());
 //     }
 //   }
 // };
-
-// Get our API routes
-const api = require('./api');
-// Set our api routes
-app.use('/api', api);
 // Initialize session
 app.use(session(
   {
@@ -32,6 +27,11 @@ app.use(session(
     saveUninitialized: true
   }
 ));
+// Get our API routes
+const api = require('./api');
+// Set our api routes
+app.use('/api', api);
+
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
