@@ -26,7 +26,7 @@ export class ApiService {
     const URL = 'oauth2/login';
     const localURL = 'http://localhost:3000/api/oauth2/login';
     console.log('DEBUG: ApiService login URL : ', `${environment.baseUrl}/${URL}`.toString());
-    return this.http.get(`${environment.baseUrl}/${URL}`)
+    return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
     // return this.http.get(localURL)
       .pipe( map( res => res ));
   }
