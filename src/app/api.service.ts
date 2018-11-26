@@ -25,7 +25,7 @@ export class ApiService {
     console.log('DEBUG: APiService login(): ', 'login() function.');
     const URL = 'oauth2/login';
     console.log('DEBUG: ApiService login URL : ', `${environment.baseUrl}/${URL}`.toString());
-    return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
+    return this.http.get(`${environment.baseUrl}/${URL}`)
       .pipe( map( res => res ));
   }
 }
