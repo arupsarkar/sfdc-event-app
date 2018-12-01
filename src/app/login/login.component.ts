@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   sfdcLogin(): void {
-    const sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=http://localhost:4200/api/oauth2/callback';
+    const sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=https://sfdc-event-app.herokuapp.com/api/oauth2/callback';
     console.log('DEBUG: LoginComponent: ', 'Login button clicked..');
     console.log('DEBUG: LoginComponent: Location ', location);
     console.log('DEBUG: LoginComponent: protocol ', location.protocol);
