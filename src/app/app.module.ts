@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ApiService } from './api.service';
 import { CallbackComponent } from './callback/callback.component';
+import { EventsComponent } from './events/events.component';
 
 
 // Define the routes
@@ -25,6 +26,10 @@ const ROUTES = [
   {
     path: 'api/oauth2/callback',
     component: CallbackComponent
+  },
+  {
+    path: '/events',
+    component: EventsComponent
   }
 ];
 
@@ -33,7 +38,8 @@ const ROUTES = [
   declarations: [
     AppComponent,
     LoginComponent,
-    CallbackComponent
+    CallbackComponent,
+    EventsComponent
   ],
   imports: [
     BrowserModule,
