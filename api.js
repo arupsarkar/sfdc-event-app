@@ -68,6 +68,10 @@ router.get('/login',  (req, res) => {
   });
 });
 
+router.get('/getEvents', (req, res) => {
+  console.log('DEBUG: SERVER: /events:');
+  res.status(200).send({label: 'Lead Event Bus', api_name: 'lead_event__e'});
+});
 
 // Get all posts
 router.get('/posts', (req, res) => {
