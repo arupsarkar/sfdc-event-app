@@ -11,8 +11,8 @@ export class AuthInterceptor implements HttpInterceptor {
     // Get the auth token from the service.
     const access_token = this.cookieService.get('access_token');
     const instance_url = this.cookieService.get('instance_url');
-    console.log('DEBUG: ApiService: access_token', access_token);
-    console.log('DEBUG: ApiService: instance_url', instance_url);
+    console.log('DEBUG: AuthInterceptor: access_token', access_token);
+    console.log('DEBUG: AuthInterceptor: instance_url', instance_url);
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
     const authReq = req.clone({
