@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-events',
@@ -7,10 +8,11 @@ import {ActivatedRoute, Router, Params} from '@angular/router';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.route.params.pipe().subscribe( (params: Params) => console.log(params));
+    console.log('access_token', this.cookieService.get('access_token'));
+    console.log('instance_url', this.cookieService.get('instance_url'));
   }
 
 }
