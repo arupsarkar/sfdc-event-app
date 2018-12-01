@@ -61,9 +61,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(__dirname + '/dist/sfdc-event'));
-// app.get('/*', function(req,res) {
-//   res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
-// });
+app.get('/*', function(req,res) {
+  res.sendFile(path.join(__dirname+'/dist/sfdc-event/index.html'));
+});
 /**
  * Get port from environment and store in Express.
  */
