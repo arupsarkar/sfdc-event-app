@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
+
 import {environment} from './environment/environment';
 
 const httpOptions = {
@@ -19,10 +21,12 @@ const httpOptions = {
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getEvents() {
     const URL = '/getEvents';
+    console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
+    console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
     return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
       .pipe( map( res => res));
   }
