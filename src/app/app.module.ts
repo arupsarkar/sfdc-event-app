@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ApiService } from './api.service';
 import { CallbackComponent } from './callback/callback.component';
 import { EventsComponent } from './events/events.component';
+import {httpInterceptorProviders} from './http-interceptors';
 
 
 // Define the routes
@@ -46,7 +47,7 @@ const ROUTES = [
     HttpClientModule,
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
-  providers: [ApiService, CookieService],
+  providers: [ApiService, CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
