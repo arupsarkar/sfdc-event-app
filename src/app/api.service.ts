@@ -24,7 +24,7 @@ export class ApiService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getEvents() {
-    const URL = '/getEvents';
+    const URL = 'getEvents';
     console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
     console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
     return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
