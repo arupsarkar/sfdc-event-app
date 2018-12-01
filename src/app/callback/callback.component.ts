@@ -16,7 +16,8 @@ export class CallbackComponent implements OnInit {
   }
 
   gotoEvents(accessToken: string, instanceUrl: string) {
-    this.router.navigate(['/events', {access_token: accessToken, instance_url: instanceUrl}]);
+    // this.router.navigate(['/events', {access_token: accessToken, instance_url: instanceUrl}]);
+    this.router.navigate(['/events']);
   }
   ngOnInit() {
 
