@@ -28,7 +28,7 @@ const ROUTES = [
     component: CallbackComponent
   },
   {
-    path: '/events',
+    path: 'events',
     component: EventsComponent
   }
 ];
