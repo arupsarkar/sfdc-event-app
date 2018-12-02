@@ -10,29 +10,25 @@ import { ApiService } from './api.service';
 import { CallbackComponent } from './callback/callback.component';
 import { EventsComponent } from './events/events.component';
 import {httpInterceptorProviders} from './http-interceptors';
+import { AppRoutingModule} from './app-routing/app-routing.module';
 
 
 // Define the routes
 
-const ROUTES = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full'
-  // },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'api/oauth2/callback',
-    component: CallbackComponent
-  },
-  {
-    path: 'events',
-    component: EventsComponent
-  }
-];
+// const ROUTES = [
+//   {
+//     path: 'login',
+//     component: LoginComponent
+//   },
+//   {
+//     path: 'api/oauth2/callback',
+//     component: CallbackComponent
+//   },
+//   {
+//     path: 'events',
+//     component: EventsComponent
+//   }
+// ];
 
 
 @NgModule({
@@ -45,7 +41,8 @@ const ROUTES = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES) // Add routes to the app
+    AppRoutingModule
+    // RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
   providers: [ApiService, CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent]
