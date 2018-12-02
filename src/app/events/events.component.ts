@@ -15,4 +15,8 @@ export class EventsComponent implements OnInit {
     this.apiService.getEvents().subscribe( data => { console.log( data ); });
   }
 
+  publishEvents() {
+    console.log('DEBUG: Publish Events', 'Start');
+    console.log('DEBUG: Publish Events', 'End');
+  }
 }

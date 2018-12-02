@@ -1,0 +1,10 @@
+.events-button {
+  background:#00c853;
+  padding:15px 40px;
+  text-align: center;
+  color:#000000;
+  font-family:'Work Sans',sans-serif;
+  border-radius:4px;
+  border:none;
+  font-size:20px;
+}

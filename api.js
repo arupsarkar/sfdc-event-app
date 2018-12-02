@@ -27,4 +27,12 @@ router.get('/getEvents', (req, res) => {
   res.status(200).send({label: 'Lead Event Bus', api_name: 'lead_event__e'});
 });
 
+router.post('/events/publish', (req, res, next) =>{
+
+  console.log('DEBUG: /events/publish', 'Start');
+  const headers = req.headers.authorization;
+  console.log('DEBUG: /events/publish: Authorization', headers);
+  console.log('DEBUG: /events/publish', 'end');
+});
+
 module.exports = router;
