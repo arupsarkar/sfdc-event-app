@@ -31,7 +31,27 @@ router.post('/events/publish', (req, res, next) =>{
 
   console.log('DEBUG: /events/publish', 'Start');
   const headers = req.headers.authorization;
-  console.log('DEBUG: /events/publish: Authorization', headers);
+  const params = headers.split('|');
+
+  let accessToken = params[0];
+  let instanceURL= params[1];
+
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+
+  console.log('DEBUG: /events/publish : salesforce connection : ', conn);
+  let azure_pe = conn.sobject('azure_iot__e');
+  azure_pe.create({ message__c: 'This is a third test message'}, function( err, ret){
+    if(err || !ret.success){
+      res.status(400).send(err);
+    }
+    console.log("Platform Events Publish:", ret);
+
+  });
+  res.status(200).send('success');
   console.log('DEBUG: /events/publish', 'end');
 });
 
