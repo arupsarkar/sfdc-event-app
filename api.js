@@ -49,10 +49,10 @@ router.post('/events/publish', (req, res, next) =>{
       res.status(400).send(err);
     }
     console.log("Platform Events Publish:", ret);
-
+    if (ret.success){
+      res.status(200).send( 'Event Id : ' , ret.id );
+    }
   });
-  res.status(200).send('success');
-  console.log('DEBUG: /events/publish', 'end');
 });
 
 module.exports = router;
