@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import {environment} from './environment/environment';
@@ -30,31 +30,32 @@ export class ApiService {
     return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
       .pipe( map( res => res));
   }
-  // login() {
-  //   console.log('DEBUG: APiService login(): ', 'login() function.');
-  //   const URL = 'oauth2/login';
-  //   const localURL = 'https://sfdc-event-app.herokuapp.com/api/oauth2/login';
-  //   console.log('DEBUG: ApiService login URL : ', `${environment.baseUrl}/${URL}`.toString());
-  //
-  //  const sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id={client_id}&redirect_uri={redirect_uri}';
-  //   console.log('DEBUG: login(): url', sfdc_url);
-  //   // return this.http.get(`${environment.baseUrl}/${URL}`)
-  //   // return this.http.get(localURL, httpOptions)
-  //   //   .pipe( map( res => res ));
-  // }
+  eventsPublish() {
+    const URL = 'events/publish';
+    console.log('DEBUG: ApiService: Events publish', 'Start');
+    console.log('DEBUG: ApiService: Events publish', 'End');
 
+    return this.http.post(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap((data) => console.log(data)), catchError( this.handleError<any>('publish events'))
+    );
+  }
 
   // This method parses the data to JSON
   private parseData(res: Response)  {
     return res.json() || [];
   }
   // Displays the error message
-  private handleError(error: Response | any) {
-    let errorMessage: string;
-    errorMessage = error.message ? error.message : error.toString();
-    // In real world application, call to log error to remote server
-    // logError(error);
-    // This returns another Observable for the observer to subscribe to
-    return Observable.throw(errorMessage);
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }
