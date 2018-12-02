@@ -50,7 +50,7 @@ router.post('/events/publish', (req, res, next) =>{
     }
     console.log("Platform Events Publish:", ret);
     if (ret.success){
-      res.status(200).send( 'Event Id : ' , ret.id );
+      res.status(200).send( 'Event Id : ' , ret );
     }
   });
 });
