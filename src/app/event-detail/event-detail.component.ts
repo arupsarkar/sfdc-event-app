@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Event} from '../model/Event';
 
 @Component({
@@ -8,7 +11,10 @@ import { Event} from '../model/Event';
 })
 export class EventDetailComponent implements OnInit {
   @Input() event: Event;
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngOnInit() {
   }
