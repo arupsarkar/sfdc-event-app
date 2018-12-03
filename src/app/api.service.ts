@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import {environment} from './environment/environment';
 import {MessageService} from './message.service';
+import { Event} from './model/Event';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,13 +27,18 @@ export class ApiService {
               private cookieService: CookieService,
               private messageService: MessageService) { }
 
-  getEvents() {
+  getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.messageService.add('ApiService: fetched Platform Events');
     console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
     console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
-    return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
-      .pipe( map( res => { this.log(JSON.stringify(res)); } ));
+
+    return this.http.get<Event[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      map( events => events)
+    );
+
+    // return this.http.get<Event[]>(`${environment.baseUrl}/${URL}`, httpOptions)
+    //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
   eventsPublish() {
     const URL = 'events/publish';
