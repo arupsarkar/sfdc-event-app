@@ -51,7 +51,7 @@ router.post('/events/publish', (req, res, next) =>{
     console.log("DEBUG: Server - /events/publish : payload - ", ret);
     if (ret.success){
       console.log('DEBUG: Server - /events/publish : success - ', ret.success);
-      res.status(200).send( {id: ret.id, success: ret.success} );
+      res.status(200).send( JSON.parse(ret) );
     }
   });
 });
