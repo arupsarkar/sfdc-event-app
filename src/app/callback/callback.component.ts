@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router, Params} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { MessageService} from '../message.service';
 
 @Component({
   selector: 'app-callback',
@@ -11,12 +12,18 @@ export class CallbackComponent implements OnInit {
   public token: any;
   private tokenUrlParams: String;
   private accessToken: string;
-  constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private cookieService: CookieService,
+              private messageService: MessageService) {
     console.log('DEBUG: CallbackComponent constructor --Start');
   }
 
   gotoEvents(accessToken: string, instanceUrl: string) {
     // this.router.navigate(['/events', {access_token: accessToken, instance_url: instanceUrl}]);
+    if ( accessToken !== undefined && instanceUrl !== undefined) {
+      this.log( 'Login success');
+    }
     this.router.navigate(['/events']);
   }
   ngOnInit() {
@@ -37,5 +44,10 @@ export class CallbackComponent implements OnInit {
     console.log('access_token', this.cookieService.get('access_token'));
     console.log('instance_url', this.cookieService.get('instance_url'));
     this.gotoEvents(this.cookieService.get('access_token'), this.cookieService.get('instance_url'));
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    this.messageService.add(`ApiService: ${message}`);
   }
 }
