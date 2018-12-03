@@ -11,6 +11,7 @@ import { EventsComponent } from './events/events.component';
 import {httpInterceptorProviders} from './http-interceptors';
 import { AppRoutingModule} from './app-routing/app-routing.module';
 import { MessagesComponent } from './messages/messages.component';
+import { EventDetailComponent } from './event-detail/event-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MessagesComponent } from './messages/messages.component';
     LoginComponent,
     CallbackComponent,
     EventsComponent,
-    MessagesComponent
+    MessagesComponent,
+    EventDetailComponent
   ],
   imports: [
     BrowserModule,

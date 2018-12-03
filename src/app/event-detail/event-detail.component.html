@@ -1,0 +1,11 @@
+<div *ngIf="event">
+
+  <h2>{{event.label | uppercase}} Details</h2>
+  <div><span>Api Name: </span>{{event.api_name}}</div>
+  <div>
+    <label>Name:
+      <input [(ngModel)]="event.label" placeholder="name"/>
+    </label>
+  </div>
+
+</div>
