@@ -22,7 +22,7 @@ export class EventsComponent implements OnInit {
     console.log('DEBUG: Publish Events', 'End');
     this.apiService.eventsPublish().subscribe(
                                         data => {
-                                              this.message = data;
+                                              this.message = JSON.parse(data);
                                               console.log( 'DEBUG: Event Component : ', data ); },
                                         response => {console.log('POST call in error', response); },
                                       () => {console.log('The POST observable is now completed.'); });
