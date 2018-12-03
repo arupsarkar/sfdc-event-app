@@ -9,6 +9,8 @@ import { ApiService } from '../api.service';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
+  message = '';
+
   constructor(private route: ActivatedRoute, private  apiService: ApiService) { }
 
   ngOnInit() {
@@ -18,8 +20,11 @@ export class EventsComponent implements OnInit {
   publishEvents() {
     console.log('DEBUG: Publish Events', 'Start');
     console.log('DEBUG: Publish Events', 'End');
-    this.apiService.eventsPublish().subscribe( data => {console.log( 'DEBUG: Event Component : ', data ); },
-                                            response => {console.log('POST call in error', response); },
-                                            () => {console.log('The POST observable is now completed.'); });
+    this.apiService.eventsPublish().subscribe(
+                                        data => {
+                                              this.message = data;
+                                              console.log( 'DEBUG: Event Component : ', data ); },
+                                        response => {console.log('POST call in error', response); },
+                                      () => {console.log('The POST observable is now completed.'); });
   }
 }
