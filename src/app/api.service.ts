@@ -36,8 +36,8 @@ export class ApiService {
     console.log('DEBUG: ApiService: Events publish', 'End');
 
 
-    return this.http.post(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap((data) => console.log(' DEBUG: ApiService : data - ' , data )),
+    return this.http.post<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap((res) => console.log(' DEBUG: ApiService : data - ', this.parseData<any>(res) )),
         catchError( this.handleError<any>(' Error publishing events'))
     );
   }

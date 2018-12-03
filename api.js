@@ -29,7 +29,7 @@ router.get('/getEvents', (req, res) => {
 
 router.post('/events/publish', (req, res, next) =>{
 
-  console.log('DEBUG: /events/publish', 'Start');
+  console.log('DEBUG: Server - /events/publish : ', 'Start');
   const headers = req.headers.authorization;
   const params = headers.split('|');
 
@@ -48,9 +48,10 @@ router.post('/events/publish', (req, res, next) =>{
     if(err || !ret.success){
       res.status(400).send(err);
     }
-    console.log("Platform Events Publish:", ret);
+    console.log("DEBUG: Server - /events/publish : payload - ", ret);
     if (ret.success){
-      res.status(200).send( ret.id );
+      console.log('DEBUG: Server - /events/publish : success - ', ret.success);
+      res.status(200).send( ret );
     }
   });
 });
