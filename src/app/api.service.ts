@@ -35,25 +35,24 @@ export class ApiService {
     console.log('DEBUG: ApiService: Events publish', 'Start');
     console.log('DEBUG: ApiService: Events publish', 'End');
 
+
     return this.http.post(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap((data) => console.log(data)), catchError( this.handleError<any>('publish events'))
+      tap((data) => console.log(' DEBUG: ApiService : data - ' , data )),
+        catchError( this.handleError<any>(' Error publishing events'))
     );
   }
 
   // This method parses the data to JSON
-  private parseData(res: Response)  {
+  private parseData<T> (res: Response)  {
     return res.json() || [];
   }
   // Displays the error message
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
