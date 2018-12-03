@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
-  res.status(200).json (
+  res.status(200).send (
       {label: 'Lead Event Bus', api_name: 'lead_event__e'},
       {label: 'Case Event Bus', api_name: 'case_event__e'},
     );
