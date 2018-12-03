@@ -10,13 +10,15 @@ import { CallbackComponent } from './callback/callback.component';
 import { EventsComponent } from './events/events.component';
 import {httpInterceptorProviders} from './http-interceptors';
 import { AppRoutingModule} from './app-routing/app-routing.module';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CallbackComponent,
-    EventsComponent
+    EventsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

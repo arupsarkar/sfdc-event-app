@@ -5,6 +5,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import {environment} from './environment/environment';
+import {MessageService} from './message.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,14 +22,17 @@ const httpOptions = {
 })
 export class ApiService {
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient,
+              private cookieService: CookieService,
+              private messageService: MessageService) { }
 
   getEvents() {
     const URL = 'getEvents';
+    this.messageService.add('ApiService: fetched Platform Events');
     console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
     console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
     return this.http.get(`${environment.baseUrl}/${URL}`, httpOptions)
-      .pipe( map( res => res));
+      .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
   eventsPublish() {
     const URL = 'events/publish';
@@ -37,7 +41,7 @@ export class ApiService {
 
 
     return this.http.post(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap((res) => res ),
+      tap((res) => { this.log( JSON.stringify(res) ); }),
         catchError( this.handleError<any>(' Error publishing events'))
     );
   }
@@ -52,9 +56,14 @@ export class ApiService {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
       // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation} failed: ${error.message}`);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    this.messageService.add(`ApiService: ${message}`);
   }
 }
