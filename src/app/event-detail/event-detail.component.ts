@@ -34,4 +34,14 @@ export class EventDetailComponent implements OnInit {
     this.apiService.getEventDetail(api_name)
       .subscribe(event => this.event = event);
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+  save(): void {
+    console.log('DEBUG: EventDetailComponent Save() ');
+    // this.heroService.updateHero(this.hero)
+    //   .subscribe(() => this.goBack());
+  }
+
 }
