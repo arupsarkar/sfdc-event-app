@@ -17,6 +17,11 @@ router.get('/getEvents', (req, res) => {
   res.status(200).json ( mock_events );
 });
 
+router.get('/getEventDetail', (req, res, next) => {
+  console.log('DEBUG: SERVER: /eventDetail:');
+  res.status(200).json(mock_events[0]);
+});
+
 router.post('/events/publish', (req, res, next) =>{
 
   console.log('DEBUG: Server - /events/publish : ', 'Start');

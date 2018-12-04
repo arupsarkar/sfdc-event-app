@@ -40,6 +40,15 @@ export class ApiService {
     // return this.http.get<Event[]>(`${environment.baseUrl}/${URL}`, httpOptions)
     //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
+
+  getEventDetail (api_name: string): Observable<Event> {
+    console.log('DEBUG: ApiService : getEvent');
+    const URL = 'getEventDetail';
+    return this.http.get<Event> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap( res => this.log(`fetched event id=${api_name}`)),
+      catchError(this.handleError<Event>(`getEventDetail api_name=${api_name}`))
+    );
+  }
   eventsPublish() {
     const URL = 'events/publish';
     console.log('DEBUG: ApiService: Events publish', 'Start');
