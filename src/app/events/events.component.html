@@ -1,6 +1,6 @@
 <li *ngFor="let event of events">
   <span> {{ event.label }}</span>
-  <a routerLink="/api/detail/{{event.api_name}}">
+  <a routerLink="/event-detail/{{event.api_name}}">
     <span>{{event.api_name}}</span> {{event.label}}
   </a>
 </li>
