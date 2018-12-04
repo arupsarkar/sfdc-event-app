@@ -14,9 +14,14 @@ export class EventDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location
-  ) { }
+  ) {
+    console.log('DEBUG: EventDetailComponent : Constructor()', 'Start');
+    console.log('DEBUG: EventDetailComponent : Constructor()', 'End');
+  }
 
   ngOnInit() {
+    console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
+    console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
 }
