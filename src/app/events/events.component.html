@@ -1,10 +1,11 @@
-<li *ngFor="let event of events">
-  <span> {{ event.label }}</span>
-  <a routerLink="/event-detail/{{event.api_name}}">
-    <span>{{event.api_name}}</span> {{event.label}}
-  </a>
-</li>
-<div>
+<ul class="events">
+  <li *ngFor="let event of events">
+    <a routerLink="/event-detail/{{event.api_name}}">
+      <span class="badge">{{event.api_name}}</span> {{event.label}}
+    </a>
+  </li>
+</ul>>
 
+<div>
   <button class="events-button" type="button" (click)="publishEvents()">Publish</button>
 </div>
