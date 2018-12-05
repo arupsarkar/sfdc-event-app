@@ -1,6 +1,7 @@
 const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
+const {promisfy} = require('util');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -11,7 +12,7 @@ let mock_events = [
     {label: 'Lead Event Bus', api_name: 'lead_event__e'},
     {label: 'Case Event Bus', api_name: 'case_event__e'}
   ];
-let eventsData = function(accessToken, instanceURL) {
+let eventsData = promisfy ( function(accessToken, instanceURL) {
   let eventsJSON = [];
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
@@ -32,7 +33,7 @@ let eventsData = function(accessToken, instanceURL) {
     }
   });
   return eventsJSON;
-};
+} );
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
@@ -40,7 +41,13 @@ router.get('/getEvents', (req, res) => {
   const params = headers.split('|');
   let accessToken = params[0];
   let instanceURL= params[1];
-  let eventsJSON = eventsData(accessToken, instanceURL);
+  let eventsJSON = eventsData(accessToken, instanceURL)
+    .then(function(res){
+      console.log(' Callback success : ',  res);
+    })
+    .catch(function(err){
+      console.log(' Callback error : ',  err);
+    });
   console.log('Events - ', JSON.stringify(eventsJSON));
   res.status(200).json ( eventsJSON );
 });
