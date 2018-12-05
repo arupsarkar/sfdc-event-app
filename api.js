@@ -14,7 +14,7 @@ let mock_events = [
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
-  let eventsJSON = {};
+  let eventsJSON = [];
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
@@ -33,7 +33,7 @@ router.get('/getEvents', (req, res) => {
       console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
-        eventsJSON.add(meta);
+        eventsJSON.push(meta);
       }
     }
   });
