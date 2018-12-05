@@ -11,7 +11,14 @@ let mock_events = [
     {label: 'Lead Event Bus', api_name: 'lead_event__e'},
     {label: 'Case Event Bus', api_name: 'case_event__e'}
   ];
-let eventsData =  async function(accessToken, instanceURL) {
+
+router.get('/getEvents', (req, res) => {
+  console.log('DEBUG: SERVER: /events:');
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+
   let eventsJSON = [];
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
@@ -19,8 +26,7 @@ let eventsData =  async function(accessToken, instanceURL) {
     accessToken: accessToken
   });
   let types = [{type: 'CustomObject', folder: null}];
-
-  await conn.metadata.list(types, '43.0', async function(err, metadata) {
+  conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
   }).then(function(res){
     //console.log('---> getEvents Response : ', res);
@@ -33,25 +39,10 @@ let eventsData =  async function(accessToken, instanceURL) {
         eventsJSON.push(meta);
       }
     }
-
+    res.status(200).json(eventsJSON);
   }).catch(function(err){
     console.log('---> getEvents Error : ', err);
   });
-};
-
-router.get('/getEvents', (req, res) => {
-  console.log('DEBUG: SERVER: /events:');
-  const headers = req.headers.authorization;
-  const params = headers.split('|');
-  let accessToken = params[0];
-  let instanceURL= params[1];
-  let eventsJSON = eventsData(accessToken, instanceURL)
-                    .then(function(data){
-                      console.log('---> /getEvents then resolved.', data);
-                      res.status(200).json ( data );
-                    });
-  console.log('---> Events JSON - ', JSON.stringify(eventsJSON));
-
 });
 
 router.get('/getEventDetail', (req, res, next) => {
