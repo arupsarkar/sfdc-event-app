@@ -37,6 +37,7 @@ router.get('/getEvents', (req, res) => {
       }
     }
   });
+  console.log('Events - ', JSON.stringify(eventsJSON));
   res.status(200).json ( eventsJSON );
 });
 
