@@ -33,7 +33,7 @@ router.get('/getEvents', (req, res) => {
       console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
-        eventsJSON.push(meta);
+        eventsJSON.add(meta);
       }
     }
   });
