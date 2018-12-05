@@ -23,11 +23,11 @@ let eventsData =  function(accessToken, instanceURL) {
   conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
   }).then(function(res){
-    console.log('---> getEvents Response : ', res);
+    //console.log('---> getEvents Response : ', res);
 
     for( let i = 0; i < res.length; i++) {
       let meta = res[i];
-      console.log(' Metadata Name - ', meta.fullName);
+      //console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
         eventsJSON.push(meta);
@@ -37,9 +37,9 @@ let eventsData =  function(accessToken, instanceURL) {
   }).catch(function(err){
     console.log('---> getEvents Error : ', err);
   }).finally(function(){
+    console.log('---> getEvents finally : ', 'Returning events JSON back.');
     return eventsJSON;
   });
-
 };
 
 router.get('/getEvents', (req, res) => {
@@ -49,7 +49,7 @@ router.get('/getEvents', (req, res) => {
   let accessToken = params[0];
   let instanceURL= params[1];
   let eventsJSON = eventsData(accessToken, instanceURL);
-  console.log('Events - ', JSON.stringify(eventsJSON));
+  console.log('---> Events JSON - ', JSON.stringify(eventsJSON));
   res.status(200).json ( eventsJSON );
 });
 
