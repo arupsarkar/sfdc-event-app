@@ -26,7 +26,8 @@ router.get('/getEvents', (req, res) => {
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
   if (err) { return console.error('err', err); }
-    for( meta in metadata) {
+    for( let i = 0; i < metadata.length; i++) {
+      let meta = metadata[i];
       console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__c') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
