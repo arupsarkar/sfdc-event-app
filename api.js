@@ -20,7 +20,7 @@ let eventsData = function(accessToken, instanceURL) {
   });
   let types = [{type: 'CustomObject', folder: null}];
 
-  conn.metadata.list(types, '43.0', function(err, metadata) {
+  let data = conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
     for( let i = 0; i < metadata.length; i++) {
       let meta = metadata[i];
