@@ -14,6 +14,25 @@ let mock_events = [
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  let types = [{type: 'CustomObject', folder: null}];
+  conn.metadata.list(types, '43.0', function(err, metadata) {
+  if (err) { return console.error('err', err); }
+    for( meta in metadata) {
+      console.log(' Metadata Name - ', meta.fullName);
+      if (meta.fullName === 'azure_iot__c') {
+        console.log(' Metadata Name - ', JSON.stringify(meta));
+      }
+    }
+  });
   res.status(200).json ( mock_events );
 });
 
