@@ -36,9 +36,6 @@ let eventsData =  function(accessToken, instanceURL) {
 
   }).catch(function(err){
     console.log('---> getEvents Error : ', err);
-  }).finally(function(){
-    console.log('---> getEvents finally : ', 'Returning events JSON back.');
-    return eventsJSON;
   });
 };
 
