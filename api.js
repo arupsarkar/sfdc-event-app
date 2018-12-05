@@ -1,7 +1,6 @@
 const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
-const promisfy = require('util');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -12,7 +11,7 @@ let mock_events = [
     {label: 'Lead Event Bus', api_name: 'lead_event__e'},
     {label: 'Case Event Bus', api_name: 'case_event__e'}
   ];
-let eventsData = promisfy ( function(accessToken, instanceURL) {
+let eventsData =  function(accessToken, instanceURL) {
   let eventsJSON = [];
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
@@ -21,7 +20,7 @@ let eventsData = promisfy ( function(accessToken, instanceURL) {
   });
   let types = [{type: 'CustomObject', folder: null}];
 
-  let data = conn.metadata.list(types, '43.0', function(err, metadata) {
+  conn.metadata.list(types, '43.0', async function(err, metadata) {
     if (err) { return console.error('err', err); }
     for( let i = 0; i < metadata.length; i++) {
       let meta = metadata[i];
@@ -31,9 +30,13 @@ let eventsData = promisfy ( function(accessToken, instanceURL) {
         eventsJSON.push(meta);
       }
     }
+  }).then(function(res){
+    console.log('---> Response', res);
+  }).catch(function(err){
+    console.log('---> Response', err);
   });
   return eventsJSON;
-} );
+};
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
@@ -41,13 +44,7 @@ router.get('/getEvents', (req, res) => {
   const params = headers.split('|');
   let accessToken = params[0];
   let instanceURL= params[1];
-  let eventsJSON = eventsData(accessToken, instanceURL)
-    .then(function(res){
-      console.log(' Callback success : ',  res);
-    })
-    .catch(function(err){
-      console.log(' Callback error : ',  err);
-    });
+  let eventsJSON = eventsData(accessToken, instanceURL);
   console.log('Events - ', JSON.stringify(eventsJSON));
   res.status(200).json ( eventsJSON );
 });
