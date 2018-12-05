@@ -20,22 +20,26 @@ let eventsData =  function(accessToken, instanceURL) {
   });
   let types = [{type: 'CustomObject', folder: null}];
 
-  conn.metadata.list(types, '43.0', async function(err, metadata) {
+  conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
-    for( let i = 0; i < metadata.length; i++) {
-      let meta = metadata[i];
+  }).then(function(res){
+    console.log('---> getEvents Response : ', res);
+
+    for( let i = 0; i < res.length; i++) {
+      let meta = res[i];
       console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
         eventsJSON.push(meta);
       }
     }
-  }).then(function(res){
-    console.log('---> Response', res);
+
   }).catch(function(err){
-    console.log('---> Response', err);
+    console.log('---> getEvents Error : ', err);
+  }).finally(function(){
+    return eventsJSON;
   });
-  return eventsJSON;
+
 };
 
 router.get('/getEvents', (req, res) => {
