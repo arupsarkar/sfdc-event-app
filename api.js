@@ -29,7 +29,7 @@ router.get('/getEvents', (req, res) => {
     for( let i = 0; i < metadata.length; i++) {
       let meta = metadata[i];
       console.log(' Metadata Name - ', meta.fullName);
-      if (meta.fullName === 'azure_iot__c') {
+      if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
       }
     }
