@@ -20,7 +20,7 @@ let eventsData =  async function(accessToken, instanceURL) {
   });
   let types = [{type: 'CustomObject', folder: null}];
 
-  conn.metadata.list(types, '43.0', function(err, metadata) {
+  await conn.metadata.list(types, '43.0', async function(err, metadata) {
     if (err) { return console.error('err', err); }
   }).then(function(res){
     //console.log('---> getEvents Response : ', res);
