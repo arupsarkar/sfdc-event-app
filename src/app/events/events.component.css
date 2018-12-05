@@ -23,11 +23,12 @@
   padding: .3em 0;
   height: 1.6em;
   border-radius: 4px;
+  width: fit-content;
 }
 
 .events li:hover {
   color: #607D8B;
-  /*background-color: #DDD;*/
+  background-color: #DDD;
   left: .1em;
 }
 
