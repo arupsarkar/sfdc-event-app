@@ -14,6 +14,7 @@ let mock_events = [
 
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
+  let eventsJSON = {};
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
@@ -24,6 +25,7 @@ router.get('/getEvents', (req, res) => {
     accessToken: accessToken
   });
   let types = [{type: 'CustomObject', folder: null}];
+
   conn.metadata.list(types, '43.0', function(err, metadata) {
   if (err) { return console.error('err', err); }
     for( let i = 0; i < metadata.length; i++) {
@@ -31,10 +33,11 @@ router.get('/getEvents', (req, res) => {
       console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
+        eventsJSON.push(meta);
       }
     }
   });
-  res.status(200).json ( mock_events );
+  res.status(200).json ( eventsJSON );
 });
 
 router.get('/getEventDetail', (req, res, next) => {
