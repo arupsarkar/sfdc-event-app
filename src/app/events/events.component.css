@@ -27,7 +27,7 @@
 
 .events li:hover {
   color: #607D8B;
-  background-color: #DDD;
+  /*background-color: #DDD;*/
   left: .1em;
 }
 
@@ -36,8 +36,7 @@
   text-decoration: none;
   position: relative;
   display: block;
-  /*width: 250px;*/
-  min-width: 16px;
+  width: 250px;
 }
 
 .events a:hover {
