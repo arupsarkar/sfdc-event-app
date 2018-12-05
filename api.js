@@ -11,14 +11,8 @@ let mock_events = [
     {label: 'Lead Event Bus', api_name: 'lead_event__e'},
     {label: 'Case Event Bus', api_name: 'case_event__e'}
   ];
-
-router.get('/getEvents', (req, res) => {
-  console.log('DEBUG: SERVER: /events:');
+let eventsData = function(accessToken, instanceURL) {
   let eventsJSON = [];
-  const headers = req.headers.authorization;
-  const params = headers.split('|');
-  let accessToken = params[0];
-  let instanceURL= params[1];
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
     instanceUrl : instanceURL,
@@ -27,7 +21,7 @@ router.get('/getEvents', (req, res) => {
   let types = [{type: 'CustomObject', folder: null}];
 
   conn.metadata.list(types, '43.0', function(err, metadata) {
-  if (err) { return console.error('err', err); }
+    if (err) { return console.error('err', err); }
     for( let i = 0; i < metadata.length; i++) {
       let meta = metadata[i];
       console.log(' Metadata Name - ', meta.fullName);
@@ -37,6 +31,16 @@ router.get('/getEvents', (req, res) => {
       }
     }
   });
+  return eventsJSON;
+};
+
+router.get('/getEvents', (req, res) => {
+  console.log('DEBUG: SERVER: /events:');
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  let eventsJSON = eventsData(accessToken, instanceURL);
   console.log('Events - ', JSON.stringify(eventsJSON));
   res.status(200).json ( eventsJSON );
 });
