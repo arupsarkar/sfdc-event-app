@@ -11,7 +11,7 @@ let mock_events = [
     {label: 'Lead Event Bus', api_name: 'lead_event__e'},
     {label: 'Case Event Bus', api_name: 'case_event__e'}
   ];
-let eventsData =  function(accessToken, instanceURL) {
+let eventsData =  async function(accessToken, instanceURL) {
   let eventsJSON = [];
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
@@ -45,9 +45,13 @@ router.get('/getEvents', (req, res) => {
   const params = headers.split('|');
   let accessToken = params[0];
   let instanceURL= params[1];
-  let eventsJSON = eventsData(accessToken, instanceURL);
+  let eventsJSON = eventsData(accessToken, instanceURL)
+                    .then(function(data){
+                      console.log('---> /getEvents then resolved.', data);
+                      res.status(200).json ( data );
+                    });
   console.log('---> Events JSON - ', JSON.stringify(eventsJSON));
-  res.status(200).json ( eventsJSON );
+
 });
 
 router.get('/getEventDetail', (req, res, next) => {
