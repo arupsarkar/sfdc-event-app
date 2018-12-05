@@ -1,7 +1,7 @@
 const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
-const {promisfy} = require('util');
+const promisfy = require('util');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
