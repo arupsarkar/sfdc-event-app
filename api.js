@@ -28,11 +28,11 @@ router.get('/getEvents', (req, res) => {
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
-  }).then(function(res){
+  }).then(function(data){
     //console.log('---> getEvents Response : ', res);
 
-    for( let i = 0; i < res.length; i++) {
-      let meta = res[i];
+    for( let i = 0; i < data.length; i++) {
+      let meta = data[i];
       //console.log(' Metadata Name - ', meta.fullName);
       if (meta.fullName === 'azure_iot__e') {
         console.log(' Metadata Name - ', JSON.stringify(meta));
