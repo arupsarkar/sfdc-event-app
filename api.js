@@ -47,7 +47,24 @@ router.get('/getEvents', (req, res) => {
 
 router.get('/getEventDetail', (req, res, next) => {
   console.log('DEBUG: SERVER: /eventDetail:');
-  res.status(200).json(mock_events[0]);
+  var fullNames = [ 'azure_iot__e' ];
+  conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
+    if (err) { console.error(err); }
+    for (let i=0; i < metadata.length; i++) {
+      let meta = metadata[i];
+      console.log("Full Name: " + meta.fullName);
+      console.log("Fields count: " + meta.fields.length);
+      // console.log("Sharing Model: " + meta.sharingModel);
+    }
+  }).then(function(data){
+    console.log('---> get event detail success - ', data);
+    res.status(200).json(mock_events[0]);
+  }).catch(function(err){
+    console.log('---> get event detail error - ', err);
+  });
+
+
+
 });
 
 router.post('/events/publish', (req, res, next) =>{
