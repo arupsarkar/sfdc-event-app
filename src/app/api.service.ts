@@ -45,7 +45,7 @@ export class ApiService {
 
   getEventDetail (fullName: string): Observable<EventSchema> {
     console.log('DEBUG: ApiService : Getting Event Details of ', fullName);
-    const URL = 'getEventDetail/:fullName';
+    const URL = 'getEventDetail/' + fullName;
     return this.http.get<EventSchema> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {this.log(`fetched event id=${fullName}`);
               this.log(`fetched fields=${JSON.stringify(res)}`);
