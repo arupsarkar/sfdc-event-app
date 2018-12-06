@@ -15,7 +15,7 @@ import { EventSchema } from '../model/event-schema';
 })
 export class EventDetailComponent implements OnInit {
   @Input() event: Event;
-  eventSchema: EventSchema[];
+  eventSchema: EventSchema;
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
   constructor(
@@ -39,11 +39,10 @@ export class EventDetailComponent implements OnInit {
     console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', api_name);
     this.apiService.getEventDetail(api_name)
       .subscribe(eventSchema => {
-        this.eventSchema = eventSchema;
-        console.log('Fetched Fields', JSON.stringify(this.eventSchema));
-        console.log('Fetched Fields', JSON.stringify(this.eventSchema[0].fields));
-        this.eventFieldSchema = this.eventSchema[0].fields;
-        console.log('Fetched Fields', JSON.stringify(this.eventSchema));
+        this.eventSchema = eventSchema[0];
+        console.log('Fetched event ', JSON.stringify(this.eventSchema));
+        console.log('Fetched Fields ', JSON.stringify(this.eventSchema.fields));
+        this.eventFieldSchema = this.eventSchema.fields;
       });
   }
 
