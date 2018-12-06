@@ -47,7 +47,18 @@ router.get('/getEvents', (req, res) => {
 
 router.get('/getEventDetail', (req, res, next) => {
   console.log('DEBUG: SERVER: /eventDetail:');
-  var fullNames = [ 'azure_iot__e' ];
+  let fullNames = [ 'azure_iot__e' ];
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) { console.error(err); }
     for (let i=0; i < metadata.length; i++) {
