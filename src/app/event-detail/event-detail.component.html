@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="eventFieldSchema">
 
-  <div><span>Name: </span>{{eventFieldSchema.label}}</div>
+  <div><span>Name: </span>{{eventFieldSchema.fullName}}</div>
   <div>
     <label>Name:
       <input [(ngModel)]="eventFieldSchema.label" placeholder="name"/>
