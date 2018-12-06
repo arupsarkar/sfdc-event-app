@@ -102,10 +102,16 @@ router.post('/events/publish', (req, res, next) =>{
     accessToken: accessToken
   });
 
-  let jsonData = {message__c: 'test message', Device_Id__c: 'abcd'};
+  let platformEventJSONPayload = {};
+  let platformEventObjectName = req.body.fullName;
+  // Iterate the fields to create the JSOn Payload.
+  for (let i = 0 ; i < req.body.fields.length; i++){
+    platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
+  }
 
-  let azure_pe = conn.sobject('azure_iot__e');
-  azure_pe.create(jsonData, function( err, ret){
+  let azure_pe = conn.sobject(platformEventObjectName);
+  console.log('---> JSON Payload : ', JSON.stringify(platformEventJSONPayload));
+  azure_pe.create(platformEventJSONPayload, function( err, ret){
     console.log('---> Return : ', ret);
     console.log('---> Error : ', err);
     if(err || !ret.success){
