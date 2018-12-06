@@ -43,17 +43,17 @@ export class ApiService {
     //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
 
-  getEventDetail (api_name: string): Observable<EventSchema[]> {
+  getEventDetail (api_name: string): Observable<EventSchema> {
     console.log('DEBUG: ApiService : getEvent');
     const URL = 'getEventDetail';
-    return this.http.get<EventSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+    return this.http.get<EventSchema> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {this.log(`fetched event id=${api_name}`);
               this.log(`fetched fields=${JSON.stringify(res)}`);
       }),
-      catchError(this.handleError<EventSchema[]>(`getEventDetail api_name=${api_name}`))
+      catchError(this.handleError<EventSchema>(`getEventDetail api_name=${api_name}`))
     );
   }
-  eventsPublish(eventSchema: EventSchema[]) {
+  eventsPublish(eventSchema: EventSchema) {
     const URL = 'events/publish';
     console.log('DEBUG: ApiService: Events publish', 'Start', JSON.stringify(eventSchema));
 
