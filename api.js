@@ -53,7 +53,7 @@ router.get('/getEvents', (req, res) => {
   });
 });
 
-router.get('/getEventDetail', (req, res, next) => {
+router.get('/getEventDetail/:fullName', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /eventDetail: Request query - ', req.query);
   console.log('---> DEBUG: SERVER: /eventDetail: Request params - ', req.params);
   console.log('---> DEBUG: SERVER: /eventDetail: Request params - ', req.params.fullName);
