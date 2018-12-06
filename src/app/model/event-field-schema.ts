@@ -9,5 +9,5 @@ export class EventFieldSchema {
   required: boolean;
   type: string;
   unique: boolean;
-
+  data: string;
 }
