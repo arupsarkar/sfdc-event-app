@@ -35,9 +35,9 @@ export class EventDetailComponent implements OnInit {
 
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
-    const api_name = this.route.snapshot.paramMap.get('api_name');
-    console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', api_name);
-    this.apiService.getEventDetail(api_name)
+    const fullName = this.route.snapshot.paramMap.get('fullName');
+    console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', fullName);
+    this.apiService.getEventDetail(fullName)
       .subscribe(eventSchema => {
         this.eventSchema = eventSchema;
         console.log('Fetched event ', JSON.stringify(this.eventSchema));

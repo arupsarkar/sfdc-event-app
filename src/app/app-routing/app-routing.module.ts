@@ -11,7 +11,7 @@ const ROUTES = [
   {path: 'login', component: LoginComponent},
   {path: 'api/oauth2/callback', component: CallbackComponent},
   {path: 'events', component: EventsComponent},
-  {path: 'event-detail/:api_name', component: EventDetailComponent}
+  {path: 'event-detail/:fullName', component: EventDetailComponent}
 ];
 
 
