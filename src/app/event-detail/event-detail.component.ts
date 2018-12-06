@@ -36,7 +36,10 @@ export class EventDetailComponent implements OnInit {
     const api_name = this.route.snapshot.paramMap.get('api_name');
     console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', api_name);
     this.apiService.getEventDetail(api_name)
-      .subscribe(eventFields => this.eventFieldSchema = eventFields);
+      .subscribe(eventFields => {
+        this.eventFieldSchema = eventFields;
+        console.log('Fetched Fields', this.eventFieldSchema);
+      });
   }
 
   goBack(): void {

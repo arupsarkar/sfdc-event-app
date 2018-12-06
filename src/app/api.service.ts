@@ -46,7 +46,9 @@ export class ApiService {
     console.log('DEBUG: ApiService : getEvent');
     const URL = 'getEventDetail';
     return this.http.get<EventFieldSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap( res => this.log(`fetched event id=${api_name}`)),
+      tap( res => {this.log(`fetched event id=${api_name}`);
+              this.log(`fetched fields=${res}`);
+      }),
       catchError(this.handleError<EventFieldSchema[]>(`getEventDetail api_name=${api_name}`))
     );
   }

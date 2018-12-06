@@ -3,12 +3,17 @@
 </div>
 <div *ngIf="eventFieldSchema">
 
-  <div><span>Name: </span>{{eventFieldSchema.fullName}}</div>
-  <div>
-    <label>Value :
-      <input [(ngModel)]="eventFieldSchema.data" placeholder="Enter some value"/>
-    </label>
-  </div>
+  <li *ngFor="let eventField of eventFieldSchema">
+
+    <div><span>Name: </span>{{eventField.fullName}}</div>
+    <div>
+      <label>Value :
+        <input [(ngModel)]="eventField.data" placeholder="Enter some value"/>
+      </label>
+    </div>
+
+  </li>
+
   <button (click)="goBack()">Back</button>
   <button (click)="save()">Save</button>
 </div>
