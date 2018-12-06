@@ -52,9 +52,7 @@ export class ApiService {
   }
   eventsPublish(eventFields: EventFieldSchema[]) {
     const URL = 'events/publish';
-    console.log('DEBUG: ApiService: Events publish', 'Start');
-    console.log('DEBUG: ApiService: Events publish', 'End');
-
+    console.log('DEBUG: ApiService: Events publish', 'Start', JSON.stringify(eventFields));
 
     return this.http.post(`${environment.baseUrl}/${URL}`, eventFields, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
