@@ -76,7 +76,7 @@ router.get('/getEventDetail', (req, res, next) => {
       // console.log("Sharing Model: " + meta.sharingModel);
     }
   }).then(function(data){
-    console.log('---> get event detail success - ', data.fields);
+    console.log('---> get event detail success - ', data);
     res.status(200).json(data.fields);
   }).catch(function(err){
     console.log('---> get event detail error - ', err);
@@ -102,7 +102,6 @@ router.post('/events/publish', (req, res, next) =>{
     accessToken: accessToken
   });
 
-  console.log('DEBUG: /events/publish : salesforce connection : ', conn);
   let azure_pe = conn.sobject('azure_iot__e');
   azure_pe.create({ message__c: 'This is a third test message'}, function( err, ret){
     if(err || !ret.success){
