@@ -77,7 +77,7 @@ router.get('/getEventDetail', (req, res, next) => {
     }
   }).then(function(data){
     console.log('---> get event detail success - ', data);
-    res.status(200).json(data.fields);
+    res.status(200).json(data);
   }).catch(function(err){
     console.log('---> get event detail error - ', err);
   });

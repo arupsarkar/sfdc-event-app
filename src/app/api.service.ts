@@ -7,7 +7,8 @@ import { CookieService } from 'ngx-cookie-service';
 import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
-import { EventFieldSchema} from './model/event-field-schema';
+import { EventFieldSchema } from './model/event-field-schema';
+import { EventSchema } from './model/event-schema';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -42,21 +43,21 @@ export class ApiService {
     //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
 
-  getEventDetail (api_name: string): Observable<EventFieldSchema[]> {
+  getEventDetail (api_name: string): Observable<EventSchema[]> {
     console.log('DEBUG: ApiService : getEvent');
     const URL = 'getEventDetail';
-    return this.http.get<EventFieldSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+    return this.http.get<EventSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {this.log(`fetched event id=${api_name}`);
               this.log(`fetched fields=${res}`);
       }),
-      catchError(this.handleError<EventFieldSchema[]>(`getEventDetail api_name=${api_name}`))
+      catchError(this.handleError<EventSchema[]>(`getEventDetail api_name=${api_name}`))
     );
   }
-  eventsPublish(eventFields: EventFieldSchema[]) {
+  eventsPublish(eventSchema: EventSchema[]) {
     const URL = 'events/publish';
-    console.log('DEBUG: ApiService: Events publish', 'Start', JSON.stringify(eventFields));
+    console.log('DEBUG: ApiService: Events publish', 'Start', JSON.stringify(eventSchema));
 
-    return this.http.post(`${environment.baseUrl}/${URL}`, eventFields, httpOptions).pipe(
+    return this.http.post(`${environment.baseUrl}/${URL}`, eventSchema, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
         catchError( this.handleError<any>(' Error publishing events'))
     );
