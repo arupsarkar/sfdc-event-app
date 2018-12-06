@@ -41,10 +41,10 @@ export class EventDetailComponent implements OnInit {
       .subscribe(eventSchema => {
         this.eventSchema = eventSchema;
         console.log('Fetched event ', JSON.stringify(this.eventSchema));
-        for ( let i = 0; i <= this.eventSchema.length; i++) {
-          console.log('---> fields : ', this.eventSchema[i].fields);
-          this.eventFieldSchema = this.eventSchema[i].fields;
-        }
+        console.log('Fetched event schema length -', this.eventSchema.length);
+        console.log('Fetched event index 0 : ', this.eventSchema[0]);
+        console.log('Fetched event fullName : ', this.eventSchema[0].fullName);
+        console.log('Fetched event fields : ', this.eventSchema[0].fields);
         // console.log('Fetched Fields ', JSON.stringify(this.eventSchema[].fields));
         // this.eventFieldSchema = this.eventSchema[0].fields;
       });
