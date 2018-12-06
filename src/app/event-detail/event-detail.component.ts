@@ -40,6 +40,8 @@ export class EventDetailComponent implements OnInit {
     this.apiService.getEventDetail(api_name)
       .subscribe(eventSchema => {
         this.eventSchema = eventSchema;
+        console.log('Fetched Fields', JSON.stringify(this.eventSchema));
+        console.log('Fetched Fields', JSON.stringify(this.eventSchema[0].fields));
         this.eventFieldSchema = this.eventSchema[0].fields;
         console.log('Fetched Fields', JSON.stringify(this.eventSchema));
       });

@@ -48,7 +48,7 @@ export class ApiService {
     const URL = 'getEventDetail';
     return this.http.get<EventSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {this.log(`fetched event id=${api_name}`);
-              this.log(`fetched fields=${res}`);
+              this.log(`fetched fields=${JSON.stringify(res)}`);
       }),
       catchError(this.handleError<EventSchema[]>(`getEventDetail api_name=${api_name}`))
     );
