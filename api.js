@@ -54,8 +54,8 @@ router.get('/getEvents', (req, res) => {
 });
 
 router.get('/getEventDetail', (req, res, next) => {
-  console.log('DEBUG: SERVER: /eventDetail:', req.body.api_name);
-  let fullNames = [ req.body.api_name ];
+  console.log('DEBUG: SERVER: /eventDetail:', req.query.api_name);
+  let fullNames = [ req.query.api_name ];
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
