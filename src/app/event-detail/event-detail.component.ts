@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 
 import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
+import { EventFieldSchema} from '../model/event-field-schema';
+
 
 @Component({
   selector: 'app-event-detail',
@@ -12,6 +14,7 @@ import { ApiService} from '../api.service';
 })
 export class EventDetailComponent implements OnInit {
   @Input() event: Event;
+  @Input() eventFieldSchema: EventFieldSchema[];
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -32,7 +35,7 @@ export class EventDetailComponent implements OnInit {
     const api_name = this.route.snapshot.paramMap.get('api_name');
     console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', api_name);
     this.apiService.getEventDetail(api_name)
-      .subscribe(event => this.event = event);
+      .subscribe(eventFields => this.eventFieldSchema = eventFields);
   }
 
   goBack(): void {

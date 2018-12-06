@@ -1,10 +1,9 @@
 <div>
   <p>Event Detail</p>
 </div>
-<div *ngIf="event">
+<div *ngIf="eventFieldSchema">
 
-  <h2>{{event.label | uppercase}} Details</h2>
-  <div><span>Api Name: </span>{{event.api_name}}</div>
+  <div><span>Name: </span>{{eventFieldSchema.label}}</div>
   <div>
     <label>Name:
       <input [(ngModel)]="event.label" placeholder="name"/>

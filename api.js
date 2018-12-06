@@ -7,11 +7,6 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
-let mock_events = [
-    {label: 'Lead Event Bus', api_name: 'lead_event__e'},
-    {label: 'Case Event Bus', api_name: 'case_event__e'}
-  ];
-
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
   const headers = req.headers.authorization;
@@ -68,13 +63,11 @@ router.get('/getEventDetail', (req, res, next) => {
       // console.log("Sharing Model: " + meta.sharingModel);
     }
   }).then(function(data){
-    console.log('---> get event detail success - ', data);
-    res.status(200).json(mock_events[0]);
+    console.log('---> get event detail success - ', data.fields);
+    res.status(200).json(data.fields);
   }).catch(function(err){
     console.log('---> get event detail error - ', err);
   });
-
-
 
 });
 

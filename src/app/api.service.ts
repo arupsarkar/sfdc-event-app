@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
+import { EventFieldSchema} from './model/event-field-schema';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,12 +42,12 @@ export class ApiService {
     //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
 
-  getEventDetail (api_name: string): Observable<Event> {
+  getEventDetail (api_name: string): Observable<EventFieldSchema[]> {
     console.log('DEBUG: ApiService : getEvent');
     const URL = 'getEventDetail';
-    return this.http.get<Event> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+    return this.http.get<EventFieldSchema[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => this.log(`fetched event id=${api_name}`)),
-      catchError(this.handleError<Event>(`getEventDetail api_name=${api_name}`))
+      catchError(this.handleError<EventFieldSchema[]>(`getEventDetail api_name=${api_name}`))
     );
   }
   eventsPublish() {
