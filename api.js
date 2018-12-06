@@ -74,6 +74,9 @@ router.get('/getEventDetail', (req, res, next) => {
 router.post('/events/publish', (req, res, next) =>{
 
   console.log('DEBUG: Server - /events/publish : ', 'Start');
+  console.log('DEBUG: Server - /events/publish : data ', req.body);
+
+
   const headers = req.headers.authorization;
   const params = headers.split('|');
 

@@ -50,13 +50,13 @@ export class ApiService {
       catchError(this.handleError<EventFieldSchema[]>(`getEventDetail api_name=${api_name}`))
     );
   }
-  eventsPublish() {
+  eventsPublish(eventFields: EventFieldSchema[]) {
     const URL = 'events/publish';
     console.log('DEBUG: ApiService: Events publish', 'Start');
     console.log('DEBUG: ApiService: Events publish', 'End');
 
 
-    return this.http.post(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+    return this.http.post(`${environment.baseUrl}/${URL}`, eventFields, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
         catchError( this.handleError<any>(' Error publishing events'))
     );

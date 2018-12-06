@@ -15,6 +15,7 @@ import { EventFieldSchema} from '../model/event-field-schema';
 export class EventDetailComponent implements OnInit {
   @Input() event: Event;
   @Input() eventFieldSchema: EventFieldSchema[];
+  message = '';
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -44,8 +45,14 @@ export class EventDetailComponent implements OnInit {
   save(): void {
     console.log('DEBUG: EventDetailComponent Save() ');
     console.log('---> Updated Event Schema - ', this.eventFieldSchema);
-    // this.heroService.updateHero(this.hero)
-    //   .subscribe(() => this.goBack());
+    this.apiService.eventsPublish(this.eventFieldSchema).subscribe(
+      data => {
+        this.message = JSON.stringify(data); },
+      response => {console.log('POST call in error', response); },
+      () => {
+        console.log('The POST observable is now completed.');
+        // this.goBack();
+      });
   }
 
 }
