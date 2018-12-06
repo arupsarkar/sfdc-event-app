@@ -102,8 +102,12 @@ router.post('/events/publish', (req, res, next) =>{
     accessToken: accessToken
   });
 
+  let jsonData = {message__c: 'test message', Device_Id__c: 'abcd'};
+
   let azure_pe = conn.sobject('azure_iot__e');
-  azure_pe.create({ message__c: 'This is a third test message'}, function( err, ret){
+  azure_pe.create(jsonData, function( err, ret){
+    console.log('---> Return : ', ret);
+    console.log('---> Error : ', err);
     if(err || !ret.success){
       res.status(400).send(err);
     }
