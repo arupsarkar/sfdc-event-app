@@ -43,6 +43,7 @@ export class EventDetailComponent implements OnInit {
   }
   save(): void {
     console.log('DEBUG: EventDetailComponent Save() ');
+    console.log('---> Updated Event Schema - ', this.eventFieldSchema);
     // this.heroService.updateHero(this.hero)
     //   .subscribe(() => this.goBack());
   }
