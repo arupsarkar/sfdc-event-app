@@ -2,9 +2,10 @@
   <li *ngFor="let event of events">
     <mat-card [ngStyle]="{'background-color':'#90a4ae'}">
       <a routerLink="/event-detail/{{event.fullName}}">
-        <span> {{ event.fullName}} </span>
+        <span class="center"> {{ event.fullName}} </span>
       </a>
     </mat-card>
+    <span flex></span>
   </li>
 <!--</ul>-->
 
