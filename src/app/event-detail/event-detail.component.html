@@ -1,5 +1,5 @@
 <div>
-  <p>Event Detail</p>
+  <p>Platform Event Object Fields</p>
 </div>
 <div *ngIf="eventFieldSchema">
 
@@ -13,6 +13,8 @@
     </div>
 
   </li>
-  <button class="back" mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>
-  <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>
+  <div class="control-buttons">
+    <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>
+    <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>
+  </div>
 </div>

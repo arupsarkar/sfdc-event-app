@@ -41,3 +41,12 @@ button:disabled {
   outline: none;
   color:#fff;
 }
+ul{
+  list-style-type:none;
+}
+li{
+  list-style-type:none;
+}
+.control-buttons {
+  display:flex;
+}
