@@ -1,13 +1,8 @@
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
-}
 body {
   margin: 0;
   padding: 0;
   font-family: 'Work Sans',sans-serif;
-  background:#f4f4ef;
+  background:#2196f3;
 }
 .center {
   text-align: center;
@@ -22,7 +17,7 @@ a:hover {
   text-decoration: underline;
 }
 .navbar {
-  background:#fff;
+  background:#2196f3;
   text-align:center;
   padding:1.5rem 0;
   width:100%;
@@ -38,5 +33,11 @@ a:hover {
   font-weight:200;
   font-size:30px;
   letter-spacing: 4px;
-  font-family:'Work Sans',sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
 }

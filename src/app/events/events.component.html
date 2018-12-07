@@ -1,8 +1,10 @@
 <ul class="events">
   <li *ngFor="let event of events">
-    <a routerLink="/event-detail/{{event.fullName}}">
-      <span class="badge"> {{ event.fullName}} </span>
-    </a>
+    <mat-card>
+      <a routerLink="/event-detail/{{event.fullName}}">
+        <span class="badge"> {{ event.fullName}} </span>
+      </a>
+    </mat-card>
   </li>
 </ul>
 

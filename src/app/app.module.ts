@@ -13,6 +13,7 @@ import { AppRoutingModule} from './app-routing/app-routing.module';
 import { MessagesComponent } from './messages/messages.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import {FormsModule} from '@angular/forms';
+import { MaterialModule} from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {FormsModule} from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ],
   providers: [ApiService, CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent]
