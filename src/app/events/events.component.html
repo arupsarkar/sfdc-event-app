@@ -1,12 +1,12 @@
-<ul class="events">
+<!--<ul class="events">-->
   <li *ngFor="let event of events">
     <mat-card>
       <a routerLink="/event-detail/{{event.fullName}}">
-        <span class="badge"> {{ event.fullName}} </span>
+        <span> {{ event.fullName}} </span>
       </a>
     </mat-card>
   </li>
-</ul>
+<!--</ul>-->
 
 <!--<div>-->
   <!--<button class="events-button" type="button" (click)="publishEvents()">Publish</button>-->
