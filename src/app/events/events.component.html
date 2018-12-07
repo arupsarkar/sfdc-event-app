@@ -1,12 +1,12 @@
-<!--<ul class="events">-->
+<ul class="events">
   <li *ngFor="let event of events">
-    <mat-card [ngStyle]="{'background-color':'#90a4ae'}">
+    <!--<mat-card [ngStyle]="{'background-color':'#90a4ae'}">-->
       <a routerLink="/event-detail/{{event.fullName}}">
-        <span class="center"> {{ event.fullName}} </span>
+        <span class="badge"> {{ event.fullName}} </span> <input type="radio" [(ngModel)]="event.subscribe" >
       </a>
-    </mat-card>
+    <!--</mat-card>-->
   </li>
-<!--</ul>-->
+</ul>
 
 <!--<div>-->
   <!--<button class="events-button" type="button" (click)="publishEvents()">Publish</button>-->

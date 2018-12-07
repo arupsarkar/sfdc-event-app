@@ -10,5 +10,6 @@ export class Event {
   lastModifiedDate: string;
   manageableState: string;
   type: string;
+  subscribe: boolean;
 
 }
