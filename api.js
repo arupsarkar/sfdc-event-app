@@ -132,7 +132,7 @@ router.post('/events/publish', (req, res, next) =>{
 
 function eventBusListener(conn, res ){
   console.log('---> Event Bus Listener : ', ' Started' );
-  conn.streaming.topic('/event/azure_iot__e').subscribe( function (){
+  conn.streaming.topic('/event/azure_iot__e').subscribe( function ( message ){
     console.log( '---> Event received - ', message );
   });
 }
