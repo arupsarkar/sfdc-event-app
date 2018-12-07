@@ -33,6 +33,9 @@ router.get('/getEvents', (req, res) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+  // start the event bus listener
+  eventBusListener(conn, res);
+
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) { return console.error('err', err); }
@@ -127,4 +130,10 @@ router.post('/events/publish', (req, res, next) =>{
   });
 });
 
+function eventBusListener(conn, res ){
+  console.log('---> Event Bus Listener : ', ' Started' );
+  conn.streaming.topic('/event/').subscribe( function (){
+    console.log( '---> Event received - ', message );
+  });
+}
 module.exports = router;
