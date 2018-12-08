@@ -54,6 +54,33 @@ router.get('/getEvents', (req, res) => {
   });
 });
 
+// Subscribe to platform events
+router.get('/events/subscribe/:fullName', (req, res) => {
+  console.log('---> DEBUG: SERVER: /eventDetail: Request params - ', req.params.fullName);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  conn.streaming.topic('/event/' + req.params.fullName).subscribe( function ( message ){
+    console.log( '---> Event received - ', message );
+    ret.status(200).json(message);
+  })
+  .then(function(response){
+    console.log('---> Events Subscribe then response - ', response);
+    ret.status(200).json(response);
+  })
+  .catch(function(err){
+    console.log('---> Events Subscribe error - ', err);
+    ret.status(200).json(err);
+  });
+});
+
+// Publish to platform events
 router.get('/getEventDetail/:fullName', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /eventDetail: Request query - ', req.query);
   console.log('---> DEBUG: SERVER: /eventDetail: Request params - ', req.params);

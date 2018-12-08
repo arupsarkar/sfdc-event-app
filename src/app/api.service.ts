@@ -7,7 +7,6 @@ import { CookieService } from 'ngx-cookie-service';
 import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
-import { EventFieldSchema } from './model/event-field-schema';
 import { EventSchema } from './model/event-schema';
 
 const httpOptions = {
@@ -63,6 +62,18 @@ export class ApiService {
     );
   }
 
+  eventsSubscribe(fullName: string): Observable<any>{
+    this.log(`Listening to event =${fullName}`);
+    const URL = '/events/subscribe/' + fullName;
+    return this.http.get<any> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap( res => {this.log(` Event Name = ${fullName}`);
+        this.log(`Result=${JSON.stringify(res)}`);
+      }),
+      catchError(this.handleError<any>(`eventsSubscribe api_name=${fullName}`))
+    );
+  }
+
+
   // This method parses the data to JSON
   private parseData<T> (res: Response)  {
     return res.json() || [];
@@ -79,7 +90,7 @@ export class ApiService {
     };
   }
 
-  /** Log a HeroService message with the MessageService */
+  /** Log a EventService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ApiService: ${message}`);
   }

@@ -6,7 +6,7 @@ import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
 import { EventFieldSchema} from '../model/event-field-schema';
 import { EventSchema } from '../model/event-schema';
-
+import { MessageService} from '../message.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -21,7 +21,8 @@ export class EventDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private messageService: MessageService
   ) {
     console.log('DEBUG: EventDetailComponent : Constructor()', 'Start');
     console.log('DEBUG: EventDetailComponent : Constructor()', 'End');
@@ -30,9 +31,18 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
     this.getEventMetaData();
+    this.subscribeToEvents();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
+  subscribeToEvents(): void {
+    console.log('DEBUG: EventDetailComponent : subscribeToEvents()', 'Start');
+    const fullName = this.route.snapshot.paramMap.get('fullName');
+    this.apiService.eventsSubscribe(fullName)
+      .subscribe( any => {
+        this.log(any);
+      });
+  }
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
     const fullName = this.route.snapshot.paramMap.get('fullName');
@@ -64,4 +74,8 @@ export class EventDetailComponent implements OnInit {
       });
   }
 
+  /** Log a EventService message with the MessageService */
+  private log(message: string) {
+    this.messageService.add(`Event Detail Component: ${message}`);
+  }
 }
