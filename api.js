@@ -56,7 +56,7 @@ router.get('/getEvents', (req, res) => {
 
 // Subscribe to platform events
 router.get('/events/subscribe/:fullName', (req, res) => {
-  console.log('---> DEBUG: SERVER: /eventDetail: Request params - ', req.params.fullName);
+  console.log('---> DEBUG: SERVER: /events/subscribe: Request params - ', req.params.fullName);
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
@@ -96,8 +96,6 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
-  // start the event bus listener
-  eventBusListener(conn, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) { console.error(err); }
