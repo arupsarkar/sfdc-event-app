@@ -33,8 +33,6 @@ router.get('/getEvents', (req, res) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
-  // start the event bus listener
-  eventBusListener(conn, res);
 
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
@@ -71,6 +69,8 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+  // start the event bus listener
+  eventBusListener(conn, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) { console.error(err); }
@@ -89,31 +89,25 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
 
 });
 
-router.post('/events/publish', (req, res, next) =>{
 
+router.post('/events/publish', (req, res, next) =>{
   console.log('DEBUG: Server - /events/publish : ', 'Start');
   console.log('DEBUG: Server - /events/publish : data ', req.body);
-
-
   const headers = req.headers.authorization;
   const params = headers.split('|');
-
   let accessToken = params[0];
   let instanceURL= params[1];
-
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
-
   let platformEventJSONPayload = {};
   let platformEventObjectName = req.body.fullName;
   // Iterate the fields to create the JSOn Payload.
   for (let i = 0 ; i < req.body.fields.length; i++){
     platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
   }
-
   let azure_pe = conn.sobject(platformEventObjectName);
   console.log('---> JSON Payload : ', JSON.stringify(platformEventJSONPayload));
   azure_pe.create(platformEventJSONPayload, function( err, ret){
