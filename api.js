@@ -90,12 +90,14 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
   const params = headers.split('|');
   let accessToken = params[0];
   let instanceURL= params[1];
-  eventBusListener(conn, fullName, res);
+
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  eventBusListener(conn, req.params.fullName, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) { console.error(err); }
