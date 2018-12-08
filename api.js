@@ -68,15 +68,15 @@ router.get('/events/subscribe/:fullName', (req, res) => {
   });
   conn.streaming.topic('/event/' + req.params.fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
-    ret.status(200).json(message);
+    res.status(200).json(message);
   })
   .then(function(response){
     console.log('---> Events Subscribe then response - ', response);
-    ret.status(200).json(response);
+    res.status(200).json(response);
   })
   .catch(function(err){
     console.log('---> Events Subscribe error - ', err);
-    ret.status(200).json(err);
+    res.status(200).json(err);
   });
 });
 
