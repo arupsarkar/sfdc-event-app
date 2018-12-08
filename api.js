@@ -153,7 +153,9 @@ function eventBusListener(conn, fullName, res ){
   console.log('---> Event Bus Listener : ', ' Started' );
   conn.streaming.topic('/event/' + fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
-    res.redirect( 'event-subscribe/subscribe?message=' + message );
+    if (message !== undefined){
+      res.redirect( 'event-subscribe/subscribe?message=' + message );
+    }
   });
 }
 module.exports = router;
