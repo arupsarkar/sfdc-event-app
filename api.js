@@ -68,7 +68,7 @@ router.get('/events/subscribe/:fullName', (req, res) => {
   });
   conn.streaming.topic('/event/' + req.params.fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
-    res.status(200).json(message);
+    res.redirect( 'event-subscribe/subscribe?message=' + message );
   })
   .then(function(response){
     console.log('---> Events Subscribe then response - ', response);
@@ -90,7 +90,7 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
   const params = headers.split('|');
   let accessToken = params[0];
   let instanceURL= params[1];
-
+  eventBusListener(conn, fullName, res);
   // instantiate a connection to salesforce
   let conn = new jsforce.Connection({
     instanceUrl : instanceURL,
@@ -149,10 +149,11 @@ router.post('/events/publish', (req, res, next) =>{
   });
 });
 
-function eventBusListener(conn, res ){
+function eventBusListener(conn, fullName, res ){
   console.log('---> Event Bus Listener : ', ' Started' );
-  conn.streaming.topic('/event/azure_iot__e').subscribe( function ( message ){
+  conn.streaming.topic('/event/' + fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
+    res.redirect( 'event-subscribe/subscribe?message=' + message );
   });
 }
 module.exports = router;

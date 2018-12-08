@@ -14,6 +14,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import {FormsModule} from '@angular/forms';
 import { MaterialModule} from './material/material.module';
+import { EventSubscribeComponent } from './event-subscribe/event-subscribe.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MaterialModule} from './material/material.module';
     CallbackComponent,
     EventsComponent,
     MessagesComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    EventSubscribeComponent
   ],
   imports: [
     BrowserModule,

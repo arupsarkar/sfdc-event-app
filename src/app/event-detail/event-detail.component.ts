@@ -31,7 +31,7 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
     this.getEventMetaData();
-    this.subscribeToEvents();
+    //this.subscribeToEvents();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
