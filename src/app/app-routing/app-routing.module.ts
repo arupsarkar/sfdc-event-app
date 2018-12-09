@@ -13,7 +13,7 @@ const ROUTES = [
   {path: 'api/oauth2/callback', component: CallbackComponent},
   {path: 'events', component: EventsComponent},
   {path: 'event-detail/:fullName', component: EventDetailComponent},
-  {path: 'event-subscribe/subscribe?message=', component: EventSubscribeComponent},
+  {path: 'event-subscribe', component: EventSubscribeComponent},
 ];
 
 

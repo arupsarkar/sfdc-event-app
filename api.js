@@ -156,7 +156,7 @@ function eventBusListener(conn, fullName, res ){
   conn.streaming.topic('/event/' + fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
     if (message !== undefined){
-      res.redirect( 'event-subscribe/subscribe?message=' + message );
+      res.render( 'event-subscribe', {message: message});
     }
   });
 }
