@@ -31,13 +31,12 @@ router.get('/logout', (req, res) =>{
   });
   conn.logout( function( data ){
     console.log('DEBUG: Server logout() main function ', data);
-    res.status(200).json(data);
+    res.status(200).json({logout: 'success'});
   }).then(function( data ) {
     console.log('DEBUG: Server logout() then function ', data);
-    res.status(200).json(data);
   }).catch(function( data ){
     console.log('DEBUG: Server logout() error function ', data);
-    res.status(200).json(data);
+    res.status(200).json({logout: 'error'});
   });
 });
 

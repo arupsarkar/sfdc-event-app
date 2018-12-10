@@ -21,7 +21,7 @@ export class EventDetailComponent implements OnInit {
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
   ioConnection: any;
-  platformEventName : string;
+  platformEventName: string;
 
   constructor(
     private route: ActivatedRoute,
