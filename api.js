@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
-router.get('logout', (req, res) =>{
+router.get('/logout', (req, res) =>{
   console.log('DEBUG: Server logout()')
   const headers = req.headers.authorization;
   const params = headers.split('|');
