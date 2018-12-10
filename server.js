@@ -61,12 +61,6 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-// Make io accessible to our router
-app.use(function(req,res,next){
-  req.io = io;
-  next();
-});
-
 // Set our api routes
 app.use('/api', api);
 
