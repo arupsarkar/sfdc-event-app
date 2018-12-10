@@ -79,7 +79,4 @@ app.set('port', port);
 /**
  * Listen on provided port, on all network interfaces.
  */
-const server = http.createServer(app);
-
-// app.listen(port, () => console.log(`API running on localhost:${port}`));
-server.listen(port, () => console.log(`API running on localhost:${port}`));
+app.listen(port, () => console.log(`API running on localhost:${port}`));
