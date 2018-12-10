@@ -3,11 +3,11 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require("express-session");
-const http = require('http');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || '3000';
-const io = require('socket.io').listen(app.listen(port));
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -79,4 +79,5 @@ app.set('port', port);
 /**
  * Listen on provided port, on all network interfaces.
  */
-app.listen(port, () => console.log(`API running on localhost:${port}`));
+// app.listen(port, () => console.log(`API running on localhost:${port}`));
+server.listen(port, () => console.log(`API running on localhost:${port}`));
