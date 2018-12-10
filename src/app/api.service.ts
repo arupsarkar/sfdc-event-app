@@ -64,7 +64,7 @@ export class ApiService {
 
   logout(): Observable<any> {
     this.log(`Logout process started`);
-    const URL = '/logout';
+    const URL = 'logout';
     return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {
         this.log(`Logout result: ${JSON.stringify(res)}`);
