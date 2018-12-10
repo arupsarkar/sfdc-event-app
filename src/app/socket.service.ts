@@ -39,7 +39,7 @@ export class SocketService {
   public getEventMessages(): Observable<string> {
     return new Observable<string>(observer => {
       this.socket.on('message', (data: string) => {
-        this.log(`SocketService: getEventMessages = ${data}`);
+        this.log(`SocketService: getEventMessages = ${JSON.stringify(data)}`);
         observer.next(data);
       });
     });
