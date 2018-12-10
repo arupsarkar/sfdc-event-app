@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Subscription } from 'rxjs';
 
 import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
@@ -21,7 +20,6 @@ export class EventDetailComponent implements OnInit {
   @Input() eventSchema: EventSchema;
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
-  sub: Subscription;
   ioConnection: any;
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +36,6 @@ export class EventDetailComponent implements OnInit {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
     this.socketService.initSocket();
     this.getEventMetaData();
-    // this.subscribeToEvents();
     this.initIoConnection();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
@@ -48,7 +45,7 @@ export class EventDetailComponent implements OnInit {
 
     this.ioConnection = this.socketService.getEventMessages()
       .subscribe((message: string) => {
-        this.log(message);
+        this.log(JSON.stringify(message));
       });
 
 
@@ -63,13 +60,6 @@ export class EventDetailComponent implements OnInit {
       });
   }
 
-
-  // subscribeToEvents(): void {
-  //   this.log(`Event listener started`);
-  //   this.sub = this.socketService.getEventMessages().subscribe( message => {
-  //     this.log(`Event Message=${message}`);
-  //   });
-  // }
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
     const fullName = this.route.snapshot.paramMap.get('fullName');
