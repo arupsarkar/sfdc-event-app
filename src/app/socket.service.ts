@@ -21,7 +21,7 @@ export class SocketService {
 
   constructor(private messageService: MessageService) { }
   getEventMessages(): Observable<string> {
-    this.socket = socketIo('https://sfdc-event-app.herokuapp.com/api');
+    this.socket = socketIo('https://sfdc-event-app.herokuapp.com');
     this.socket.on('data', (res) => {
       console.log('---> Socket Service started');
       this.observer.next(res.data);
