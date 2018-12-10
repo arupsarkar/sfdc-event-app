@@ -156,7 +156,7 @@ function eventBusListener(conn, fullName, req, res ){
     console.log( '---> Event received - ', message );
     if (message !== undefined){
       req.io.sockets.emit('message', message);
-      res.json({message: message});
+      // res.json({message: message});
     }
   });
 }
