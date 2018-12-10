@@ -49,6 +49,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  sfdcLogout(): void {
+
+  }
 
   sfdcLogin(): void {
     let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id='
