@@ -9,6 +9,7 @@ import { EventFieldSchema} from '../model/event-field-schema';
 import { EventSchema } from '../model/event-schema';
 import { MessageService} from '../message.service';
 import { SocketService} from '../socket.service';
+import { EventSocket } from '../shared/event';
 
 @Component({
   selector: 'app-event-detail',
@@ -21,7 +22,7 @@ export class EventDetailComponent implements OnInit {
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
   sub: Subscription;
-
+  ioConnection: any;
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -35,17 +36,40 @@ export class EventDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
+    this.socketService.initSocket();
     this.getEventMetaData();
-    this.subscribeToEvents();
+    // this.subscribeToEvents();
+    this.initIoConnection();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
-  subscribeToEvents(): void {
-    this.log(`Event listener started`);
-    this.sub = this.socketService.getEventMessages().subscribe( message => {
-      this.log(`Event Message=${message}`);
-    });
+  private initIoConnection(): void {
+    this.socketService.initSocket();
+
+    this.ioConnection = this.socketService.getEventMessages()
+      .subscribe((message: string) => {
+        this.log(message);
+      });
+
+
+    this.socketService.onEvent(EventSocket.CONNECT)
+      .subscribe(() => {
+        console.log('connected');
+      });
+
+    this.socketService.onEvent(EventSocket.DISCONNECT)
+      .subscribe(() => {
+        console.log('disconnected');
+      });
   }
+
+
+  // subscribeToEvents(): void {
+  //   this.log(`Event listener started`);
+  //   this.sub = this.socketService.getEventMessages().subscribe( message => {
+  //     this.log(`Event Message=${message}`);
+  //   });
+  // }
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
     const fullName = this.route.snapshot.paramMap.get('fullName');
