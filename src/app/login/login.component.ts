@@ -4,7 +4,7 @@ import { EventServiceService} from '../event-service.service';
 import {LoginOAuth} from '../model/LoginOAuth';
 import { ApiService } from '../api.service';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
-
+import { MessageService} from '../message.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,8 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 export class LoginComponent implements OnInit {
     results: LoginOAuth[];
     location: Location;
-  constructor(private eventService: EventServiceService, private apiService: ApiService) {
+    logoutData: string;
+  constructor(private eventService: EventServiceService, private apiService: ApiService, private messageService: MessageService) {
     console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
   }
 
@@ -50,11 +51,13 @@ export class LoginComponent implements OnInit {
   }
 
   sfdcLogout(): void {
-
+    this.apiService.logout().subscribe(logoutData => {
+      this.log(JSON.stringify(logoutData));
+    });
   }
 
   sfdcLogin(): void {
-    let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id='
+    let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=';
     sfdc_url = sfdc_url + '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
     console.log('DEBUG: LoginComponent: ', 'Login button clicked..');
@@ -72,5 +75,9 @@ export class LoginComponent implements OnInit {
       // });
     // this.apiService.login().subscribe( data => { console.log( data ); });
 
+  }
+  /** Log a EventService message with the MessageService */
+  private log(message: string) {
+    this.messageService.add(`Logout component : ${message}`);
   }
 }

@@ -62,17 +62,16 @@ export class ApiService {
     );
   }
 
-  eventsSubscribe(fullName: string): Observable<any>{
-    this.log(`Listening to event =${fullName}`);
-    const URL = '/events/subscribe/' + fullName;
-    return this.http.get<any> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap( res => {this.log(` Event Name = ${fullName}`);
-        this.log(`Result=${JSON.stringify(res)}`);
+  logout(): Observable<any> {
+    this.log(`Logout process started`);
+    const URL = '/logout';
+    return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap( res => {
+        this.log(`Logout result: ${JSON.stringify(res)}`);
       }),
-      catchError(this.handleError<any>(`eventsSubscribe api_name=${fullName}`))
+      catchError(this.handleError<any>(`Logout error `))
     );
   }
-
 
   // This method parses the data to JSON
   private parseData<T> (res: Response)  {

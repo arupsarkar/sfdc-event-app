@@ -19,6 +19,28 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
+router.get('logout', (req, res) =>{
+  console.log('DEBUG: Server logout()')
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  conn.logout( function( data ){
+    console.log('DEBUG: Server logout() main function ', data);
+    res.status(200).json(data);
+  }).then(function( data ) {
+    console.log('DEBUG: Server logout() then function ', data);
+    res.status(200).json(data);
+  }).catch(function( data ){
+    console.log('DEBUG: Server logout() error function ', data);
+    res.status(200).json(data);
+  });
+});
+
 router.get('/getEvents', (req, res) => {
   console.log('DEBUG: SERVER: /events:');
   const headers = req.headers.authorization;
