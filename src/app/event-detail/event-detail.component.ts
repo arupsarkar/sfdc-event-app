@@ -21,6 +21,8 @@ export class EventDetailComponent implements OnInit {
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
   ioConnection: any;
+  platformEventName : string;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -72,6 +74,7 @@ export class EventDetailComponent implements OnInit {
         console.log('Fetched event fields : ', JSON.stringify(this.eventSchema.fields));
         // console.log('Fetched Fields ', JSON.stringify(this.eventSchema[].fields));
         this.eventFieldSchema = this.eventSchema.fields;
+        this.platformEventName = eventSchema.label + ' fields.';
       });
   }
 

@@ -1,9 +1,12 @@
-<div>
-  <p> {{eventSchema.fullName}} + ' fields.' </p>
-</div>
+
 <div *ngIf="eventFieldSchema">
+
+  <div>
+    <p> {{platformEventName}}</p>
+  </div>
+
   <li *ngFor="let eventField of eventFieldSchema">
-    <div><span>Name: </span>{{eventField.fullName}}</div>
+    <div><span></span>{{eventField.label}}</div>
     <div>
         <input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
     </div>
