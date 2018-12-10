@@ -155,6 +155,8 @@ function eventBusListener(conn, fullName, req, res ){
   conn.streaming.topic('/event/' + fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
     if (message !== undefined){
+      console.log( '---> Event fired  - ', message );
+      console.log( '---> re.io  - ', req.io );
       req.io.sockets.emit('message', message);
       // res.json({message: message});
     }
