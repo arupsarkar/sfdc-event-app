@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
 import { EventFieldSchema} from '../model/event-field-schema';
 import { EventSchema } from '../model/event-schema';
 import { MessageService} from '../message.service';
+import { SocketService} from '../socket.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -18,11 +20,14 @@ export class EventDetailComponent implements OnInit {
   @Input() eventSchema: EventSchema;
   @Input() eventFieldSchema: EventFieldSchema[];
   message = '';
+  sub: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private apiService: ApiService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private socketService: SocketService
   ) {
     console.log('DEBUG: EventDetailComponent : Constructor()', 'Start');
     console.log('DEBUG: EventDetailComponent : Constructor()', 'End');
@@ -31,17 +36,15 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
     this.getEventMetaData();
-    //this.subscribeToEvents();
+    this.subscribeToEvents();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
   subscribeToEvents(): void {
-    console.log('DEBUG: EventDetailComponent : subscribeToEvents()', 'Start');
-    const fullName = this.route.snapshot.paramMap.get('fullName');
-    this.apiService.eventsSubscribe(fullName)
-      .subscribe( any => {
-        this.log(any);
-      });
+    this.log(`Event listener started`);
+    this.sub = this.socketService.getEventMessages().subscribe( message => {
+      this.log(`Event Message=${message}`);
+    });
   }
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
