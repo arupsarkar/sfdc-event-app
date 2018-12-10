@@ -1,17 +1,12 @@
 <div>
-  <p>Platform Event Object Fields</p>
+  <p> {{eventSchema.fullName}} + ' fields.' </p>
 </div>
 <div *ngIf="eventFieldSchema">
-
   <li *ngFor="let eventField of eventFieldSchema">
-
     <div><span>Name: </span>{{eventField.fullName}}</div>
     <div>
-      <label>Value :
-        <input [(ngModel)]="eventField.data" placeholder="Enter some value"/>
-      </label>
+        <input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
     </div>
-
   </li>
   <div class="control-buttons">
     <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>
