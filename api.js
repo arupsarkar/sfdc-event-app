@@ -2,7 +2,6 @@ const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
-const SocketSingleton = require('./socket-singleton');
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -97,7 +96,7 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     accessToken: accessToken
   });
 
-  eventBusListener(conn, req.params.fullName, res);
+  eventBusListener(conn, req.params.fullName, req, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) { console.error(err); }
@@ -151,12 +150,12 @@ router.post('/events/publish', (req, res, next) =>{
   });
 });
 
-function eventBusListener(conn, fullName, res ){
+function eventBusListener(conn, fullName, req, res ){
   console.log('---> Event Bus Listener : ', ' Started' );
   conn.streaming.topic('/event/' + fullName).subscribe( function ( message ){
     console.log( '---> Event received - ', message );
     if (message !== undefined){
-      SocketSingleton.io.emit('payload', {msg: message});
+      req.io.sockets.emit('update');
       res.json({message: message});
     }
   });

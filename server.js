@@ -7,7 +7,7 @@ const http = require('http');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || '3000';
-const SocketSingleton = require('./socket-singleton');
+const io = require('socket.io').listen(app.listen(port));
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -53,6 +53,20 @@ app.use(session(
 ));
 // Get our API routes
 const api = require('./api');
+
+io.sockets.on('connection', function (socket) {
+  console.log('client connect');
+  socket.on('echo', function (data) {
+    io.sockets.emit('message', data);
+  });
+});
+
+// Make io accessible to our router
+app.use(function(req,res,next){
+  req.io = io;
+  next();
+});
+
 // Set our api routes
 app.use('/api', api);
 
@@ -72,6 +86,6 @@ app.set('port', port);
  * Listen on provided port, on all network interfaces.
  */
 const server = http.createServer(app);
-SocketSingleton.configure(server);
+
 // app.listen(port, () => console.log(`API running on localhost:${port}`));
 server.listen(port, () => console.log(`API running on localhost:${port}`));
