@@ -44,17 +44,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Disable login once cookie value exists
-    if (this.cookieService.get('access_token') !== undefined) {
-      this.loginTiles[0].disable = true;
-      this.logoutTiles[0].disable = false;
-    }
-
-    // Disable logout once logout is successful.
-    if (this.cookieService.get('access_token') === undefined) {
-      this.loginTiles[0].disable = false;
-      this.logoutTiles[0].disable = true;
-    }
+    console.log('access_token: ', this.cookieService.get('access_token'));
+    // // Disable login once cookie value exists
+    // if (this.cookieService.get('access_token') !== undefined) {
+    //   this.loginTiles[0].disable = true;
+    //   this.logoutTiles[0].disable = false;
+    // }
+    //
+    // // Disable logout once logout is successful.
+    // if (this.cookieService.get('access_token') === undefined) {
+    //   this.loginTiles[0].disable = false;
+    //   this.logoutTiles[0].disable = true;
+    // }
   }
 
   sfdcLogout(): void {
