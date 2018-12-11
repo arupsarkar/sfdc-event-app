@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('access_token: ', this.cookieService.get('access_token'));
+    console.log('DEBUG: LoginComponent():ngOnInit() access_token: ', this.cookieService.get('access_token'));
+    console.log('DEBUG: LoginComponent():ngOnInit() access_token: ', this.cookieService.get('access_token').length);
     // // Disable login once cookie value exists
     // if (this.cookieService.get('access_token') !== undefined) {
     //   this.loginTiles[0].disable = true;
