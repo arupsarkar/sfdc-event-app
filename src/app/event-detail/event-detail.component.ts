@@ -10,6 +10,15 @@ import { MessageService} from '../message.service';
 import { SocketService} from '../socket.service';
 import { EventSocket } from '../shared/event';
 
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+  disable: boolean;
+}
+
+
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
@@ -22,6 +31,18 @@ export class EventDetailComponent implements OnInit {
   message = '';
   ioConnection: any;
   platformEventName: string;
+
+  // Tiles
+  backButtonTiles: Tile[] = [
+    {text: 'Back', cols: 1, rows: 1, color: '#ECEFF1', disable: false}
+  ];
+  middleSpaceTiles: Tile[] = [
+    {text: '', cols: 2, rows: 1, color: '#ECEFF1', disable: false}
+  ];
+  saveButtonTiles: Tile[] = [
+    {text: 'Save', cols: 1, rows: 1, color: '#ECEFF1', disable: false}
+  ];
+
 
   constructor(
     private route: ActivatedRoute,

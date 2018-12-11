@@ -5,14 +5,68 @@
     <p> {{platformEventName}}</p>
   </div>
 
-  <li *ngFor="let eventField of eventFieldSchema">
-    <div><span></span>{{eventField.label}}</div>
-    <div>
-        <input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
-    </div>
-  </li>
-  <div class="control-buttons">
-    <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>
-    <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>
+  <!--<li *ngFor="let eventField of eventFieldSchema">-->
+    <!--<div><span></span>{{eventField.label}}</div>-->
+    <!--<div>-->
+        <!--<input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>-->
+    <!--</div>-->
+  <!--</li>-->
+  <!--<div class="control-buttons">-->
+    <!--<button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>-->
+    <!--<button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>-->
+  <!--</div>-->
+
+  <div>
+
+    <!-- Show the data -->
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        *ngFor="let eventField of eventFieldSchema"
+        [colspan]="4"
+        [rowspan]="1">
+        <div>
+          <input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- back button -->
+    <mat-grid-list cols="4" rowHeight="80px">
+      <mat-grid-tile
+        *ngFor="let backButtonTile of backButtonTiles"
+        [colspan]="backButtonTile.cols"
+        [rowspan]="backButtonTile.rows"
+        [style.background]="backButtonTile.color">
+        <div>
+          <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>
+        </div>
+      </mat-grid-tile>
+
+      <!-- middle space tile -->
+      <mat-grid-tile
+        *ngFor="let middleSpaceTile of middleSpaceTiles"
+        [colspan]="middleSpaceTile.cols"
+        [rowspan]="middleSpaceTile.rows"
+        [style.background]="middleSpaceTile.color">
+        {{middleSpaceTile.text}}
+      </mat-grid-tile>
+
+      <!-- Save button tile -->
+
+      <mat-grid-tile
+        *ngFor="let saveButtonTile of saveButtonTiles"
+        [colspan]="saveButtonTile.cols"
+        [rowspan]="saveButtonTile.rows"
+        [style.background]="saveButtonTile.color">
+        <div>
+          <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
   </div>
+
+
+
 </div>
