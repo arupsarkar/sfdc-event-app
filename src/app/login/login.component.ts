@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 import { ApiService } from '../api.service';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
@@ -36,16 +37,31 @@ export class LoginComponent implements OnInit {
     {text: '', cols: 2, rows: 1, color: '#344955', disable: false}
   ];
 
-  constructor( private apiService: ApiService, private messageService: MessageService ) {
+  constructor( private apiService: ApiService,
+               private messageService: MessageService,
+               private cookieService: CookieService) {
     console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Disable login once cookie value exists
+    if (this.cookieService.get('access_token') !== undefined) {
+      this.loginTiles[0].disable = true;
+      this.logoutTiles[0].disable = false;
+    }
+
+    // Disable logout once logout is successful.
+    if (this.cookieService.get('access_token') === undefined) {
+      this.loginTiles[0].disable = false;
+      this.logoutTiles[0].disable = true;
+    }
+  }
 
   sfdcLogout(): void {
     this.apiService.logout().subscribe(logoutData => {
       this.log(JSON.stringify(logoutData));
       if (logoutData.logout === 'success') {
+
         this.loginTiles[0].disable = false;
         this.logoutTiles[0].disable = true;
         window.location.href = location.origin;
@@ -63,8 +79,6 @@ export class LoginComponent implements OnInit {
     console.log('DEBUG: LoginComponent: host ', location.host);
     console.log('DEBUG: LoginComponent: port ', location.port);
     console.log('DEBUG: LoginComponent: window.location.href ', window.location.href);
-    this.loginTiles[0].disable = true;
-    this.logoutTiles[0].disable = false;
     window.location.href = sfdc_url;
   }
   /** Log a EventService message with the MessageService */
