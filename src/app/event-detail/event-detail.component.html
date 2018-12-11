@@ -1,22 +1,14 @@
 
 <div *ngIf="eventFieldSchema">
-
   <div>
-    <p> {{platformEventName}}</p>
-  </div>
-
-  <!--<li *ngFor="let eventField of eventFieldSchema">-->
-    <!--<div><span></span>{{eventField.label}}</div>-->
-    <!--<div>-->
-        <!--<input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>-->
-    <!--</div>-->
-  <!--</li>-->
-  <!--<div class="control-buttons">-->
-    <!--<button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="goBack()">Back</button>-->
-    <!--<button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="save()">Save</button>-->
-  <!--</div>-->
-
-  <div>
+    <!-- Show the heading -->
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1">
+        <p> {{platformEventName}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
 
     <!-- Show the data -->
     <mat-grid-list cols="4" rowHeight="50px">
