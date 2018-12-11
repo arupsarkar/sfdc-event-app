@@ -30,13 +30,13 @@ router.get('/logout', (req, res) =>{
     accessToken: accessToken
   });
 
-  conn.logoutByOAuth2( function(err){
+  conn.logoutByOAuth2( function(data){
     console.log('DEBUG: Server logout() main function ', data);
     res.status(200).json({logout: 'success'});
   }).then(function (data){
     console.log('DEBUG: Server logout() then function ', data);
   }).catch( function(err){
-    console.log('DEBUG: Server logout() error function ', data);
+    console.log('DEBUG: Server logout() error function ', err);
     res.status(200).json({logout: 'error'});
   });
   // conn.logout( function( data ){
