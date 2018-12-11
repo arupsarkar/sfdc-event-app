@@ -29,15 +29,25 @@ router.get('/logout', (req, res) =>{
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
-  conn.logout( function( data ){
+
+  conn.logoutByOAuth2( function(err){
     console.log('DEBUG: Server logout() main function ', data);
     res.status(200).json({logout: 'success'});
-  }).then(function( data ) {
+  }).then(function (data){
     console.log('DEBUG: Server logout() then function ', data);
-  }).catch(function( data ){
+  }).catch( function(err){
     console.log('DEBUG: Server logout() error function ', data);
     res.status(200).json({logout: 'error'});
   });
+  // conn.logout( function( data ){
+  //   console.log('DEBUG: Server logout() main function ', data);
+  //   res.status(200).json({logout: 'success'});
+  // }).then(function( data ) {
+  //   console.log('DEBUG: Server logout() then function ', data);
+  // }).catch(function( data ){
+  //   console.log('DEBUG: Server logout() error function ', data);
+  //   res.status(200).json({logout: 'error'});
+  // });
 });
 
 router.get('/getEvents', (req, res) => {
