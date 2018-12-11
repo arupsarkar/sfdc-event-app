@@ -1,4 +1,9 @@
 /* HeroDetailComponent's private CSS styles */
+
+p.a {
+  font: bold 20px arial, sans-serif;
+}
+
 label {
   display: inline-block;
   width: 3em;
