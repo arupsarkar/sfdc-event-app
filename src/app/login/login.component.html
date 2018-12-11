@@ -1,10 +1,5 @@
 <!-- Button to login to salesforce.-->
 <div>
-  <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogin()">Login</button>
-  <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogout()">Logout</button>
-</div>
-
-<div>
   <!-- Column Heading -->
   <mat-grid-list cols="4" rowHeight="60px">
     <mat-grid-tile
@@ -27,7 +22,7 @@
       [rowspan]="loginTile.rows"
       [style.background]="loginTile.color">
       <div>
-        <button mat-flat-button [disabled]="loginTile.disable" [ngStyle]="{'background-color':'#90caf9'}" (click)="sfdcLogin()">Login</button>
+        <button mat-flat-button [disabled]="loginTile.disable" [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogin()">Login</button>
       </div>
     </mat-grid-tile>
     <!-- middle space -->
@@ -48,7 +43,7 @@
       [rowspan]="logoutTile.rows"
       [style.background]="logoutTile.color">
       <div>
-        <button mat-flat-button [disabled]="logoutTile.disable" [ngStyle]="{'background-color':'#90caf9'}" (click)="sfdcLogout()">Logout</button>
+        <button mat-flat-button [disabled]="logoutTile.disable" [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogout()">Logout</button>
       </div>
     </mat-grid-tile>
   </mat-grid-list>
