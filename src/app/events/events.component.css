@@ -8,7 +8,7 @@
 .events li {
   position: relative;
   cursor: pointer;
-  background-color: #EEE;
+  background-color: #607D8B;
   margin: .5em;
   padding: .3em 0;
   height: 1.6em;
@@ -35,7 +35,7 @@
 
 .events .badge {
   display: inline-block;
-  font-size: small;
+  font-size: large;
   color: white;
   padding: 0.8em 0.7em 0 0.7em;
   background-color: #607D8B;
