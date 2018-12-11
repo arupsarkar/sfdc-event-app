@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-// import event service
-import { EventServiceService} from '../event-service.service';
-import {LoginOAuth} from '../model/LoginOAuth';
+
 import { ApiService } from '../api.service';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { MessageService} from '../message.service';
+
+
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+  disable: boolean;
+}
+
 
 @Component({
   selector: 'app-login',
@@ -13,47 +21,33 @@ import { MessageService} from '../message.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    results: LoginOAuth[];
-    location: Location;
-    logoutData: string;
-  constructor(private eventService: EventServiceService, private apiService: ApiService, private messageService: MessageService) {
+
+  headings: Tile[] = [
+    {text: 'Platform Event Integration', cols: 4, rows: 1, color: '#344955', disable: false}
+  ];
+
+  loginTiles: Tile[] = [
+    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#344955', disable: false}
+  ];
+  logoutTiles: Tile[] = [
+    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#344955', disable: false}
+  ];
+  middleSpaces: Tile[] = [
+    {text: '', cols: 2, rows: 1, color: '#344955', disable: false}
+  ];
+
+  constructor( private apiService: ApiService, private messageService: MessageService ) {
     console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
   }
 
-  ngOnInit() {
-  }
-
-  supplant(str, data): String {
-    return str.replace(/{([^{}]*)}/g, function (a, b) {
-
-      // Split the variable into its dot notation parts
-      let p = b.split(/\./);
-
-      // The c variable becomes our cursor that will traverse the object
-      let c = data;
-
-      // Loop over the steps in the dot notation path
-      for (let i = 0; i < p.length; ++i) {
-
-        // If the key doesn't exist in the object do not process
-        // mirrors how the function worked for bad values
-        if (c[p[i]] == null) {
-          return a;
-        }
-        // Move the cursor up to the next step
-        c = c[p[i]];
-      }
-
-      // If the data is a string or number return it otherwise do
-      // not process, return the value it was, i.e. {x}
-      return typeof c === 'string' || typeof c === 'number' ? c : a;
-    });
-  }
+  ngOnInit() {}
 
   sfdcLogout(): void {
     this.apiService.logout().subscribe(logoutData => {
       this.log(JSON.stringify(logoutData));
       if (logoutData.logout === 'success') {
+        this.loginTiles[0].disable = false;
+        this.logoutTiles[0].disable = true;
         window.location.href = location.origin;
       }
     });
@@ -69,15 +63,9 @@ export class LoginComponent implements OnInit {
     console.log('DEBUG: LoginComponent: host ', location.host);
     console.log('DEBUG: LoginComponent: port ', location.port);
     console.log('DEBUG: LoginComponent: window.location.href ', window.location.href);
+    this.loginTiles[0].disable = true;
+    this.logoutTiles[0].disable = false;
     window.location.href = sfdc_url;
-      // this.eventService.login().subscribe( data => {
-      //   // this.results = data.login[0].token;
-      //   this.results = data;
-      //   console.log('DEBUG: LoginComponent token : ', this.results);
-      //   console.log('DEBUG: LoginComponent instanceURL : ', this.results);
-      // });
-    // this.apiService.login().subscribe( data => { console.log( data ); });
-
   }
   /** Log a EventService message with the MessageService */
   private log(message: string) {

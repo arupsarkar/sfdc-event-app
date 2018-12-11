@@ -3,3 +3,55 @@
   <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogin()">Login</button>
   <button mat-flat-button [ngStyle]="{'background-color':'#448aff'}" (click)="sfdcLogout()">Logout</button>
 </div>
+
+<div>
+  <!-- Column Heading -->
+  <mat-grid-list cols="4" rowHeight="60px">
+    <mat-grid-tile
+      *ngFor="let heading of headings"
+      [colspan]="4"
+      [rowspan]="1"
+      [style.background]="heading.color">
+      <div class="navbar">
+        <h2 style="background-color: aliceblue"> {{heading.text}} </h2>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
+  <mat-grid-list cols="4" rowHeight="60px">
+    <!-- Login Button -->
+    <mat-grid-tile
+      *ngFor="let loginTile of loginTiles"
+      [colspan]="loginTile.cols"
+      [rowspan]="loginTile.rows"
+      [style.background]="loginTile.color">
+      <div>
+        <button mat-flat-button [disabled]="loginTile.disable" [ngStyle]="{'background-color':'#90caf9'}" (click)="sfdcLogin()">Login</button>
+      </div>
+    </mat-grid-tile>
+    <!-- middle space -->
+    <mat-grid-tile
+      *ngFor="let middleSpace of middleSpaces"
+      [colspan]="middleSpace.cols"
+      [rowspan]="middleSpace.rows"
+      [style.background]="middleSpace.color">
+      <div class="navbar">
+        <h2 style="background-color: aliceblue"> {{middleSpace.text}} </h2>
+      </div>
+    </mat-grid-tile>
+
+    <!-- logout button -->
+    <mat-grid-tile
+      *ngFor="let logoutTile of logoutTiles"
+      [colspan]="logoutTile.cols"
+      [rowspan]="logoutTile.rows"
+      [style.background]="logoutTile.color">
+      <div>
+        <button mat-flat-button [disabled]="logoutTile.disable" [ngStyle]="{'background-color':'#90caf9'}" (click)="sfdcLogout()">Logout</button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
+</div>

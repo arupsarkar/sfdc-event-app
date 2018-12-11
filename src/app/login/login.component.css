@@ -8,3 +8,11 @@
   /*border:none;*/
   /*font-size:20px;*/
 /*}*/
+.navbar h2 {
+  margin:0;
+  font-weight:200;
+  font-size:30px;
+  font-style: #ffff;
+  letter-spacing: 1px;
+  font-family:'Work Sans',sans-serif;
+}
