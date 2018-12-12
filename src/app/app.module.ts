@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService} from 'ngx-cookie-service';
 
@@ -32,6 +32,7 @@ import { MaterialModule} from './material/material.module';
     MaterialModule
   ],
   providers: [ApiService, CookieService, httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
