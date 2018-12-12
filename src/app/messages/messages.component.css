@@ -1,0 +1,10 @@
+.messages-header {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: firebrick;
+  font-weight: bold
+}
+
+.messages-content {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: small;
+}

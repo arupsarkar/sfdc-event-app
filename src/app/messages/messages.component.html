@@ -1,25 +1,21 @@
 <div *ngIf="messageService.messages.length">
-
-  <!--<h2>Messages</h2>-->
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="messageService.clear()">Clear</button>
+        </mat-panel-title>
+        <mat-panel-description class="messages-header">
+          Messages
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="messages-content" *ngFor='let message of messageService.messages'> {{message}} </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+<!--<h2>Messages</h2>-->
   <!--<button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}"-->
           <!--(click)="messageService.clear()">Clear</button>-->
   <!--<div *ngFor='let message of messageService.messages'> {{message}} </div>-->
-
-  <mat-card>
-    <mat-card-header>
-      <!--<div mat-card-avatar class="example-header-image"></div>-->
-      <mat-card-title>Messages</mat-card-title>
-      <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-flat-button [ngStyle]="{'background-color':'#90a4ae'}" (click)="messageService.clear()">Clear</button>
-    </mat-card-actions>
-    <mat-card-content>
-      <div *ngFor='let message of messageService.messages'> {{message}} </div>
-    </mat-card-content>
-  </mat-card>
-
-
 </div>
 
 
