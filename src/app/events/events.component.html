@@ -1,13 +1,20 @@
-<ul class="events">
-  <li *ngFor="let event of events">
-    <!--<mat-card [ngStyle]="{'background-color':'#90a4ae'}">-->
-      <a routerLink="/event-detail/{{event.fullName}}">
-        <span class="badge"> {{ event.fullName}} </span>
-      </a>
-    <!--</mat-card>-->
-  </li>
-</ul>
+<!--<ul class="events">-->
+  <!--<li *ngFor="let event of events">-->
+      <!--<a routerLink="/event-detail/{{event.fullName}}">-->
+        <!--<span class="badge"> {{ event.fullName}} </span>-->
+      <!--</a>-->
+  <!--</li>-->
+<!--</ul>-->
 
-<!--<div>-->
-  <!--<button class="events-button" type="button" (click)="publishEvents()">Publish</button>-->
-<!--</div>-->
+<div class="event-tile">
+  <mat-grid-list cols="4" rowHeight="60px" >
+    <mat-grid-tile
+      *ngFor="let event of events"
+      [colspan]="4"
+      [rowspan]="1"
+      [style.background]=tileColor
+      routerLink="/event-detail/{{event.fullName}}">
+    {{event.fullName}}
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

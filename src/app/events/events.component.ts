@@ -12,7 +12,10 @@ import { Event} from '../model/Event';
 export class EventsComponent implements OnInit {
   message = '';
   events: Event[];
-  constructor(private route: ActivatedRoute, private  apiService: ApiService) { }
+  tileColor: string;
+  constructor(private route: ActivatedRoute, private  apiService: ApiService) {
+    this.tileColor = '#455a64';
+  }
 
   ngOnInit() {
     this.apiService.getEvents().subscribe( events => this.events = events );
