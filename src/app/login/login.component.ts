@@ -24,17 +24,17 @@ export interface Tile {
 export class LoginComponent implements OnInit {
 
   headings: Tile[] = [
-    {text: 'Platform Event Integration', cols: 4, rows: 1, color: '#344955', disable: false}
+    {text: 'Platform Event Integration', cols: 4, rows: 1, color: '#e3f2fd', disable: false}
   ];
 
   loginTiles: Tile[] = [
-    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#344955', disable: false}
+    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
   ];
   logoutTiles: Tile[] = [
-    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#344955', disable: false}
+    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
   ];
   middleSpaces: Tile[] = [
-    {text: '', cols: 2, rows: 1, color: '#344955', disable: false}
+    {text: '', cols: 2, rows: 1, color: '#e3f2fd', disable: false}
   ];
 
   constructor( private apiService: ApiService,
