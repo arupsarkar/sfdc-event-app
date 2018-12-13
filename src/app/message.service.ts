@@ -8,6 +8,8 @@ export class MessageService {
 
   add(message: string) {
     this.messages.push(message);
+    // Removing duplicates from the array
+    this.messages = this.messages.filter((el, i, a) => i === a.indexOf(el));
   }
 
   clear() {
