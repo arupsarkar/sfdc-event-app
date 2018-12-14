@@ -72,7 +72,7 @@ export class ApiService {
         this.log(`Logout result: ${JSON.stringify(res)}`);
       }),
       // catchError(this.handleError<any>(`Logout error `))
-      catchError(ApiService.handleApiError)
+      catchError(this.handleApiError)
     );
   }
 
@@ -82,7 +82,7 @@ export class ApiService {
       tap( res => {
         this.log(`Config result: ${JSON.stringify(res)}`);
       }),
-      catchError(ApiService.handleApiError)
+      catchError(this.handleApiError)
     );
   }
 
