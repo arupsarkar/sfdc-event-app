@@ -59,7 +59,8 @@ export class ApiService {
 
     return this.http.post(`${environment.baseUrl}/${URL}`, eventSchema, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
-        catchError( this.handleError<any>(' Error publishing events'))
+        // catchError( this.handleError<any>(' Error publishing events'))
+      catchError(this.handleApiError)
     );
   }
 
@@ -71,7 +72,7 @@ export class ApiService {
         this.log(`Logout result: ${JSON.stringify(res)}`);
       }),
       // catchError(this.handleError<any>(`Logout error `))
-      catchError(this.handleApiError)
+      catchError(ApiService.handleApiError)
     );
   }
 
@@ -81,7 +82,7 @@ export class ApiService {
       tap( res => {
         this.log(`Config result: ${JSON.stringify(res)}`);
       }),
-      catchError(this.handleApiError)
+      catchError(ApiService.handleApiError)
     );
   }
 
@@ -102,7 +103,7 @@ export class ApiService {
     };
   }
 
-  private handleApiError (error: HttpErrorResponse){
+  private handleApiError (error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
