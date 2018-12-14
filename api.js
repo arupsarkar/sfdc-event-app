@@ -174,7 +174,7 @@ router.post('/events/publish', (req, res, next) =>{
   azure_pe.create(platformEventJSONPayload, function( err, ret){
     console.log('---> Return : ', ret);
     console.log('---> Error : ', err);
-    if(err){
+    if(err !== undefined){
       // return next(err);
       res.status(500).json(err);
     }
