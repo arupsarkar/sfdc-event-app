@@ -103,12 +103,11 @@ export class EventDetailComponent implements OnInit {
     this.location.back();
   }
   save(): void {
-    console.log('DEBUG: EventDetailComponent Save() ');
-    console.log('---> Updated Event Schema - ', this.eventFieldSchema);
     this.apiService.eventsPublish(this.eventSchema).subscribe(
       data => {
-        this.message = JSON.stringify(data); },
-      response => {console.log('POST call in error', response); },
+        this.message = JSON.stringify(data);
+        this.log(`${this.message}`); },
+      error => {this.log(`${error}`); },
       () => {
         console.log('The POST observable is now completed.');
         // this.goBack();
