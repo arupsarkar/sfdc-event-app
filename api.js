@@ -175,7 +175,7 @@ router.post('/events/publish', (req, res, next) =>{
     console.log('---> Return : ', ret);
     console.log('---> Error : ', err);
     if(err){
-      next(err);
+      return next(err);
       // res.status(400).send(err);
     }
     console.log("DEBUG: Server - /events/publish : payload - ", ret);
