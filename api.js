@@ -178,7 +178,7 @@ router.post('/events/publish', (req, res, next) =>{
       console.log('Error publishing event: name - ', err.name);
       console.log('Error publishing event: code - ', err.errorCode);
       console.log('Error publishing event: fields - ', err.fields);
-      res.status(400);
+      res.status(400).json(err);
       return next(err);
       // res.status(500).json(err);
     }
