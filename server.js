@@ -14,7 +14,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  if(err){
+  if(err !== null || err !== undefined || err.toString().length > 0){
     Console.log('DEBUG: Server app.use error : ', err);
     next(err);
   }
