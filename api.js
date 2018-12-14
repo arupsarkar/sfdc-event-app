@@ -19,8 +19,20 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
+router.get('/config', function(req, res){
+  console.log('DEBUG: Server config()');
+  if(!(process.env.SFDC_CONSUMER_KEY)){
+    throw 'Error: Configuration variable SFDC_CONSUMER_KEY missing.';
+  }
+  try{
+    let sfdc_consumer_key = process.env.SFDC_CONSUMER_KEY;
+    res.status(200).json({'secret': sfdc_consumer_key});
+  }catch(err){
+  }
+});
+
 router.get('/logout', (req, res) =>{
-  console.log('DEBUG: Server logout()')
+  console.log('DEBUG: Server logout()');
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];

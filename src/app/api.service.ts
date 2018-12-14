@@ -8,6 +8,7 @@ import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
+import {strictEqual} from 'assert';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -73,6 +74,17 @@ export class ApiService {
       catchError(this.handleApiError)
     );
   }
+
+  getConfig(): Observable<any> {
+    const URL = 'config';
+    return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap( res => {
+        this.log(`Config result: ${JSON.stringify(res)}`);
+      }),
+      catchError(this.handleApiError)
+    );
+  }
+
 
   // This method parses the data to JSON
   private parseData<T> (res: Response)  {

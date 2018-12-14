@@ -23,6 +23,7 @@ export interface Tile {
 })
 export class LoginComponent implements OnInit {
 
+  private secret: string;
   headings: Tile[] = [
     {text: 'Platform Event Integration', cols: 4, rows: 1, color: '#e3f2fd', disable: false}
   ];
@@ -41,6 +42,12 @@ export class LoginComponent implements OnInit {
                private messageService: MessageService,
                private cookieService: CookieService) {
     console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
+    this.apiService.getConfig().subscribe( sfdcKey => {
+      if (sfdcKey.secret !== undefined) {
+        console.log('secret: ', sfdcKey.secret);
+        this.secret = sfdcKey.secret;
+      }
+    });
   }
 
   ngOnInit() {
@@ -73,7 +80,8 @@ export class LoginComponent implements OnInit {
 
   sfdcLogin(): void {
     let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=';
-    sfdc_url = sfdc_url + '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=';
+    // sfdc_url = sfdc_url + '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=';
+    sfdc_url = sfdc_url + this.secret + '&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
     console.log('DEBUG: LoginComponent: ', 'Login button clicked..');
     console.log('DEBUG: LoginComponent: Location ', location);
