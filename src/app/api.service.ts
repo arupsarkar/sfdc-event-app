@@ -111,8 +111,9 @@ export class ApiService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend returned code ${JSON.stringify(error.status)}, ` +
+        `body was: ${JSON.stringify(error.error)}`);
+        this.log(`Error publishing event : ${JSON.stringify(error)}`);
     }
     // return an observable with a user-facing error message
     return throwError(
