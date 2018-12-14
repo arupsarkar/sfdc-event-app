@@ -175,9 +175,9 @@ router.post('/events/publish', (req, res, next) =>{
     console.log('---> Return : ', ret);
     console.log('---> Error : ', err);
     if(err !== null || err !== undefined || err.toString().length > 0){
-      // return next(err);
       console.log('Error publishing event: ', err);
-      res.status(500).json(err);
+      return next(err);
+      // res.status(500).json(err);
     }
     console.log("DEBUG: Server - /events/publish : payload - ", ret);
     if (ret !== undefined && ret.success){
