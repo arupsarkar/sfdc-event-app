@@ -8,9 +8,12 @@ const app = express();
 const port = process.env.PORT || '3000';
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-app.use(function(req, res, next) {
+app.use(function(err, req, res, next) {
   req.io = io;
-  next();
+  if(err){
+    next(err);
+  }
+
 });
 
 // // Enable CORS

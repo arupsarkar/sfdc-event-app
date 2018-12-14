@@ -50,7 +50,7 @@ router.get('/logout', (req, res) =>{
   // });
 });
 
-router.get('/getEvents', (req, res) => {
+router.get('/getEvents', (req, res, next) => {
   console.log('DEBUG: SERVER: /events:');
   const headers = req.headers.authorization;
   const params = headers.split('|');
@@ -66,7 +66,11 @@ router.get('/getEvents', (req, res) => {
 
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
-    if (err) { return console.error('err', err); }
+    if (err) {
+      next(err);
+    }else{
+      return console.error('DEBUG getEvents() ', JSON.stringify(metadata));
+    }
   }).then(function(data){
     //console.log('---> getEvents Response : ', res);
 
