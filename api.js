@@ -28,6 +28,8 @@ router.get('/config', function(req, res){
     let sfdc_consumer_key = process.env.SFDC_CONSUMER_KEY;
     res.status(200).json({'secret': sfdc_consumer_key});
   }catch(err){
+    res.status(400).json(err);
+    return next(err);
   }
 });
 
@@ -49,17 +51,9 @@ router.get('/logout', (req, res) =>{
     console.log('DEBUG: Server logout() then function ', data);
   }).catch( function(err){
     console.log('DEBUG: Server logout() error function ', err);
-    res.status(200).json({logout: 'error'});
+    res.status(400).json(err);
+    return next(err);
   });
-  // conn.logout( function( data ){
-  //   console.log('DEBUG: Server logout() main function ', data);
-  //   res.status(200).json({logout: 'success'});
-  // }).then(function( data ) {
-  //   console.log('DEBUG: Server logout() then function ', data);
-  // }).catch(function( data ){
-  //   console.log('DEBUG: Server logout() error function ', data);
-  //   res.status(200).json({logout: 'error'});
-  // });
 });
 
 router.get('/getEvents', (req, res, next) => {
@@ -79,7 +73,8 @@ router.get('/getEvents', (req, res, next) => {
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
     if (err) {
-      next(err);
+      res.status(400).json(err);
+      return next(err);
     }else{
       return console.error('DEBUG getEvents() ', JSON.stringify(metadata));
     }
@@ -96,33 +91,8 @@ router.get('/getEvents', (req, res, next) => {
     }
     res.status(200).json(eventsJSON);
   }).catch(function(err){
-    console.log('---> getEvents Error : ', err);
-  });
-});
-
-// Subscribe to platform events
-router.get('/events/subscribe/:fullName', (req, res) => {
-  console.log('---> DEBUG: SERVER: /events/subscribe: Request params - ', req.params.fullName);
-  const headers = req.headers.authorization;
-  const params = headers.split('|');
-  let accessToken = params[0];
-  let instanceURL= params[1];
-  // instantiate a connection to salesforce
-  let conn = new jsforce.Connection({
-    instanceUrl : instanceURL,
-    accessToken: accessToken
-  });
-  conn.streaming.topic('/event/' + req.params.fullName).subscribe( function ( message ){
-    console.log( '---> Event received - ', message );
-    res.redirect( 'event-subscribe/subscribe?message=' + message );
-  })
-  .then(function(response){
-    console.log('---> Events Subscribe then response - ', response);
-    res.status(200).json(response);
-  })
-  .catch(function(err){
-    console.log('---> Events Subscribe error - ', err);
-    res.status(200).json(err);
+    res.status(400).json(err);
+    return next(err);
   });
 });
 
@@ -146,7 +116,11 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
   eventBusListener(conn, req.params.fullName, req, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
-    if (err) { console.error(err); }
+    if (err) {
+      console.error(err);
+      res.status(400).json(err);
+      return next(err);
+    }
     for (let i=0; i < metadata.length; i++) {
       let meta = metadata[i];
       console.log("Full Name: " + meta.fullName);
@@ -157,7 +131,8 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     console.log('---> get event detail success - ', data);
     res.status(200).json(data);
   }).catch(function(err){
-    console.log('---> get event detail error - ', err);
+    res.status(400).json(err);
+    return next(err);
   });
 
 });
@@ -210,6 +185,11 @@ function eventBusListener(conn, fullName, req, res ){
       console.log( '---> Event fired  - ', message );
       req.io.sockets.emit('message', message);
     }
+  }).then( function(data){
+    console.log('DEBUG: Server Event Bus Listener :', JSON.stringify(data));
+  }).catch( function (err){
+    res.status(400).json(err);
+    return next(err);
   });
 }
 module.exports = router;
