@@ -108,12 +108,13 @@ export class ApiService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
+      this.log(`Error : ${JSON.stringify(error.error)}`);
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
         `Backend returned code ${JSON.stringify(error.status)}, ` +
         `body was: ${JSON.stringify(error.error)}`);
-        this.log(`Error publishing event : ${JSON.stringify(error)}`);
+
     }
     // return an observable with a user-facing error message
     return throwError(
