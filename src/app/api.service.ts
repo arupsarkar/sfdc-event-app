@@ -107,6 +107,7 @@ export class ApiService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
+      this.messageService.add(`ApiService: ${JSON.stringify(error.error)}`);
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
