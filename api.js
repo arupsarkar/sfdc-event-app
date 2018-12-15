@@ -21,12 +21,13 @@ router.get('/', (req, res) => {
 
 router.get('/config', function(req, res){
   console.log('DEBUG: Server config()');
-  if(!(process.env.SFDC_CONSUMER_KEY)){
+  if(!(process.env.SFDC_CONSUMER_KEY) || !(process.env.SOCKET_SERVER_URL)){
     throw 'Error: Configuration variable SFDC_CONSUMER_KEY missing.';
   }
   try{
     let sfdc_consumer_key = process.env.SFDC_CONSUMER_KEY;
-    res.status(200).json({'secret': sfdc_consumer_key});
+    let socket_server_url = process.env.SOCKET_SERVER_URL;
+    res.status(200).json({'secret': sfdc_consumer_key, 'socket_server_url': socket_server_url});
   }catch(err){
     res.status(400).json(err);
     return next(err);
