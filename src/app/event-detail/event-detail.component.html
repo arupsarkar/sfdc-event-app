@@ -1,7 +1,9 @@
 
 <div *ngIf="eventFieldSchema">
-  <div>
+
+
     <!-- Show the heading -->
+  <div>
     <mat-grid-list cols="4" rowHeight="50px">
       <mat-grid-tile
         [colspan]="4"
@@ -9,8 +11,13 @@
         <p class="a"> {{platformEventName}}</p>
       </mat-grid-tile>
     </mat-grid-list>
+  </div>
+
+
+
 
     <!-- Show the data -->
+  <div>
     <mat-grid-list cols="4" rowHeight="50px">
       <mat-grid-tile
         *ngFor="let eventField of eventFieldSchema"
@@ -22,6 +29,9 @@
       </mat-grid-tile>
     </mat-grid-list>
 
+  </div>
+
+  <div>
     <!-- back button -->
     <mat-grid-list cols="4" rowHeight="80px">
       <mat-grid-tile
@@ -56,9 +66,5 @@
       </mat-grid-tile>
     </mat-grid-list>
 
-
   </div>
-
-
-
 </div>
