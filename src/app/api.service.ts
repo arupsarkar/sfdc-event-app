@@ -116,7 +116,7 @@ export class ApiService {
     }
     // return an observable with a user-facing error message
     return throwError(
-      'Please fix your error and try again'
+      'Error : ' + JSON.stringify(error.error)
     );
   }
 
