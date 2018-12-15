@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
-router.get('/config', function(req, res){
+router.get('/config', function(req, res, next){
   console.log('DEBUG: Server config()');
   if(!(process.env.SFDC_CONSUMER_KEY) || !(process.env.SOCKET_SERVER_URL)){
     throw 'Error: Configuration variable SFDC_CONSUMER_KEY missing.';
@@ -27,6 +27,8 @@ router.get('/config', function(req, res){
   try{
     let sfdc_consumer_key = process.env.SFDC_CONSUMER_KEY;
     let socket_server_url = process.env.SOCKET_SERVER_URL;
+    console.log('DEBUG: Server - key - ', sfdc_consumer_key);
+    console.log('DEBUG: Server - socket url - ', socket_server_url);
     res.status(200).json({'secret': sfdc_consumer_key, 'socket_server_url': socket_server_url});
   }catch(err){
     res.status(400).json(err);
