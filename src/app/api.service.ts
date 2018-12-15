@@ -8,7 +8,6 @@ import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
-import {strictEqual} from 'assert';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -116,7 +115,8 @@ export class ApiService {
     }
     // return an observable with a user-facing error message
     return throwError(
-      'Something bad happened; please try again later.');
+      this.log(`${JSON.stringify(error.error)}`)
+    );
   }
 
   /** Log a EventService message with the MessageService */
