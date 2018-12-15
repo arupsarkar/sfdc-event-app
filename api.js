@@ -185,11 +185,6 @@ function eventBusListener(conn, fullName, req, res ){
       console.log( '---> Event fired  - ', message );
       req.io.sockets.emit('message', message);
     }
-  }).then( function(data){
-    console.log('DEBUG: Server Event Bus Listener :', JSON.stringify(data));
-  }).catch( function (err){
-    res.status(400).json(err);
-    return next(err);
   });
 }
 module.exports = router;
