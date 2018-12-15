@@ -35,12 +35,12 @@
       </mat-grid-tile>
 
       <!-- middle space tile -->
-      <mat-grid-tile
+      <mat-g
         *ngFor="let middleSpaceTile of middleSpaceTiles"
         [colspan]="middleSpaceTile.cols"
         [rowspan]="middleSpaceTile.rows"
         [style.background]="middleSpaceTile.color">
-        {{middleSpaceTile.text}}
+        <p class="a"> {{middleSpaceTile.text}} </p>
       </mat-grid-tile>
 
       <!-- Save button tile -->
