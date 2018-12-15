@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -58,7 +58,8 @@ export class ApiService {
 
     return this.http.post(`${environment.baseUrl}/${URL}`, eventSchema, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
-        catchError( this.handleError<any>(' Error publishing events'))
+        // catchError( this.handleError<any>(' Error publishing events'))
+      catchError(this.handleApiError)
     );
   }
 
@@ -69,9 +70,21 @@ export class ApiService {
       tap( res => {
         this.log(`Logout result: ${JSON.stringify(res)}`);
       }),
-      catchError(this.handleError<any>(`Logout error `))
+      // catchError(this.handleError<any>(`Logout error `))
+      catchError(this.handleApiError)
     );
   }
+
+  getConfig(): Observable<any> {
+    const URL = 'config';
+    return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      tap( res => {
+        this.log(`Config result: ${JSON.stringify(res)}`);
+      }),
+      catchError(this.handleApiError)
+    );
+  }
+
 
   // This method parses the data to JSON
   private parseData<T> (res: Response)  {
@@ -87,6 +100,23 @@ export class ApiService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private handleApiError (error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${JSON.stringify(error.status)}, ` +
+        `body was: ${JSON.stringify(error.error)}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Error : ' + JSON.stringify(error.error)
+    );
   }
 
   /** Log a EventService message with the MessageService */
