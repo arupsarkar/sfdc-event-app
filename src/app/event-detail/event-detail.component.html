@@ -25,7 +25,7 @@
         [rowspan]="1">
         <mat-form-field class="example-full-width" >
           <mat-label> {{eventField.fullName}} </mat-label>
-          <input  [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
+          <input  matInput [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
           <mat-hint> required-{{eventField.required}}, type-{{eventField.type}}, len-{{eventField.length}} </mat-hint>
         </mat-form-field>
         <div>
