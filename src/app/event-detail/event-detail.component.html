@@ -21,8 +21,8 @@
     <mat-grid-list cols="4" rowHeight="80px">
       <mat-grid-tile
         *ngFor="let eventField of eventFieldSchema"
-        [colspan]="4"
-        [rowspan]="1">
+        [colspan]=4
+        [rowspan]=1>
         <mat-form-field>
           <!--<mat-label> {{eventField.fullName}} </mat-label>-->
           <input  matInput [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
