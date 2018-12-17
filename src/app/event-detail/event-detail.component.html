@@ -17,13 +17,13 @@
 
 
     <!-- Show the data -->
-  <div class="event-detail-full-width">
+  <div>
     <mat-grid-list cols="4" rowHeight="80px">
       <mat-grid-tile
         *ngFor="let eventField of eventFieldSchema"
         [colspan]="4"
         [rowspan]="1">
-        <mat-form-field class="example-full-width" >
+        <mat-form-field>
           <!--<mat-label> {{eventField.fullName}} </mat-label>-->
           <input  matInput [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
           <mat-hint> required-{{eventField.required}}, type-{{eventField.type}}, len-{{eventField.length}} </mat-hint>
