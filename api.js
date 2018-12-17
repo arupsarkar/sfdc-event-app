@@ -49,7 +49,8 @@ router.get('/logout', (req, res) =>{
     console.log('DEBUG: Server logout() then function ', data);
   }).catch( function(err){
     console.log('DEBUG: Server logout() error function ', err);
-    res.status(200).json({logout: 'error'});
+    res.status(400).json(err);
+    return next(err);
   });
   // conn.logout( function( data ){
   //   console.log('DEBUG: Server logout() main function ', data);

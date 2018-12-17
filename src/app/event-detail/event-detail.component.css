@@ -4,6 +4,29 @@ p.a {
   font: bold 20px arial, sans-serif;
 }
 
+
+.event-detail-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.event-detail-full-width {
+  width: 60%;
+  padding-left: 20%;
+  padding-right: 20%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: large;
+  color: gray;
+  border-radius: 2%
+}
+
+input {
+  padding-right: .4em;
+  padding-left: .4em;
+  height: 2em;
+  size: 100px;
+}
 /*label {*/
   /*display: inline-block;*/
   /*width: 3em;*/
