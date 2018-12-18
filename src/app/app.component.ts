@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable, of, throwError} from 'rxjs';
 
 import { SocketService} from './socket.service';
 import { EventSocket } from './shared/event';
@@ -34,7 +35,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initIoConnection();
+    const source = Observable.create(0, 1).delay(3000);
+    const subscription = source.subscribe(
+      function(data) {
+        console.log(data);
+      }, function (error) {
+        console.log(error);
+      }, function () {
+        this.initIoConnection();
+        console.log('Complete');
+      }
+    );
+
   }
 
   /** Log a EventService message with the MessageService */
