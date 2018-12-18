@@ -25,7 +25,7 @@ export class EventsComponent implements OnInit {
     this.apiService.getEvents().subscribe(
       events => {
         this.events = events;
-        this.log(this.events.entries() + 'Events fetched.');
+        this.log(this.events.length + ' events fetched.');
         this.platformEventsExist = events.length > 0;
         if (!this.platformEventsExist) {
           this.eventsExistHeader = 'There are no platform events in this org.';
