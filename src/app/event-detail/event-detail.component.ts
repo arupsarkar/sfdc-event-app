@@ -59,29 +59,29 @@ export class EventDetailComponent implements OnInit {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
     // this.socketService.initSocket();
     this.getEventMetaData();
-    // this.initIoConnection();
+    this.initIoConnection();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
-  // private initIoConnection(): void {
-  //   this.socketService.initSocket();
-  //
-  //   this.ioConnection = this.socketService.getEventMessages()
-  //     .subscribe((message: string) => {
-  //       this.log(JSON.stringify(message));
-  //     });
-  //
-  //
-  //   this.socketService.onEvent(EventSocket.CONNECT)
-  //     .subscribe(() => {
-  //       console.log('connected');
-  //     });
-  //
-  //   this.socketService.onEvent(EventSocket.DISCONNECT)
-  //     .subscribe(() => {
-  //       console.log('disconnected');
-  //     });
-  // }
+  private initIoConnection(): void {
+    this.socketService.initSocket();
+
+    this.ioConnection = this.socketService.getEventMessages()
+      .subscribe((message: string) => {
+        this.log(JSON.stringify(message));
+      });
+
+
+    this.socketService.onEvent(EventSocket.CONNECT)
+      .subscribe(() => {
+        console.log('connected');
+      });
+
+    this.socketService.onEvent(EventSocket.DISCONNECT)
+      .subscribe(() => {
+        console.log('disconnected');
+      });
+  }
 
   getEventMetaData(): void {
     console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
