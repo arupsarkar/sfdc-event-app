@@ -5,16 +5,42 @@
       <!--</a>-->
   <!--</li>-->
 <!--</ul>-->
+<div *ngIf="!platformEventsExist">
+  <!-- Show the heading -->
+  <div>
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1">
+        <p class="a"> {{eventsDoNotExistHeader}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
 
-<div class="event-tile">
-  <mat-grid-list cols="4" rowHeight="60px" >
-    <mat-grid-tile
-      *ngFor="let event of events"
-      [colspan]="4"
-      [rowspan]="1"
-      [style.background]=tileColor
-      routerLink="/event-detail/{{event.fullName}}">
-    {{event.fullName}}
-    </mat-grid-tile>
-  </mat-grid-list>
+<div *ngIf="platformEventsExist">
+
+  <!-- Show the heading -->
+  <div>
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1">
+        <p class="a"> {{eventsExistHeader}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div class="event-tile">
+    <mat-grid-list cols="4" rowHeight="60px" >
+      <mat-grid-tile
+        *ngFor="let event of events"
+        [colspan]="4"
+        [rowspan]="1"
+        [style.background]=tileColor
+        routerLink="/event-detail/{{event.fullName}}">
+      {{event.fullName}}
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>

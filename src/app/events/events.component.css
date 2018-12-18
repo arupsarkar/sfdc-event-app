@@ -6,3 +6,7 @@
   font-size: large;
   color: aliceblue;
 }
+
+p.a {
+  font: bold 20px arial, sans-serif;
+}
