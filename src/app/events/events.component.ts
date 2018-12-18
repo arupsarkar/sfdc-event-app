@@ -13,23 +13,23 @@ import {MessageService} from '../message.service';
 export class EventsComponent implements OnInit {
   platformEventsExist: boolean;
   eventsExistHeader: string;
-  eventsDoNotExistHeader: string;
   message = '';
   events: Event[];
   tileColor: string;
   constructor(private route: ActivatedRoute, private  apiService: ApiService, private messageService: MessageService) {
     this.tileColor = '#455a64';
     this.eventsExistHeader = 'List of platform events.';
-    this.eventsDoNotExistHeader = 'There are no platform events in this org OR you do not have visibility to any of them.';
   }
 
   ngOnInit() {
     this.apiService.getEvents().subscribe(
       events => {
-        this.platformEventsExist = false;
         this.events = events;
         this.log(this.events.entries() + 'Events fetched.');
         this.platformEventsExist = events.length > 0;
+        if (!this.platformEventsExist) {
+          this.eventsExistHeader = 'There are no platform events in this org.';
+        }
     }, error => {
         this.log('Events fetched error.' + error);
       }, () => {
