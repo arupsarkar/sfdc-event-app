@@ -1,7 +1,9 @@
 
 <div *ngIf="eventFieldSchema">
-  <div>
+
+
     <!-- Show the heading -->
+  <div>
     <mat-grid-list cols="4" rowHeight="50px">
       <mat-grid-tile
         [colspan]="4"
@@ -9,19 +11,30 @@
         <p class="a"> {{platformEventName}}</p>
       </mat-grid-tile>
     </mat-grid-list>
+  </div>
+
+
+
 
     <!-- Show the data -->
-    <mat-grid-list cols="4" rowHeight="50px">
+  <div>
+    <mat-grid-list cols="4" rowHeight="80px">
       <mat-grid-tile
         *ngFor="let eventField of eventFieldSchema"
         [colspan]="4"
         [rowspan]="1">
-        <div>
-          <input [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
-        </div>
+        <mat-form-field>
+          <!--<mat-label> {{eventField.fullName}} </mat-label>-->
+          <input  matInput [(ngModel)]="eventField.data" placeholder={{eventField.label}}/>
+          <!--<mat-hint> required-{{eventField.required}}, type-{{eventField.type}}, len-{{eventField.length}} </mat-hint>-->
+          <mat-hint> {{eventField.required}},{{eventField.type}},{{eventField.length}} </mat-hint>
+        </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
 
+  </div>
+
+  <div>
     <!-- back button -->
     <mat-grid-list cols="4" rowHeight="80px">
       <mat-grid-tile
@@ -56,9 +69,5 @@
       </mat-grid-tile>
     </mat-grid-list>
 
-
   </div>
-
-
-
 </div>

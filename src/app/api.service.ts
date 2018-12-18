@@ -68,8 +68,12 @@ export class ApiService {
     const URL = 'logout';
     return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {
-        this.log(`Logout result: ${JSON.stringify(res)}`);
-      }),
+        this.log(`Logout success : ${JSON.stringify(res)}`);
+      },
+        error => {
+          this.log(`Logout error : ${JSON.stringify(error)}`);
+          this.handleApiError(error);
+        }),
       // catchError(this.handleError<any>(`Logout error `))
       catchError(this.handleApiError)
     );

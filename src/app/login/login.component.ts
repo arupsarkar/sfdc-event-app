@@ -69,13 +69,18 @@ export class LoginComponent implements OnInit {
   sfdcLogout(): void {
     this.apiService.logout().subscribe(logoutData => {
       this.log(JSON.stringify(logoutData));
-      if (logoutData.logout === 'success') {
-
-        this.loginTiles[0].disable = false;
-        this.logoutTiles[0].disable = true;
-        window.location.href = location.origin;
-      }
-    });
+        if (logoutData.logout === 'success') {
+          this.loginTiles[0].disable = false;
+          this.logoutTiles[0].disable = true;
+          window.location.href = location.origin;
+        }
+      },
+      error => {
+          this.log(error);
+      },
+      () => {
+          this.log('Logout process is now complete.');
+      });
   }
 
   sfdcLogin(): void {
