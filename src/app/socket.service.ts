@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import * as socketIo from 'socket.io-client';
 
 import {MessageService} from './message.service';
 import { EventSocket} from './shared/event';
 import { ApiService} from './api.service';
-
-const SERVER_URL = 'https://sfdc-event-app.herokuapp.com';
 
 @Injectable({
   providedIn: 'root'
