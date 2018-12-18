@@ -21,32 +21,33 @@ export class AppComponent implements OnInit {
     this.ioConnection = this.socketService.getEventMessages()
       .subscribe((message: string) => {
         this.log(JSON.stringify(message));
+      }, (error) => {
+        this.log(error);
+      }, () => {
+        this.socketService.onEvent(EventSocket.CONNECT)
+          .subscribe(() => {
+            console.log('connected');
+          });
+
+        this.socketService.onEvent(EventSocket.DISCONNECT)
+          .subscribe(() => {
+            console.log('disconnected');
+          });
       });
 
-    this.socketService.onEvent(EventSocket.CONNECT)
-      .subscribe(() => {
-        console.log('connected');
-      });
-
-    this.socketService.onEvent(EventSocket.DISCONNECT)
-      .subscribe(() => {
-        console.log('disconnected');
-      });
+    // this.socketService.onEvent(EventSocket.CONNECT)
+    //   .subscribe(() => {
+    //     console.log('connected');
+    //   });
+    //
+    // this.socketService.onEvent(EventSocket.DISCONNECT)
+    //   .subscribe(() => {
+    //     console.log('disconnected');
+    //   });
   }
 
   ngOnInit() {
-    const source = Observable.create(0, 1).delay(3000);
-    const subscription = source.subscribe(
-      function(data) {
-        console.log(data);
-      }, function (error) {
-        console.log(error);
-      }, function () {
-        this.initIoConnection();
-        console.log('Complete');
-      }
-    );
-
+    this.initIoConnection();
   }
 
   /** Log a EventService message with the MessageService */
