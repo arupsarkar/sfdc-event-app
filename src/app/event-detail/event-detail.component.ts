@@ -57,9 +57,9 @@ export class EventDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
-    this.socketService.initSocket();
+    // this.socketService.initSocket();
     this.getEventMetaData();
-    this.initIoConnection();
+    // this.initIoConnection();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
