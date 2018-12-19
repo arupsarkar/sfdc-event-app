@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
@@ -21,6 +21,7 @@ export interface Tile {
 
 @Component({
   selector: 'app-event-detail',
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })
@@ -52,35 +53,51 @@ export class EventDetailComponent implements OnInit {
     private socketService: SocketService
   ) {
     console.log('DEBUG: EventDetailComponent : Constructor()', 'Start');
+    this.socketService.initSocket();
     console.log('DEBUG: EventDetailComponent : Constructor()', 'End');
   }
 
   ngOnInit() {
     console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
-    this.socketService.initSocket();
+    // this.socketService.initSocket();
     this.getEventMetaData();
     this.initIoConnection();
     console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
   private initIoConnection(): void {
-    this.socketService.initSocket();
+    // this.socketService.initSocket();
 
     this.ioConnection = this.socketService.getEventMessages()
       .subscribe((message: string) => {
-        this.log(JSON.stringify(message));
-      });
+        this.log('Event detail IOConnection success : ' + JSON.stringify(message));
+      },
+        error => {
+          this.log('Event detail IOConnection error : ' + JSON.stringify(error));
+        }, () => {
+          this.log('Event detail IOConnection completed.');
+        });
 
 
     this.socketService.onEvent(EventSocket.CONNECT)
       .subscribe(() => {
         console.log('connected');
-      });
+      },
+        error => {
+          console.log('Event component onEvent Connect error - ' + error);
+        }, () => {
+          console.log('Event component onEvent Connect complete.');
+        });
 
     this.socketService.onEvent(EventSocket.DISCONNECT)
       .subscribe(() => {
         console.log('disconnected');
-      });
+      },
+        error => {
+          console.log('Event component onEvent disconnect error - ' + error);
+        }, () => {
+          console.log('Event component onEvent disconnect complete.');
+        });
   }
 
   getEventMetaData(): void {

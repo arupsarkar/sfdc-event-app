@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
     this.apiService.getConfig().subscribe( sfdcKey => {
       if (sfdcKey.secret !== undefined) {
         console.log('secret: ', sfdcKey.secret);
+        console.log('socket server url : ', sfdcKey.socket_server_url);
         this.secret = sfdcKey.secret;
       }
     });

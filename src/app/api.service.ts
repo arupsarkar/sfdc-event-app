@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map, retry, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import {environment} from './environment/environment';
@@ -24,10 +24,19 @@ const httpOptions = {
 })
 export class ApiService {
 
+  socketServerURL: string;
+
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private messageService: MessageService) { }
 
+
+  getSocketServerURL(): string {
+    if (this.socketServerURL.length > 0) {
+      return this.socketServerURL;
+    }
+
+  }
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.messageService.add('ApiService: fetched Platform Events');
@@ -82,8 +91,10 @@ export class ApiService {
   getConfig(): Observable<any> {
     const URL = 'config';
     return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      retry(3),
       tap( res => {
         this.log(`Config result: ${JSON.stringify(res)}`);
+        this.socketServerURL = res.socket_server_url;
       }),
       catchError(this.handleApiError)
     );
