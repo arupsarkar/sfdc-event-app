@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map, retry, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import {environment} from './environment/environment';
@@ -82,6 +82,7 @@ export class ApiService {
   getConfig(): Observable<any> {
     const URL = 'config';
     return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      retry(3),
       tap( res => {
         this.log(`Config result: ${JSON.stringify(res)}`);
       }),
