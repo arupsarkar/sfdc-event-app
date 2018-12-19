@@ -16,12 +16,13 @@ export class SocketService {
 
   public initSocket(): void {
     // Get the SOCKET_SERVER_URL from settings.
-    this.apiService.getConfig().subscribe( params => {
-      if (params.socket_server_url !== undefined) {
-        console.log('socket_server_url: ', params.socket_server_url);
-        this.socket = socketIo(params.socket_server_url);
-      }
-    });
+    this.socket = socketIo(this.apiService.getsocketServerURL());
+    // this.apiService.getConfig().subscribe( params => {
+    //   if (params.socket_server_url !== undefined) {
+    //     console.log('socket_server_url: ', params.socket_server_url);
+    //     this.socket = socketIo(params.socket_server_url);
+    //   }
+    // });
   }
 
   public onEvent(eventSocket: EventSocket): Observable<any> {

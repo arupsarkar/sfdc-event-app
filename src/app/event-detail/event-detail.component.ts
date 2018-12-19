@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 import { Event} from '../model/Event';
 import { ApiService} from '../api.service';
@@ -21,6 +21,7 @@ export interface Tile {
 
 @Component({
   selector: 'app-event-detail',
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })

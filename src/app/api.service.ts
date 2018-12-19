@@ -24,10 +24,19 @@ const httpOptions = {
 })
 export class ApiService {
 
+  socketServerURL: string;
+
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private messageService: MessageService) { }
 
+
+  getsocketServerURL(): string {
+    if (this.socketServerURL.length > 0){
+      return this.socketServerURL;
+    }
+
+  }
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.messageService.add('ApiService: fetched Platform Events');
@@ -85,6 +94,7 @@ export class ApiService {
       retry(3),
       tap( res => {
         this.log(`Config result: ${JSON.stringify(res)}`);
+        this.socketServerURL = res.socket_server_url;
       }),
       catchError(this.handleApiError)
     );
