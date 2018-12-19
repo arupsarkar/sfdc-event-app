@@ -31,8 +31,8 @@ export class ApiService {
               private messageService: MessageService) { }
 
 
-  getsocketServerURL(): string {
-    if (this.socketServerURL.length > 0){
+  getSocketServerURL(): string {
+    if (this.socketServerURL.length > 0) {
       return this.socketServerURL;
     }
 
