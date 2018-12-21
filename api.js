@@ -50,7 +50,7 @@ router.get('/logout', (req, res, next) =>{
   if ( conn === undefined){
     return next();
   }else{
-    console.log('DEBUG: logout Connection user info - ', conn.userInfo());
+    console.log('DEBUG: logout Connection user info - ', conn.userInfo);
   }
 
   conn.logoutByOAuth2( function(data){
@@ -82,7 +82,7 @@ router.get('/getEvents', (req, res, next) => {
   if ( conn === undefined){
     return next();
   }else{
-    console.log('DEBUG: getEvents Connection user info - ', conn.userInfo());
+    console.log('DEBUG: getEvents Connection user info - ', conn.userInfo);
   }
 
   let types = [{type: 'CustomObject', folder: null}];
@@ -132,7 +132,7 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
   if ( conn === undefined){
     return next();
   }else{
-    console.log('DEBUG: getEventDetail Connection user info - ', conn.userInfo());
+    console.log('DEBUG: getEventDetail Connection user info - ', conn.userInfo);
   }
 
   eventBusListener(conn, req.params.fullName, req, res);
@@ -176,7 +176,7 @@ router.post('/events/publish', (req, res, next) =>{
   if ( conn === undefined){
     return next();
   }else{
-    console.log('DEBUG: event/publish Connection user info - ', conn.userInfo());
+    console.log('DEBUG: event/publish Connection user info - ', conn.userInfo);
   }
 
   let platformEventJSONPayload = {};
