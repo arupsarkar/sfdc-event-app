@@ -36,7 +36,7 @@ router.get('/config', function(req, res, next){
   }
 });
 
-router.get('/logout', (req, res) =>{
+router.get('/logout', (req, res, next) =>{
   console.log('DEBUG: Server logout()');
   const headers = req.headers.authorization;
   const params = headers.split('|');
@@ -46,6 +46,12 @@ router.get('/logout', (req, res) =>{
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: logout Connection user info - ', conn.userInfo());
+  }
 
   conn.logoutByOAuth2( function(data){
     console.log('DEBUG: Server logout() main function ', data);
@@ -72,6 +78,12 @@ router.get('/getEvents', (req, res, next) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getEvents Connection user info - ', conn.userInfo());
+  }
 
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
@@ -116,6 +128,13 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     accessToken: accessToken
   });
 
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getEventDetail Connection user info - ', conn.userInfo());
+  }
+
   eventBusListener(conn, req.params.fullName, req, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
@@ -153,6 +172,13 @@ router.post('/events/publish', (req, res, next) =>{
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: event/publish Connection user info - ', conn.userInfo());
+  }
+
   let platformEventJSONPayload = {};
   let platformEventObjectName = req.body.fullName;
   // Iterate the fields to create the JSOn Payload.
