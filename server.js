@@ -10,15 +10,15 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 app.use(function(req, res, next) {
   req.io = io;
-    next();
+  next();
 });
 
-app.use(function(err, req, res, next) {
-  if(err !== null || err !== undefined || err.toString().length > 0){
-    Console.log('DEBUG: Server app.use error : ', err);
-    next(err);
-  }
-});
+// app.use(function(err, req, res, next) {
+//   if(err !== null || err !== undefined || err.toString().length > 0){
+//     Console.log('DEBUG: Server app.use error : ', err);
+//     next(err);
+//   }
+// });
 
 // Enable CORS
 app.use(cors());
