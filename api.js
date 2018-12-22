@@ -36,7 +36,7 @@ router.get('/config', function(req, res, next){
   }
 });
 
-router.get('/logout', (req, res) =>{
+router.get('/logout', (req, res, next) =>{
   console.log('DEBUG: Server logout()');
   const headers = req.headers.authorization;
   const params = headers.split('|');
@@ -47,6 +47,12 @@ router.get('/logout', (req, res) =>{
     accessToken: accessToken
   });
 
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: logout Connection user info - ', conn.userInfo);
+  }
+
   conn.logoutByOAuth2( function(data){
     console.log('DEBUG: Server logout() main function ', data);
     res.status(200).json({logout: 'success'});
@@ -54,7 +60,7 @@ router.get('/logout', (req, res) =>{
     console.log('DEBUG: Server logout() then function ', data);
   }).catch( function(err){
     console.log('DEBUG: Server logout() error function ', err);
-    res.status(400).json(err);
+    // res.status(400).json(err);
     return next(err);
   });
 });
@@ -72,6 +78,12 @@ router.get('/getEvents', (req, res, next) => {
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getEvents Connection user info - ', conn.userInfo);
+  }
 
   let types = [{type: 'CustomObject', folder: null}];
   conn.metadata.list(types, '43.0', function(err, metadata) {
@@ -116,6 +128,13 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
     accessToken: accessToken
   });
 
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getEventDetail Connection user info - ', conn.userInfo);
+  }
+
   eventBusListener(conn, req.params.fullName, req, res);
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
@@ -153,11 +172,26 @@ router.post('/events/publish', (req, res, next) =>{
     instanceUrl : instanceURL,
     accessToken: accessToken
   });
+
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: event/publish Connection user info - ', conn.userInfo);
+  }
+
   let platformEventJSONPayload = {};
   let platformEventObjectName = req.body.fullName;
   // Iterate the fields to create the JSOn Payload.
   for (let i = 0 ; i < req.body.fields.length; i++){
-    platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
+    // convert string to date
+    if (req.body.fields[i].type === 'DateTime' || req.body.fields[i].type === 'Date') {
+      console.log('DEBUG: Datatype ', req.body.fields[i].type);
+      console.log('DEBUG: Data value ', req.body.fields[i].type);
+      platformEventJSONPayload[req.body.fields[i].fullName] = new Date(req.body.fields[i].data);
+    } else {
+      platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
+    }
+
   }
   let azure_pe = conn.sobject(platformEventObjectName);
   console.log('---> JSON Payload : ', JSON.stringify(platformEventJSONPayload));

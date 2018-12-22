@@ -77,7 +77,10 @@ export class LoginComponent implements OnInit {
         }
       },
       error => {
-          this.log(error);
+        this.log('Error logging out. Redirecting to the login page.');
+        this.loginTiles[0].disable = true;
+        this.logoutTiles[0].disable = false;
+        window.location.href = location.origin;
       },
       () => {
           this.log('Logout process is now complete.');
