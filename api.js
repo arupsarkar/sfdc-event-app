@@ -183,7 +183,15 @@ router.post('/events/publish', (req, res, next) =>{
   let platformEventObjectName = req.body.fullName;
   // Iterate the fields to create the JSOn Payload.
   for (let i = 0 ; i < req.body.fields.length; i++){
-    platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
+    // convert string to date
+    if (req.body.fields[i].type === 'DateTime' || req.body.fields[i].type === 'Date') {
+      console.log('DEBUG: Datatype ', req.body.fields[i].type);
+      console.log('DEBUG: Data value ', req.body.fields[i].type);
+      platformEventJSONPayload[req.body.fields[i].fullName] = new Date(req.body.fields[i].data);
+    } else {
+      platformEventJSONPayload[req.body.fields[i].fullName] = req.body.fields[i].data;
+    }
+
   }
   let azure_pe = conn.sobject(platformEventObjectName);
   console.log('---> JSON Payload : ', JSON.stringify(platformEventJSONPayload));
