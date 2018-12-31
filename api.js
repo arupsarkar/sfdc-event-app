@@ -14,6 +14,9 @@ router.use(bodyParser.urlencoded({
  * Parses the text as JSON and exposes the resulting object on req.body.
  */
 router.use(bodyParser.json());
+router.use(logErrors);
+router.use(clientErrorHandler);
+router.use(errorHandler);
 /* GET api listing. */
 router.get('/', (req, res) => {
   res.send('api works');
@@ -224,4 +227,22 @@ function eventBusListener(conn, fullName, req, res ){
     }
   });
 }
+// Error handlers
+function logErrors (err, req, res, next) {
+  console.error(err.stack);
+  next(err)
+}
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' });
+  } else {
+    next(err)
+  }
+}
+
+function errorHandler (err, req, res, next) {
+  res.status(500);
+  res.render('error', { error: err })
+}
+
 module.exports = router;
