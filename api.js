@@ -37,32 +37,33 @@ router.get('/config', function(req, res, next){
 });
 
 router.get('/logout', (req, res, next) =>{
-  console.log('DEBUG: Server logout()');
-  const headers = req.headers.authorization;
-  const params = headers.split('|');
-  let accessToken = params[0];
-  let instanceURL= params[1];
-  let conn = new jsforce.Connection({
-    instanceUrl : instanceURL,
-    accessToken: accessToken
-  });
-
-  if ( conn === undefined){
-    return next();
-  }else{
-    console.log('DEBUG: logout Connection user info - ', conn.userInfo);
-  }
-
-  conn.logoutByOAuth2( function(data){
-    console.log('DEBUG: Server logout() main function ', data);
-    res.status(200).json({logout: 'success'});
-  }).then(function (data){
-    console.log('DEBUG: Server logout() then function ', data);
-  }).catch( function(err){
-    console.log('DEBUG: Server logout() error function ', err);
-    // res.status(400).json(err);
-    return next(err);
-  });
+  throw new res.status(503).json({error: 'some error'});
+  // console.log('DEBUG: Server logout()');
+  // const headers = req.headers.authorization;
+  // const params = headers.split('|');
+  // let accessToken = params[0];
+  // let instanceURL= params[1];
+  // let conn = new jsforce.Connection({
+  //   instanceUrl : instanceURL,
+  //   accessToken: accessToken
+  // });
+  //
+  // if ( conn === undefined){
+  //   return next();
+  // }else{
+  //   console.log('DEBUG: logout Connection user info - ', conn.userInfo);
+  // }
+  //
+  // conn.logoutByOAuth2( function(data){
+  //   console.log('DEBUG: Server logout() main function ', data);
+  //   res.status(200).json({logout: 'success'});
+  // }).then(function (data){
+  //   console.log('DEBUG: Server logout() then function ', data);
+  // }).catch( function(err){
+  //   console.log('DEBUG: Server logout() error function ', err);
+  //   // res.status(400).json(err);
+  //   return next(err);
+  // });
 });
 
 router.get('/getEvents', (req, res, next) => {
