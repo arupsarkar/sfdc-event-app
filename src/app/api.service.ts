@@ -39,26 +39,26 @@ export class ApiService {
   }
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
-    this.messageService.add('ApiService: fetched Platform Events');
+    this.messageService.add('ApiService: Fetched Platform Events');
     console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
     console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
 
     return this.http.get<Event[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       map( events => events)
     );
-
-    // return this.http.get<Event[]>(`${environment.baseUrl}/${URL}`, httpOptions)
-    //   .pipe( map( res => { this.log(JSON.stringify(res)); } ));
   }
 
   getEventDetail (fullName: string): Observable<EventSchema> {
     console.log('DEBUG: ApiService : Getting Event Details of ', fullName);
     const URL = 'getEventDetail/' + fullName;
     return this.http.get<EventSchema> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
-      tap( res => {this.log(`fetched event id=${fullName}`);
-              this.log(`fetched fields=${JSON.stringify(res)}`);
+      tap( res => {
+        this.log(`Fetched event id=${fullName}`);
+        this.log(`Fetched ${res.fields.length} fields.`);
+        // this.log(`fetched fields=${JSON.stringify(res)}`);
       }),
-      catchError(this.handleError<EventSchema>(`getEventDetail api_name=${fullName}`))
+      // catchError(this.handleError<EventSchema>(`getEventDetail api_name=${fullName}`))
+      catchError(this.handleApiError)
     );
   }
   eventsPublish(eventSchema: EventSchema) {
@@ -100,11 +100,6 @@ export class ApiService {
     );
   }
 
-
-  // This method parses the data to JSON
-  private parseData<T> (res: Response)  {
-    return res.json() || [];
-  }
   // Displays the error message
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

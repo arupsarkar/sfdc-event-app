@@ -131,7 +131,7 @@ export class EventDetailComponent implements OnInit {
         this.middleSpaceTiles[0].text = 'Error';
       },
       () => {
-        console.log('The POST observable is now completed.');
+        console.log('Event publish operation successfully completed.');
         // this.goBack();
       });
   }
