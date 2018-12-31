@@ -60,7 +60,7 @@ router.get('/logout', (req, res, next) =>{
     console.log('DEBUG: Server logout() then function ', data);
   }).catch( function(err){
     console.log('DEBUG: Server logout() error function ', err);
-    // res.status(400).json(err);
+    res.status(400).json(err);
     return next(err);
   });
 });
