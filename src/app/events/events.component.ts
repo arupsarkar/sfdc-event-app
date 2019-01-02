@@ -33,12 +33,16 @@ export class EventsComponent implements OnInit {
     }, error => {
         this.log('Events fetched error.' + error);
       }, () => {
-        this.log('Events fetch operation complete.');
+        this.log('Events fetch operation completed successfully.');
       });
   }
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Event Component: ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} : Event Component: ${message}`);
   }
 }

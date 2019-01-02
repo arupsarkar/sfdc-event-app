@@ -65,12 +65,12 @@ export class EventDetailComponent implements OnInit {
 
     this.ioConnection = this.socketService.getEventMessages()
       .subscribe((message: string) => {
-        this.log('Event detail IOConnection success : ' + JSON.stringify(message));
+        this.log('Message payload : ' + JSON.stringify(message));
       },
         error => {
-          this.log('Event detail IOConnection error : ' + JSON.stringify(error));
+          this.log('Message payload : ' + JSON.stringify(error));
         }, () => {
-          this.log('Event detail IOConnection completed.');
+          this.log('Event detail IO Connection completed successfully.');
         });
 
 
@@ -120,13 +120,17 @@ export class EventDetailComponent implements OnInit {
         this.middleSpaceTiles[0].text = 'Error';
       },
       () => {
-        this.log('Event publish operation successfully completed.');
+        this.log('Event publish operation completed successfully.');
         // this.goBack();
       });
   }
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Event Detail Component: ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} : Event Detail Component: ${message}`);
   }
 }

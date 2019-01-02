@@ -39,7 +39,7 @@ export class ApiService {
   }
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
-    this.messageService.add('ApiService: Fetched Platform Events');
+    this.log('Fetched Platform Events');
     return this.http.get<Event[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       map( events => events)
     );
@@ -123,6 +123,10 @@ export class ApiService {
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ApiService: ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} : ApiService: ${message}`);
   }
 }

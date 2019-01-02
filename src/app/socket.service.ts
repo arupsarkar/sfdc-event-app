@@ -25,7 +25,7 @@ export class SocketService {
   public onEvent(eventSocket: EventSocket): Observable<any> {
     return new Observable<Event>(observer => {
       this.socket.on(eventSocket, () => {
-        this.log(`SocketService : onEvent=${eventSocket}`);
+        this.log(`onEvent=${eventSocket}`);
         observer.next();
       });
     });
@@ -34,14 +34,18 @@ export class SocketService {
   public getEventMessages(): Observable<string> {
     return new Observable<string>(observer => {
       this.socket.on('message', (data: string) => {
-        this.log(`SocketService: getEventMessages = ${JSON.stringify(data)}`);
+        this.log(`Message payload : ${JSON.stringify(data)}`);
         observer.next(data);
       });
     });
   }
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ApiService: ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} : Socket Service : ${message}`);
   }
 
 
