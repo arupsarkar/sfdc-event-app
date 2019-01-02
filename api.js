@@ -55,17 +55,30 @@ router.get('/logout', (req, res, next) =>{
   }else{
     console.log('DEBUG: logout Connection user info - ', conn.userInfo);
   }
+  conn.logout( function (err) {
+    if (err) {
+      res.status(400).json(err);
+      return next(err);
+    } else {
+      console.log('DEBUG: User successfully logged out.')
+    }
+  }).then( function (data) {
+    res.status(200).json( data );
+  }).catch( function (error) {
+    res.status(400).json(error);
+    return next(error);
+  })
 
-  conn.logoutByOAuth2( function(data){
-    console.log('DEBUG: Server logout() main function ', data);
-    res.status(200).json({logout: 'success'});
-  }).then(function (data){
-    console.log('DEBUG: Server logout() then function ', data);
-  }).catch( function(err){
-    console.log('DEBUG: Server logout() error function ', err);
-    res.status(400).json(err);
-    return next(err);
-  });
+  // conn.logoutByOAuth2( function(data){
+  //   console.log('DEBUG: Server logout() main function ', data);
+  //   res.status(200).json({logout: 'success'});
+  // }).then(function (data){
+  //   console.log('DEBUG: Server logout() then function ', data);
+  // }).catch( function(err){
+  //   console.log('DEBUG: Server logout() error function ', err);
+  //   res.status(400).json(err);
+  //   return next(err);
+  // });
 });
 
 router.get('/getEvents', (req, res, next) => {
