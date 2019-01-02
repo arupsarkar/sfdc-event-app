@@ -39,6 +39,10 @@ export class EventsComponent implements OnInit {
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Event Component: ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} + ' ' + Event Component: ${message}`);
   }
 }

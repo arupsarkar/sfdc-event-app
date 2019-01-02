@@ -89,6 +89,10 @@ export class LoginComponent implements OnInit {
   }
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Logout component : ${message}`);
+    const d = new Date();
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString();
+    const finalDateTime = datePart + ' ' + timePart;
+    this.messageService.add(`${finalDateTime} + ' ' + Auth component : ${message}`);
   }
 }
