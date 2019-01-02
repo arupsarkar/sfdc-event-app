@@ -39,7 +39,7 @@ export class ApiService {
   }
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
-    this.messageService.add('ApiService: Fetched Platform Events');
+    this.log('Fetched Platform Events');
     return this.http.get<Event[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       map( events => events)
     );
