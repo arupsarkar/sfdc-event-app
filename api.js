@@ -57,13 +57,13 @@ router.get('/logout', (req, res, next) =>{
   }
   conn.logout( function (err) {
     if (err) {
-      res.status(400).json(err);
+      res.status(400).json({logout: err});
       return next(err);
     } else {
       console.log('DEBUG: User successfully logged out.')
     }
   }).then( function (data) {
-    res.status(200).json( data );
+    res.status(200).json({logout: 'success' + data});
   }).catch( function (error) {
     res.status(400).json(error);
     return next(error);
