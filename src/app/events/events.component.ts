@@ -33,7 +33,7 @@ export class EventsComponent implements OnInit {
     }, error => {
         this.log('Events fetched error.' + error);
       }, () => {
-        this.log('Events fetch operation complete.');
+        this.log('Events fetch operation completed successfully.');
       });
   }
 
@@ -43,6 +43,6 @@ export class EventsComponent implements OnInit {
     const datePart = d.toLocaleDateString();
     const timePart = d.toLocaleTimeString();
     const finalDateTime = datePart + ' ' + timePart;
-    this.messageService.add(`${finalDateTime} + ' ' + Event Component: ${message}`);
+    this.messageService.add(`${finalDateTime} : Event Component: ${message}`);
   }
 }

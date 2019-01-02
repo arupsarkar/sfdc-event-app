@@ -127,6 +127,6 @@ export class ApiService {
     const datePart = d.toLocaleDateString();
     const timePart = d.toLocaleTimeString();
     const finalDateTime = datePart + ' ' + timePart;
-    this.messageService.add(`${finalDateTime} + ' ' + ApiService: ${message}`);
+    this.messageService.add(`${finalDateTime} : ApiService: ${message}`);
   }
 }

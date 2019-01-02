@@ -58,6 +58,6 @@ export class CallbackComponent implements OnInit {
     const datePart = d.toLocaleDateString();
     const timePart = d.toLocaleTimeString();
     const finalDateTime = datePart + ' ' + timePart;
-    this.messageService.add(`${finalDateTime} + ' ' + Callback component : ${message}`);
+    this.messageService.add(`${finalDateTime} : Callback component : ${message}`);
   }
 }
