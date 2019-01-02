@@ -33,12 +33,12 @@ export class EventsComponent implements OnInit {
     }, error => {
         this.log('Events fetched error.' + error);
       }, () => {
-        this.log('Events fetched complete.');
+        this.log('Events fetch operation complete.');
       });
   }
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Event Detail Component: ${message}`);
+    this.messageService.add(`Event Component: ${message}`);
   }
 }

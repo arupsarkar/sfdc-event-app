@@ -52,17 +52,12 @@ export class EventDetailComponent implements OnInit {
     private messageService: MessageService,
     private socketService: SocketService
   ) {
-    console.log('DEBUG: EventDetailComponent : Constructor()', 'Start');
     this.socketService.initSocket();
-    console.log('DEBUG: EventDetailComponent : Constructor()', 'End');
   }
 
   ngOnInit() {
-    console.log('DEBUG: EventDetailComponent : OnInit()', 'Start');
-    // this.socketService.initSocket();
     this.getEventMetaData();
     this.initIoConnection();
-    console.log('DEBUG: EventDetailComponent : OnInit()', 'End');
   }
 
   private initIoConnection(): void {
@@ -101,16 +96,10 @@ export class EventDetailComponent implements OnInit {
   }
 
   getEventMetaData(): void {
-    console.log('DEBUG: EventDetailComponent : getEventMetaData()', 'Start');
     const fullName = this.route.snapshot.paramMap.get('fullName');
-    console.log('DEBUG: EventDetailComponent : getEventMetaData(): api_name - ', fullName);
     this.apiService.getEventDetail(fullName)
       .subscribe(eventSchema => {
         this.eventSchema = eventSchema;
-        console.log('Fetched event ', JSON.stringify(this.eventSchema));
-        console.log('Fetched event fullName : ', this.eventSchema.fullName);
-        console.log('Fetched event fields : ', JSON.stringify(this.eventSchema.fields));
-        // console.log('Fetched Fields ', JSON.stringify(this.eventSchema[].fields));
         this.eventFieldSchema = this.eventSchema.fields;
         this.platformEventName = eventSchema.label + ' fields.';
       });
@@ -131,7 +120,7 @@ export class EventDetailComponent implements OnInit {
         this.middleSpaceTiles[0].text = 'Error';
       },
       () => {
-        console.log('Event publish operation successfully completed.');
+        this.log('Event publish operation successfully completed.');
         // this.goBack();
       });
   }

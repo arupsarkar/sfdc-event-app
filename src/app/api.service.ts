@@ -40,22 +40,17 @@ export class ApiService {
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.messageService.add('ApiService: Fetched Platform Events');
-    console.log('DEBUG: ApiService: access_token', this.cookieService.get('access_token'));
-    console.log('DEBUG: ApiService: instance_url', this.cookieService.get('instance_url'));
-
     return this.http.get<Event[]> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       map( events => events)
     );
   }
 
   getEventDetail (fullName: string): Observable<EventSchema> {
-    console.log('DEBUG: ApiService : Getting Event Details of ', fullName);
     const URL = 'getEventDetail/' + fullName;
     return this.http.get<EventSchema> (`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       tap( res => {
-        this.log(`Fetched event id=${fullName}`);
+        this.log(`Fetched event - ${fullName}`);
         this.log(`Fetched ${res.fields.length} fields.`);
-        // this.log(`fetched fields=${JSON.stringify(res)}`);
       }),
       // catchError(this.handleError<EventSchema>(`getEventDetail api_name=${fullName}`))
       catchError(this.handleApiError)
@@ -63,8 +58,6 @@ export class ApiService {
   }
   eventsPublish(eventSchema: EventSchema) {
     const URL = 'events/publish';
-    console.log('DEBUG: ApiService: Events publish', 'Start', JSON.stringify(eventSchema));
-
     return this.http.post(`${environment.baseUrl}/${URL}`, eventSchema, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
         // catchError( this.handleError<any>(' Error publishing events'))
@@ -93,7 +86,6 @@ export class ApiService {
     return this.http.get<any>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
       retry(3),
       tap( res => {
-        this.log(`Config result: ${JSON.stringify(res)}`);
         this.socketServerURL = res.socket_server_url;
       }),
       catchError(this.handleApiError)

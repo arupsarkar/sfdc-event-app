@@ -20,23 +20,19 @@ export class NoopInterceptor implements HttpInterceptor {
         event => {
           // logging http response to browser's console in case of success.
           if (event instanceof HttpResponse) {
-            this.messageService.add('Http success response - start');
-            this.messageService.add(`${JSON.stringify(event.body)}`);
-            this.messageService.add('Http success response - end');
           }
         },
         error => {
           // logging http response to browser's console in case of error.
           if (error instanceof HttpResponse) {
-            this.messageService.add('Http error response - start');
+            this.messageService.add('Error response - start');
             this.messageService.add(`${error.status}`);
             this.messageService.add(`${error.statusText}`);
             this.messageService.add(`${error.type}`);
-            this.messageService.add('Http error response - end');
+            this.messageService.add('Error response - end');
           }
         },
         () => {
-          this.messageService.add(`Http response is complete.`);
         }
       )
     );
