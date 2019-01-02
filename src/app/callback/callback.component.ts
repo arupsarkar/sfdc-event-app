@@ -27,7 +27,18 @@ export class CallbackComponent implements OnInit {
   }
   ngOnInit() {
 
-    this.token = this.route.params.pipe().subscribe( (params: Params) => console.log(this.route.snapshot.fragment));
+    this.token = this.route.params.pipe().subscribe(
+      (params: Params) => {
+        // If required log some output to the message broker
+        // or console for testing.
+      },
+      error => {
+        // If required log some output to the message broker
+        // or console for testing.
+        this.log(`${error}`);
+      },
+      () => {}
+    );
     this.tokenUrlParams = `${this.route.snapshot.fragment}`;
     const toArray = this.tokenUrlParams.split('&');
     for (const token of toArray) {

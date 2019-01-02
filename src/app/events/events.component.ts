@@ -39,6 +39,6 @@ export class EventsComponent implements OnInit {
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Event Detail Component: ${message}`);
+    this.messageService.add(`Event Component: ${message}`);
   }
 }
