@@ -16,7 +16,6 @@ export class CallbackComponent implements OnInit {
               private router: Router,
               private cookieService: CookieService,
               private messageService: MessageService) {
-    console.log('DEBUG: CallbackComponent constructor --Start');
   }
 
   gotoEvents(accessToken: string, instanceUrl: string) {
@@ -31,9 +30,7 @@ export class CallbackComponent implements OnInit {
     this.token = this.route.params.pipe().subscribe( (params: Params) => console.log(this.route.snapshot.fragment));
     this.tokenUrlParams = `${this.route.snapshot.fragment}`;
     const toArray = this.tokenUrlParams.split('&');
-    console.log(toArray);
     for (const token of toArray) {
-      console.log(' >>>>> ' , token);
       const params = token.split('=');
         if (params[0] === 'access_token') {
           this.cookieService.set('access_token', params[1]);
@@ -41,8 +38,6 @@ export class CallbackComponent implements OnInit {
           this.cookieService.set('instance_url', params[1]);
         }
     }
-    console.log('access_token', this.cookieService.get('access_token'));
-    console.log('instance_url', this.cookieService.get('instance_url'));
     this.gotoEvents(this.cookieService.get('access_token'), this.cookieService.get('instance_url'));
   }
 

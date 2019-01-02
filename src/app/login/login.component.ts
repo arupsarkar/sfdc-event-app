@@ -41,19 +41,14 @@ export class LoginComponent implements OnInit {
   constructor( private apiService: ApiService,
                private messageService: MessageService,
                private cookieService: CookieService) {
-    console.log('DEBUG: LoginComponent: ', 'Inside LoginComponent constructor ');
     this.apiService.getConfig().subscribe( sfdcKey => {
       if (sfdcKey.secret !== undefined) {
-        console.log('secret: ', sfdcKey.secret);
-        console.log('socket server url : ', sfdcKey.socket_server_url);
         this.secret = sfdcKey.secret;
       }
     });
   }
 
   ngOnInit() {
-    console.log('DEBUG: LoginComponent():ngOnInit() access_token: ', this.cookieService.get('access_token'));
-    console.log('DEBUG: LoginComponent():ngOnInit() access_token: ', this.cookieService.get('access_token').length);
     // Disable login once cookie value exists
     if (this.cookieService.get('access_token').length <  1) {
       this.loginTiles[0].disable = false;
@@ -69,7 +64,6 @@ export class LoginComponent implements OnInit {
 
   sfdcLogout(): void {
     this.apiService.logout().subscribe(logoutData => {
-      this.log(JSON.stringify(logoutData));
         if (logoutData.logout === 'success') {
           this.loginTiles[0].disable = false;
           this.logoutTiles[0].disable = true;
@@ -83,21 +77,14 @@ export class LoginComponent implements OnInit {
         window.location.href = location.origin;
       },
       () => {
-          this.log('Logout process is now complete.');
+          this.log('Logout process is now complete. You can close this browser tab.');
       });
   }
 
   sfdcLogin(): void {
     let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=';
-    // sfdc_url = sfdc_url + '3MVG9zlTNB8o8BA2wrVtTcGwhEwLCayBmMKJEF6uILig.M9wPX3IHZTlE8W7OsJKeJ0Mc0cHvIPF_p_bmMAXx&redirect_uri=';
     sfdc_url = sfdc_url + this.secret + '&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
-    console.log('DEBUG: LoginComponent: ', 'Login button clicked..');
-    console.log('DEBUG: LoginComponent: Location ', location);
-    console.log('DEBUG: LoginComponent: protocol ', location.protocol);
-    console.log('DEBUG: LoginComponent: host ', location.host);
-    console.log('DEBUG: LoginComponent: port ', location.port);
-    console.log('DEBUG: LoginComponent: window.location.href ', window.location.href);
     window.location.href = sfdc_url;
   }
   /** Log a EventService message with the MessageService */

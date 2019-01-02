@@ -33,7 +33,7 @@ export class EventsComponent implements OnInit {
     }, error => {
         this.log('Events fetched error.' + error);
       }, () => {
-        this.log('Events fetched complete.');
+        this.log('Events fetch operation complete.');
       });
   }
 

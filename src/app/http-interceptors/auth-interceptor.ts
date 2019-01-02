@@ -15,8 +15,6 @@ export class AuthInterceptor implements HttpInterceptor {
     // Get the auth token from the service.
     const access_token = this.cookieService.get('access_token');
     const instance_url = this.cookieService.get('instance_url');
-    console.log('DEBUG: AuthInterceptor: access_token', access_token);
-    console.log('DEBUG: AuthInterceptor: instance_url', instance_url);
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
     const authReq = req.clone({
@@ -28,22 +26,18 @@ export class AuthInterceptor implements HttpInterceptor {
       tap(
         event => {
           if ( event instanceof HttpResponse) {
-            this.messageService.add('Auth Interceptor success response - Start');
-            this.messageService.add(`${event.body}`);
-            this.messageService.add('Auth Interceptor success response - End');
           }
         },
         error => {
           if (error instanceof HttpResponse || error instanceof HttpErrorResponse) {
-            this.messageService.add('Auth Interceptor error response - Start');
+            this.messageService.add('Error response - Start');
             this.messageService.add(`${error.status}`);
             this.messageService.add(`${error.statusText}`);
             this.messageService.add(`${error.type}`);
-            this.messageService.add('Auth Interceptor error response - End');
+            this.messageService.add('Error response - End');
           }
         },
         () => {
-          this.messageService.add('Auth Interceptor response complete.');
         }
       )
     );
