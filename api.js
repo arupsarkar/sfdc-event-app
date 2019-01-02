@@ -14,6 +14,9 @@ router.use(bodyParser.urlencoded({
  * Parses the text as JSON and exposes the resulting object on req.body.
  */
 router.use(bodyParser.json());
+router.use(logErrors);
+router.use(clientErrorHandler);
+router.use(errorHandler);
 /* GET api listing. */
 router.get('/', (req, res) => {
   res.send('api works');
@@ -52,17 +55,31 @@ router.get('/logout', (req, res, next) =>{
   }else{
     console.log('DEBUG: logout Connection user info - ', conn.userInfo);
   }
-
-  conn.logoutByOAuth2( function(data){
-    console.log('DEBUG: Server logout() main function ', data);
+  conn.logout( function (err) {
+    if (err) {
+      res.status(400).json({logout: err});
+      return next(err);
+    } else {
+      console.log('DEBUG: User successfully logged out.')
+    }
+  }).then( function (data) {
+    console.log('DEBUG: User successfully logged out then function.', data);
     res.status(200).json({logout: 'success'});
-  }).then(function (data){
-    console.log('DEBUG: Server logout() then function ', data);
-  }).catch( function(err){
-    console.log('DEBUG: Server logout() error function ', err);
-    // res.status(400).json(err);
-    return next(err);
-  });
+  }).catch( function (error) {
+    res.status(400).json(error);
+    return next(error);
+  })
+
+  // conn.logoutByOAuth2( function(data){
+  //   console.log('DEBUG: Server logout() main function ', data);
+  //   res.status(200).json({logout: 'success'});
+  // }).then(function (data){
+  //   console.log('DEBUG: Server logout() then function ', data);
+  // }).catch( function(err){
+  //   console.log('DEBUG: Server logout() error function ', err);
+  //   res.status(400).json(err);
+  //   return next(err);
+  // });
 });
 
 router.get('/getEvents', (req, res, next) => {
@@ -224,4 +241,22 @@ function eventBusListener(conn, fullName, req, res ){
     }
   });
 }
+// Error handlers
+function logErrors (err, req, res, next) {
+  console.error(err.stack);
+  next(err)
+}
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' });
+  } else {
+    next(err)
+  }
+}
+
+function errorHandler (err, req, res, next) {
+  res.status(500);
+  res.render('error', { error: err })
+}
+
 module.exports = router;
