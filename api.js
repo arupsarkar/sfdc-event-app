@@ -63,7 +63,8 @@ router.get('/logout', (req, res, next) =>{
       console.log('DEBUG: User successfully logged out.')
     }
   }).then( function (data) {
-    res.status(200).json({logout: 'success' + data});
+    console.log('DEBUG: User successfully logged out then function.', data);
+    res.status(200).json({logout: 'success'});
   }).catch( function (error) {
     res.status(400).json(error);
     return next(error);
