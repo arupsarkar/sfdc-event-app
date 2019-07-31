@@ -8,17 +8,17 @@ const bodyParser = require("body-parser");
  */
 const webpush = require('web-push');
 
-const vapidKeys = {
-  publicKey: '',
-  privateKey: '',
-};
-
-webpush.setVapidDetails(
-  'mailto:arup.sarkar@salesforce.com',
-  vapidKeys.publicKey,
-  vapidKeys.privateKey
-);
-
+// const vapidKeys = {
+//   publicKey: '',
+//   privateKey: '',
+// };
+//
+// webpush.setVapidDetails(
+//   'mailto:arup.sarkar@salesforce.com',
+//   vapidKeys.publicKey,
+//   vapidKeys.privateKey
+// );
+webpush.setGCMAPIKey('BAUmjqCn6p5sznOyW2aBjyKm5DJtYOvcnHwFGYUJ7HPj9SBgqI5IMtx5OYhhXKGEezdtR6zx8NTkvJ2XPkZyeIg');
 const pushSubscription = {
   endpoint: 'https://fcm.googleapis.com/fcm/send/dcR7IrrVl3s:APA91bFNmRF7cSQaNKkn-8SLZgvyOYKIUMmy3GUhOCS4VnOqZTAadYCFF0DrtjRNtjf8t1AMCz2pCZygqke5Ip8ddL1aPVkade4gbxtGUibw7EXnyRdHshW09JjRTksNMFHDOL5LT6dU',
   keys: {
