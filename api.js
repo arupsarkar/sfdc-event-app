@@ -256,8 +256,20 @@ function eventBusListener(conn, fullName, req, res ){
     if (message !== undefined){
       console.log( '---> Event fired  - ', message );
       req.io.sockets.emit('message', message);
-      // Temporary: Create a web push message
-      webpush.sendNotification(pushSubscription, JSON.stringify(message));
+      try{
+        // Temporary: Create a web push message
+        // webpush.sendNotification(pushSubscription, JSON.stringify(message));
+        webpush.sendNotification(pushSubscription, JSON.stringify(message))
+          .then((success) => {
+            console.log(success);
+          })
+          .catch(error => {
+            console.error(error.stack);
+          });
+      }catch(e) {
+        console.error('error in web push', e);
+      }
+
     }
   });
 }
