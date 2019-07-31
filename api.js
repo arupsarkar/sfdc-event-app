@@ -23,7 +23,7 @@ webpush.setVapidDetails(
   vapidKeys.publicKey,
   vapidKeys.privateKey
 );
-
+webpush.setGCMAPIKey('BPpaEUpzPTrKxivRFjGby40_LCTqTA1vbNUXyUXiLC3qIZ73TlpDSHSIDw0vbbyk-gmDNPM61DPUcELob04fAfs');
 const pushSubscription = {
   endpoint: 'https://fcm.googleapis.com/fcm/send/dcR7IrrVl3s:APA91bFNmRF7cSQaNKkn-8SLZgvyOYKIUMmy3GUhOCS4VnOqZTAadYCFF0DrtjRNtjf8t1AMCz2pCZygqke5Ip8ddL1aPVkade4gbxtGUibw7EXnyRdHshW09JjRTksNMFHDOL5LT6dU',
   keys: {
