@@ -8,21 +8,21 @@ const bodyParser = require("body-parser");
  */
 const webpush = require('web-push');
 
-const vapidKeys = webpush.generateVAPIDKeys();
-console.log('---------Start Vapid keys -----');
-console.log(vapidKeys.publicKey);
-console.log(vapidKeys.privateKey);
-console.log('---------End Vapid keys -----');
-// const vapidKeys = {
-//   publicKey: '',
-//   privateKey: '',
-// };
+// const vapidKeys = webpush.generateVAPIDKeys();
+// console.log('---------Start Vapid keys -----');
+// console.log(vapidKeys.publicKey);
+// console.log(vapidKeys.privateKey);
+// console.log('---------End Vapid keys -----');
+const vapidKeys = {
+  publicKey: 'BLq6B2a4H-xxW7oRgurtOFS9OTiXe3ZNXKb76aSBFf33KmXMZQG4AS_bOsZK8iVG5pUjvRU_vPx_-lUWIEwNGn4',
+  privateKey: 'zFZiflAtZSBG1nLjHzGoxiazbmEHrTVJlNePvLDPF9A',
+};
 //
-// webpush.setVapidDetails(
-//   'mailto:arup.sarkar@salesforce.com',
-//   vapidKeys.publicKey,
-//   vapidKeys.privateKey
-// );
+webpush.setVapidDetails(
+  'mailto:arup.sarkar@salesforce.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 
 const pushSubscription = {
   endpoint: 'https://fcm.googleapis.com/fcm/send/dcR7IrrVl3s:APA91bFNmRF7cSQaNKkn-8SLZgvyOYKIUMmy3GUhOCS4VnOqZTAadYCFF0DrtjRNtjf8t1AMCz2pCZygqke5Ip8ddL1aPVkade4gbxtGUibw7EXnyRdHshW09JjRTksNMFHDOL5LT6dU',
