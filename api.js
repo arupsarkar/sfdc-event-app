@@ -18,7 +18,8 @@ const webpush = require('web-push');
 //   vapidKeys.publicKey,
 //   vapidKeys.privateKey
 // );
-webpush.setGCMAPIKey('BAUmjqCn6p5sznOyW2aBjyKm5DJtYOvcnHwFGYUJ7HPj9SBgqI5IMtx5OYhhXKGEezdtR6zx8NTkvJ2XPkZyeIg');
+webpush.setGCMAPIKey('AAAA9hgxqnE:APA91bGjuczQ33Ar6-hb9C22UL-iiEgWitVgxXyKX3vECo5E-ThWumjAvtUeLAkd6Nj78OKc7t20bzmRQcr8Rn6JfXRPxwYYcBgscDeAyIKkjxZdguOqaXylcd-XG31J44zgOzC_1urK');
+
 const pushSubscription = {
   endpoint: 'https://fcm.googleapis.com/fcm/send/dcR7IrrVl3s:APA91bFNmRF7cSQaNKkn-8SLZgvyOYKIUMmy3GUhOCS4VnOqZTAadYCFF0DrtjRNtjf8t1AMCz2pCZygqke5Ip8ddL1aPVkade4gbxtGUibw7EXnyRdHshW09JjRTksNMFHDOL5LT6dU',
   keys: {
