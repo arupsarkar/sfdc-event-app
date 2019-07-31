@@ -6,6 +6,24 @@ const bodyParser = require("body-parser");
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
+const webpush = require('web-push');
+
+// VAPID keys should only be generated only once.
+const vapidKeys = webpush.generateVAPIDKeys();
+webpush.setVapidDetails(
+  'mailto:arup.sarkar@salesforce.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
+
+const pushSubscription = {
+  endpoint: 'https://fcm.googleapis.com/fcm/send/dcR7IrrVl3s:APA91bFNmRF7cSQaNKkn-8SLZgvyOYKIUMmy3GUhOCS4VnOqZTAadYCFF0DrtjRNtjf8t1AMCz2pCZygqke5Ip8ddL1aPVkade4gbxtGUibw7EXnyRdHshW09JjRTksNMFHDOL5LT6dU',
+  keys: {
+    p256dh: 'BFrjjBsg7Cqgqz9uxOZrTjJ1c84TauPt40yicO37RvDd_YENQ_6u-ilGK0OOVyRr7hzF4HjogITXQhczXfoUloM',
+    auth: 'Fbzo5MTYqSZKEstMtPxcYA'
+  }
+};
+
 router.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -238,6 +256,8 @@ function eventBusListener(conn, fullName, req, res ){
     if (message !== undefined){
       console.log( '---> Event fired  - ', message );
       req.io.sockets.emit('message', message);
+      // Temporary: Create a web push message
+      webpush.sendNotification(pushSubscription, message);
     }
   });
 }
