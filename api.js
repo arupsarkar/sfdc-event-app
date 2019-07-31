@@ -258,13 +258,16 @@ function eventBusListener(conn, fullName, req, res ){
       req.io.sockets.emit('message', message);
       try{
         // Temporary: Create a web push message
-        // webpush.sendNotification(pushSubscription, JSON.stringify(message));
-        webpush.sendNotification(pushSubscription, JSON.stringify(message))
-          .then((success) => {
-            console.log(success);
-          })
-          .catch(error => {
-            console.error(error.stack);
+        webpush.sendNotification(pushSubscription, new Buffer(JSON.stringify(message), 'utf8'))
+          .then(
+            function (data) {
+              console.log('data: ', data);
+            },
+            function (err) {
+              console.error('err: ', err);
+            })
+          .catch(function (ex) {
+              console.error('err ex: ', ex);
           });
       }catch(e) {
         console.error('error in web push', e);
