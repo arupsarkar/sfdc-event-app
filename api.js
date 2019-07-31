@@ -257,7 +257,7 @@ function eventBusListener(conn, fullName, req, res ){
       console.log( '---> Event fired  - ', message );
       req.io.sockets.emit('message', message);
       // Temporary: Create a web push message
-      webpush.sendNotification(pushSubscription, message);
+      webpush.sendNotification(pushSubscription, JSON.stringify(message));
     }
   });
 }
