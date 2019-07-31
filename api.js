@@ -14,8 +14,8 @@ const webpush = require('web-push');
 // console.log(vapidKeys.privateKey);
 // console.log('---------End Vapid keys -----');
 const vapidKeys = {
-  publicKey: 'BLq6B2a4H-xxW7oRgurtOFS9OTiXe3ZNXKb76aSBFf33KmXMZQG4AS_bOsZK8iVG5pUjvRU_vPx_-lUWIEwNGn4',
-  privateKey: 'zFZiflAtZSBG1nLjHzGoxiazbmEHrTVJlNePvLDPF9A',
+  publicKey: 'BAUmjqCn6p5sznOyW2aBjyKm5DJtYOvcnHwFGYUJ7HPj9SBgqI5IMtx5OYhhXKGEezdtR6zx8NTkvJ2XPkZyeIg',
+  privateKey: 'yzyN3l2gj99hjN1dagGH_j9YwhWvvSitmfRwRY4UTrY',
 };
 //
 webpush.setVapidDetails(
