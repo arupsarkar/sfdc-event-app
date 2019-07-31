@@ -8,8 +8,11 @@ const bodyParser = require("body-parser");
  */
 const webpush = require('web-push');
 
-// VAPID keys should only be generated only once.
-const vapidKeys = webpush.generateVAPIDKeys();
+const vapidKeys = {
+  publicKey: '',
+  privateKey: '',
+};
+
 webpush.setVapidDetails(
   'mailto:arup.sarkar@salesforce.com',
   vapidKeys.publicKey,
