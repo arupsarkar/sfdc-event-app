@@ -129,11 +129,11 @@ router.get('/getEvents', (req, res, next) => {
 });
 
 router.post('/searchSOSL', (req, res, next) => {
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request - ', req);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request query - ', req.query);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request params - ', req.params);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request body search params - ', req.body.searchParams);
+  // console.log('---> DEBUG: SERVER: /searchSOSL: Request - ', req);
+  // console.log('---> DEBUG: SERVER: /searchSOSL: Request query - ', req.query);
+  // console.log('---> DEBUG: SERVER: /searchSOSL: Request params - ', req.params);
+  // console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
+  // console.log('---> DEBUG: SERVER: /searchSOSL: Request body search params - ', req.body.searchParams);
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
