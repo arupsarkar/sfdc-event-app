@@ -43,8 +43,9 @@ export class ApiService {
     console.log('api.service.ts : ', value);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');
-    return this.http.post<string>(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(
-      map(data => data)
+    return this.http.post(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
     );
   }
 
