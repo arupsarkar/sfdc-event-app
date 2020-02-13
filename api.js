@@ -128,6 +128,34 @@ router.get('/getEvents', (req, res, next) => {
   });
 });
 
+// create contact
+router.post('/createContact', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /createContact: Request query - ', req.query);
+  console.log('---> DEBUG: SERVER: /createContact: Request params - ', req.params);
+  console.log('---> DEBUG: SERVER: /createContact: Request body - ', req.body);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: createContact Connection user info - ', conn.userInfo);
+  }
+  conn.sobject("Contact").create({FirstName: req.body.FirstName, LastName: req.body.LastName}, function(err, ret) {
+    if (err || !ret.success) { return console.error(err, ret); }
+    else {
+      res.status(200).json({'Id': ret.Id});
+    }
+  });
+
+});
 //get contacts
 router.get('/getContacts', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /getContacts: Request query - ', req.query);

@@ -38,6 +38,21 @@ export class ApiService {
     }
 
   }
+
+  createContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'createContact';
+    this.log(new Date() + ': Creating contact.');
+    // return this.http.post(``, contact, httpOptions).pipe(
+    //   tap( (res) => {this.log(JSON.stringify(res)); }), catchError(this.handleApiError)
+    // );
+    //
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
   getContacts(): Observable<Contact[]> {
     const URL = 'getContacts';
     this.log(new Date() + ': Fetching contacts from salesforce.');

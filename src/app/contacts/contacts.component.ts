@@ -66,6 +66,17 @@ export class ContactsComponent implements OnInit {
       console.log('update contact component id ', contact.Id);
     } else {
       console.log('create contact component id ', JSON.stringify(contact));
+      this.apiService.createContact(contact).subscribe(
+        data => {
+          this.message = JSON.stringify(data);
+          this.log(`${this.message}`);
+      },
+        err => {
+          this.log('Contacts create error.' + err);
+        },
+        () => {
+          this.log('Contacts create operation completed successfully.');
+        });
     }
 
   }
