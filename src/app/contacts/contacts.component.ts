@@ -12,7 +12,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 })
 export class ContactsComponent implements OnInit {
   // variables declaration
-  displayedColumns: string[] = ['Id', 'FirstName', 'LastName', 'Email', 'MobilePhone', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['Id', 'FirstName', 'LastName'];
   dataSource = new MatTableDataSource<Contact>();
   selectedContact: Contact = new Contact();
   contactsExists: boolean;
