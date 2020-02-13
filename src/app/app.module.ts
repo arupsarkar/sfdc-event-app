@@ -16,6 +16,7 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import {FormsModule} from '@angular/forms';
 import { MaterialModule} from './material/material.module';
 import { ContactsComponent } from './contacts/contacts.component';
+import {MatPaginatorModule, MatListModule, MatTableModule, MatSortModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,11 @@ import { ContactsComponent } from './contacts/contacts.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatListModule,
+    MatSortModule
   ],
   providers: [ApiService, CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent],
