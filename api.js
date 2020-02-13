@@ -158,7 +158,6 @@ router.post('/createContact', (req, res, next) => {
       return console.error(err, ret);
     } else {
       console.log('Contact Id ', ret.id);
-      res.status(200).json({'Id': ret.id});
     }
   });
 

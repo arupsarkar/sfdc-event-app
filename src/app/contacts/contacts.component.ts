@@ -19,6 +19,7 @@ export class ContactsComponent implements OnInit {
   contactsExistHeader: string;
   message = '';
   contacts: Contact[];
+  newContact: Contact[];
   tileColor: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,6 +31,26 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getContacts();
+    // this.apiService.getContacts().subscribe(
+    //   contacts => {
+    //     this.contacts = contacts;
+    //     this.log(this.contacts.length + ' contacts fetched.');
+    //     this.contactsExists = contacts.length > 0;
+    //     this.dataSource = new MatTableDataSource(this.contacts);
+    //     this.dataSource.sort = this.sort;
+    //     this.dataSource.paginator = this.paginator;
+    //     if (!this.contactsExists) {
+    //       this.contactsExistHeader = 'There are no contacts in this org.';
+    //     }
+    // }, error => {
+    //     this.log('Contacts fetched error.' + error);
+    //   }, () => {
+    //     this.log('Contacts fetch operation completed successfully.');
+    //   });
+  }
+
+  getContacts(): void {
     this.apiService.getContacts().subscribe(
       contacts => {
         this.contacts = contacts;
@@ -41,13 +62,12 @@ export class ContactsComponent implements OnInit {
         if (!this.contactsExists) {
           this.contactsExistHeader = 'There are no contacts in this org.';
         }
-    }, error => {
+      }, error => {
         this.log('Contacts fetched error.' + error);
       }, () => {
         this.log('Contacts fetch operation completed successfully.');
       });
   }
-
 
   editContact(contact: Contact): void {
     console.log('Edit contact ', JSON.stringify(contact));
@@ -70,6 +90,7 @@ export class ContactsComponent implements OnInit {
         data => {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
+          this.getContacts();
       },
         err => {
           this.log('Contacts create error.' + err);
