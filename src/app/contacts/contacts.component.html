@@ -4,6 +4,7 @@
     <label>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
     </label>
+    <button mat-flat-button color="primary" (click)="searchSOSL($event.target.value) ">Search</button>
   </mat-form-field>
   <!--  placeholder for input end-->
 
