@@ -21,6 +21,7 @@ export class ContactsComponent implements OnInit {
   contacts: Contact[];
   newContact: Contact[];
   tileColor: string;
+  searchParams: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

@@ -1,11 +1,14 @@
 <div  fxLayout="column" class="mat-elevation-z1" fxFlex="100%" fxFlex.gt-sm="100%">
 <!--  placeholder for input start-->
-  <mat-form-field>
-    <label>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
-    </label>
-    <button mat-flat-button color="primary" (click)="searchSOSL($event.target.value) ">Search</button>
-  </mat-form-field>
+  <div align="center">
+    <mat-form-field>
+      <label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="searchParams">
+      </label>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="applyFilter(searchParams) ">SOSL Search</button>
+  </div>
+
   <!--  placeholder for input end-->
 
   <table mat-table [dataSource]="dataSource" matSort>
