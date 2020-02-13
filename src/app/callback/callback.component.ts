@@ -23,7 +23,8 @@ export class CallbackComponent implements OnInit {
     if ( accessToken !== undefined && instanceUrl !== undefined) {
       this.log( 'Login success');
     }
-    this.router.navigate(['/events']);
+    this.router.navigate(['/contacts']);
+    // this.router.navigate(['/contacts']).then(r => console.log(new Date(), 'Navigating to contacts'));
   }
   ngOnInit() {
 
