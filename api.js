@@ -133,6 +133,7 @@ router.post('/searchSOSL', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /searchSOSL: Request query - ', req.query);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request params - ', req.params);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
+  console.log('---> DEBUG: SERVER: /searchSOSL: Request body search params - ', req.body.searchParams);
   const headers = req.headers.authorization;
   const params = headers.split('|');
   let accessToken = params[0];
@@ -149,7 +150,7 @@ router.post('/searchSOSL', (req, res, next) => {
     console.log('DEBUG: searchSOSL Connection user info - ', conn.userInfo);
   }
 
-  conn.search("FIND {" + req.body + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
+  conn.search("FIND {" + req.body.searchParams + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
     function(err, res) {
       if (err) { return console.error(err); }
       console.log(res);

@@ -39,10 +39,11 @@ export class ApiService {
 
   }
 
-  searchSOSL(value: string): Observable<any> {
+  searchSOSL(value: string): Observable<string> {
     console.log('api.service.ts : ', value);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');
+    // @ts-ignore
     return this.http.post(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
       catchError(this.handleApiError)
