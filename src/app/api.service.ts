@@ -40,6 +40,7 @@ export class ApiService {
   }
 
   searchSOSL(value: string): Observable<any> {
+    console.log('api.service.ts : ', value);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');
     return this.http.post<string>(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(

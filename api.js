@@ -129,6 +129,7 @@ router.get('/getEvents', (req, res, next) => {
 });
 
 router.post('/searchSOSL', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /searchSOSL: Request - ', req);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request query - ', req.query);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request params - ', req.params);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
@@ -148,7 +149,7 @@ router.post('/searchSOSL', (req, res, next) => {
     console.log('DEBUG: searchSOSL Connection user info - ', conn.userInfo);
   }
 
-  conn.search("FIND {" + req.body + "} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
+  conn.search("FIND {" + req.body + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
     function(err, res) {
       if (err) { return console.error(err); }
       console.log(res);
