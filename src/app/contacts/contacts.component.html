@@ -58,7 +58,32 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons></mat-paginator>
+
+<!--  setting up edit form-->
+  <div align="center">
+    <h2>Contact Details</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <label>
+        <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" required>
+      </label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <label>
+        <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" required>
+      </label>
+    </mat-form-field>
+  </div>
+
+  <div align="center">
+    <button mat-flat-button color="primary" (click)="createContact(selectedContact) ">{{(selectedContact.id !== undefined)?'Update':'Create'}}</button>
+  </div>
+
 </div>
+
+
 
 
 <!--<div *ngIf="!contactsExists">-->

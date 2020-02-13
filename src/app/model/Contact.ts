@@ -4,7 +4,7 @@ export class Contact {
   createdDate: string;
   FirstName: string;
   LastName: string;
-  Mobile: string;
+  MobilePhone: string;
   Email: string;
   Id: string;
   lastModifiedById: string;
