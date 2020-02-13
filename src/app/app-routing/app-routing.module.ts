@@ -11,9 +11,10 @@ const ROUTES = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'api/oauth2/callback', component: CallbackComponent},
-  {path: 'events', component: EventsComponent},
-  {path: 'event-detail/:fullName', component: EventDetailComponent},
-  {path: 'contacts', component: ContactsComponent}
+  {path: 'contacts', component: ContactsComponent},
+  // {path: 'events', component: EventsComponent},
+  // {path: 'event-detail/:fullName', component: EventDetailComponent},
+
 ];
 
 
