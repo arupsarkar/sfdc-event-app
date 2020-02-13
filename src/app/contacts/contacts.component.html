@@ -6,7 +6,7 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="searchParams">
       </label>
     </mat-form-field>
-    <button mat-flat-button color="primary" (click)="searchSOSL(searchParams) ">SOSL Search</button>
+    <button mat-flat-button color="primary" (click)="searchSOSL() ">Search</button>
   </div>
 
   <!--  placeholder for input end-->

@@ -56,8 +56,9 @@ export class ContactsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  searchSOSL(value: string): void {
-    this.apiService.searchSOSL(value).subscribe(
+  searchSOSL(): void {
+    console.log('Search Params : ', this.searchParams);
+    this.apiService.searchSOSL(this.searchParams).subscribe(
       data => {
         this.message = JSON.stringify(data);
         this.log(`${this.message}`);
