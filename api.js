@@ -128,6 +128,46 @@ router.get('/getEvents', (req, res, next) => {
   });
 });
 
+//get contacts
+router.get('/getContacts', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /getContacts: Request query - ', req.query);
+  console.log('---> DEBUG: SERVER: /getContacts: Request params - ', req.params);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getContacts Connection user info - ', conn.userInfo);
+  }
+  let records = [];
+  let queryString = 'SELECT Id, FirstName, LastName, Mobile, Phone, Email FROM Contact';
+  conn.query(queryString, function (err, result) {
+    if(err) {
+      return console.error(err);
+    }
+    console.log("total : " + result.totalSize);
+    console.log("fetched : " + result.records.length);
+    console.log("done ? : " + result.done);
+
+    if (!result.done) {
+      // you can use the locator to fetch next records set.
+      console.log("next records URL : " + result.nextRecordsUrl);
+    }else {
+      records = result.records;
+      res.status(200).json(records);
+    }
+  })
+
+});
+
 // Publish to platform events
 router.get('/getEventDetail/:fullName', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /eventDetail: Request query - ', req.query);

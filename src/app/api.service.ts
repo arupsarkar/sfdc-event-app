@@ -8,6 +8,7 @@ import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
+import {Contact} from './model/Contact';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,6 +38,14 @@ export class ApiService {
     }
 
   }
+  getContacts(): Observable<Contact[]> {
+    const URL = 'getContacts';
+    this.log(new Date() + ': Fetching contacts from salesforce.');
+    return this.http.get<Contact[]>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      map(contacts => contacts)
+    );
+  }
+
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.log('Fetched Platform Events');
