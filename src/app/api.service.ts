@@ -39,6 +39,16 @@ export class ApiService {
 
   }
 
+  deleteContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'deleteContact';
+    this.log(new Date() + ': Deleting contact.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
   createContact(contact: Contact): Observable<Contact[]> {
     const URL = 'createContact';
     this.log(new Date() + ': Creating contact.');

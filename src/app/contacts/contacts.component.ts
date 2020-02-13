@@ -77,6 +77,18 @@ export class ContactsComponent implements OnInit {
   deleteContact(contact: Contact): void {
     console.log('Deleted contact ', JSON.stringify(contact));
     this.contacts = this.contacts.filter(l => l !== contact);
+    this.apiService.deleteContact(contact).subscribe(
+      data => {
+        this.message = JSON.stringify(data);
+        this.log(`${this.message}`);
+        this.getContacts();
+      },
+      err => {
+        this.log('Delete contact error.' + err);
+      },
+      () => {
+        this.log('Delete contact operation completed successfully.');
+      });
   }
 
   createContact(contact: Contact): void {
