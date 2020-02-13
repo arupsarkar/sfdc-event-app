@@ -39,6 +39,14 @@ export class ApiService {
 
   }
 
+  searchSOSL(value: string): Observable<any> {
+    const URL = 'searchSOSL';
+    this.log(new Date() + ': Search SOSL from salesforce.');
+    return this.http.post<string>(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(
+      map(data => data)
+    );
+  }
+
   deleteContact(contact: Contact): Observable<Contact[]> {
     const URL = 'deleteContact';
     this.log(new Date() + ': Deleting contact.');

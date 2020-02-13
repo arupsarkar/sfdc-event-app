@@ -53,8 +53,22 @@ export class ContactsComponent implements OnInit {
   applyFilter(filterValue: string) {
     console.log('Search Filter : ', filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.searchSOSL(filterValue);
   }
 
+  searchSOSL(value: string): void {
+    this.apiService.searchSOSL(value).subscribe(
+      data => {
+        this.message = JSON.stringify(data);
+        this.log(`${this.message}`);
+      },
+      err => {
+        this.log('Search SOSL error.' + err);
+      },
+      () => {
+        this.log('Search SOSL operation completed successfully.');
+      });
+  }
   getContacts(): void {
     this.apiService.getContacts().subscribe(
       contacts => {
