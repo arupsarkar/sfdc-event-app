@@ -15,6 +15,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import {FormsModule} from '@angular/forms';
 import { MaterialModule} from './material/material.module';
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MaterialModule} from './material/material.module';
     CallbackComponent,
     EventsComponent,
     MessagesComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
