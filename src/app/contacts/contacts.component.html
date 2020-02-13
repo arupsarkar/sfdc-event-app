@@ -1,3 +1,12 @@
-<p>
-  contacts works!
-</p>
+<div *ngIf="!contactsExists">
+  <!-- Show the heading -->
+  <div>
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1">
+        <p class="a"> {{contactsExistHeader}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
