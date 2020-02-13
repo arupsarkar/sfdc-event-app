@@ -50,6 +50,11 @@ export class ContactsComponent implements OnInit {
     //   });
   }
 
+  applyFilter(filterValue: string) {
+    console.log('Search Filter : ', filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   getContacts(): void {
     this.apiService.getContacts().subscribe(
       contacts => {
