@@ -6,7 +6,7 @@ export class Contact {
   LastName: string;
   Mobile: string;
   Email: string;
-  id: string;
+  Id: string;
   lastModifiedById: string;
   lastModifiedByName: string;
   lastModifiedDate: string;
