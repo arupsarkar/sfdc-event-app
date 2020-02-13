@@ -10,3 +10,26 @@
     </mat-grid-list>
   </div>
 </div>
+
+
+<div *ngIf="contactsExists">
+  <!-- Show the heading -->
+  <div>
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1">
+        <p class="a"> {{contactsExistHeader}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div *ngFor="let contact of contacts">
+    <mat-grid-list cols="4" rowHeight="60px" >
+      <p> {{contact.FirstName}} </p>
+      <p> {{contact.LastName}} </p>
+    </mat-grid-list>
+  </div>
+
+
+</div>

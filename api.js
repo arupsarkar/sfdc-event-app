@@ -148,7 +148,7 @@ router.get('/getContacts', (req, res, next) => {
     console.log('DEBUG: getContacts Connection user info - ', conn.userInfo);
   }
   let records = [];
-  let queryString = 'SELECT Id, FirstName, LastName, Mobile, Phone, Email FROM Contact';
+  let queryString = 'SELECT Id, FirstName, LastName, MobilePhone, Phone, Email FROM Contact';
   conn.query(queryString, function (err, result) {
     if(err) {
       return console.error(err);
