@@ -9,6 +9,7 @@ import {MessageService} from './message.service';
 import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
 import {Contact} from './model/Contact';
+import {SearchParams} from './model/Search';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -39,12 +40,12 @@ export class ApiService {
 
   }
 
-  searchSOSL(value: string): Observable<string> {
-    console.log('api.service.ts : ', value);
+  searchSOSL(searchParam: SearchParams): Observable<string> {
+    console.log('api.service.ts : ', searchParam);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');
     // @ts-ignore
-    return this.http.post(`${environment.baseUrl}/${URL}`, value, httpOptions).pipe(
+    return this.http.post(`${environment.baseUrl}/${URL}`, searchParam, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
       catchError(this.handleApiError)
     );

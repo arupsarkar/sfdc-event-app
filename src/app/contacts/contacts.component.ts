@@ -4,6 +4,7 @@ import {ApiService} from '../api.service';
 import {MessageService} from '../message.service';
 import {Contact} from '../model/Contact';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {SearchParams} from '../model/Search';
 
 @Component({
   selector: 'app-contacts',
@@ -21,7 +22,7 @@ export class ContactsComponent implements OnInit {
   contacts: Contact[];
   newContact: Contact[];
   tileColor: string;
-  searchParams: string;
+  searchParam: SearchParams;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,8 +58,8 @@ export class ContactsComponent implements OnInit {
   }
 
   searchSOSL(): void {
-    console.log('Search Params : ', this.searchParams);
-    this.apiService.searchSOSL(this.searchParams).subscribe(
+    console.log('Search Params : ', this.searchParam);
+    this.apiService.searchSOSL(this.searchParam).subscribe(
       data => {
         this.message = JSON.stringify(data);
         this.log(`${this.message}`);
