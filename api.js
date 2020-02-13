@@ -148,10 +148,17 @@ router.post('/createContact', (req, res, next) => {
   }else{
     console.log('DEBUG: createContact Connection user info - ', conn.userInfo);
   }
-  conn.sobject("Contact").create({FirstName: req.body.FirstName, LastName: req.body.LastName}, function(err, ret) {
-    if (err || !ret.success) { return console.error(err, ret); }
-    else {
-      res.status(200).json({'Id': ret.Id});
+  conn.sobject("Contact").create({
+    FirstName: req.body.FirstName,
+    LastName: req.body.LastName,
+    Email: req.body.Email,
+    MobilePhone: req.body.MobilePhone}, function(err, ret) {
+    console.log('Create Contact : ', JSON.stringify(ret));
+    if (err || !ret.success) {
+      return console.error(err, ret);
+    } else {
+      console.log('Contact Id ', ret.id);
+      res.status(200).json({'Id': ret.id});
     }
   });
 
