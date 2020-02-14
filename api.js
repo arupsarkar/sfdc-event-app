@@ -153,7 +153,7 @@ router.post('/searchSOSL', (req, res, next) => {
     function(err, result) {
       if (err) { return console.error(err); }
       console.log(JSON.stringify(result));
-      res.status(200).json(result);
+      res.status(200).json(result.searchRecords);
     }
   );
 
