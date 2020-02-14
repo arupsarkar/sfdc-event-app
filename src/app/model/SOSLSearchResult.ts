@@ -1,6 +1,5 @@
 export class SOSLSearchResult {
-  type: string;
-  url: string;
+  attributes: { type: string, url: string};
   Id: string;
   Name: string;
 }

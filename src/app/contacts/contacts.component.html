@@ -13,8 +13,8 @@
 
     <div *ngFor="let result of searchResults">
       <mat-grid-list cols="4" rowHeight="60px" >
-        <p> {{result.type}} </p>
-        <p> {{result.url}} </p>
+        <p> {{result.attributes.type}} </p>
+        <p> {{result.attributes.url}} </p>
         <p> {{result.Id}} </p>
         <p> {{result.Name}} </p>
       </mat-grid-list>

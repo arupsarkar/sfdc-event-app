@@ -129,9 +129,6 @@ router.get('/getEvents', (req, res, next) => {
 });
 
 router.post('/searchSOSL', (req, res, next) => {
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request - ', req);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request query - ', req.query);
-  console.log('---> DEBUG: SERVER: /searchSOSL: Request params - ', req.params);
   console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
   const headers = req.headers.authorization;
   const params = headers.split('|');
@@ -151,7 +148,7 @@ router.post('/searchSOSL', (req, res, next) => {
 
   conn.search("FIND {" + req.body.searchValue + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
     function(err, result) {
-      if (err) { return console.error(err); }
+      if (err) { res.status(200).json(err); }
       console.log(JSON.stringify(result));
       res.status(200).json(result.searchRecords);
     }
@@ -177,7 +174,7 @@ router.post('/updateContact', (req, res, next) => {
     MobilePhone : req.body.MobilePhone,
     Email : req.body.Email,
   }, function(err, ret) {
-    if (err || !ret.success) { return console.error(err, ret); }
+    if (err || !ret.success) { res.status(200).json(err); }
     console.log('Updated Successfully : ' + ret.id);
     res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
   });
@@ -205,7 +202,7 @@ router.post('/deleteContact', (req, res, next) => {
   }
 // Single record deletion
   conn.sobject("Contact").destroy(req.body.Id, function(err, ret) {
-    if (err || !ret.success) { return console.error(err, ret); }
+    if (err || !ret.success) { res.status(200).json(err); }
     console.log('Deleted Successfully : ' + ret.id);
     res.status(200).json({'Id': ret.Id});
   });
@@ -237,7 +234,7 @@ router.post('/createContact', (req, res, next) => {
     MobilePhone: req.body.MobilePhone}, function(err, ret) {
     console.log('Create Contact : ', JSON.stringify(ret));
     if (err || !ret.success) {
-      return console.error(err, ret);
+      res.status(200).json(err);
     } else {
       res.status(200).json({'Id': ret.Id});
       console.log('Contact Id ', ret.id);
