@@ -47,9 +47,9 @@ export class ApiService {
     this.log(new Date() + ': Search SOSL from salesforce.');
     // @ts-ignore
     return this.http.post(`${environment.baseUrl}/${URL}`, searchParam, httpOptions).pipe(
-      tap((searchResults) => {
-        this.log( JSON.stringify(searchResults));
-      }),
+      // tap((searchResults) => {
+      //   this.log( JSON.stringify(searchResults));
+      // }),
       map( searchResults => searchResults),
       catchError(this.handleApiError)
     );
