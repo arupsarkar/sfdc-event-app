@@ -3,10 +3,10 @@
   <div align="center">
     <mat-form-field>
       <label>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="searchParam">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" [(ngModel)]="search">
       </label>
     </mat-form-field>
-    <button mat-flat-button color="primary" (click)="searchSOSL()">Search</button>
+    <button mat-flat-button color="primary" (click)="searchSOSL(search)">Search</button>
   </div>
 
   <!--  placeholder for input end-->

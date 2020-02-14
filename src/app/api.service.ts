@@ -40,7 +40,7 @@ export class ApiService {
 
   }
 
-  searchSOSL(searchParam: SearchParams): Observable<SearchParams> {
+  searchSOSL(searchParam: SearchParams): Observable<SearchParams[]> {
     console.log('api.service.ts : ', searchParam);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');

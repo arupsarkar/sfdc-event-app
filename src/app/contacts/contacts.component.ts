@@ -22,7 +22,7 @@ export class ContactsComponent implements OnInit {
   contacts: Contact[];
   newContact: Contact[];
   tileColor: string;
-  searchParam: SearchParams;
+  search: SearchParams = new SearchParams();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,9 +57,9 @@ export class ContactsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  searchSOSL(): void {
-    console.log('Search Params : ', this.searchParam);
-    this.apiService.searchSOSL(this.searchParam).subscribe(
+  searchSOSL(search: SearchParams): void {
+    console.log('Search Params : ', JSON.stringify(search));
+    this.apiService.searchSOSL(search).subscribe(
       data => {
         this.message = JSON.stringify(data);
         this.log(`${this.message}`);
