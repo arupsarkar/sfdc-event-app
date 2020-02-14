@@ -36,27 +36,14 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit() {
     this.getContacts();
-    // this.apiService.getContacts().subscribe(
-    //   contacts => {
-    //     this.contacts = contacts;
-    //     this.log(this.contacts.length + ' contacts fetched.');
-    //     this.contactsExists = contacts.length > 0;
-    //     this.dataSource = new MatTableDataSource(this.contacts);
-    //     this.dataSource.sort = this.sort;
-    //     this.dataSource.paginator = this.paginator;
-    //     if (!this.contactsExists) {
-    //       this.contactsExistHeader = 'There are no contacts in this org.';
-    //     }
-    // }, error => {
-    //     this.log('Contacts fetched error.' + error);
-    //   }, () => {
-    //     this.log('Contacts fetch operation completed successfully.');
-    //   });
   }
 
   applyFilter(filterValue: string) {
     console.log('Search Filter : ', filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if ( filterValue.length < 1 ) {
+      this.searchResults = undefined;
+    }
   }
 
   searchSOSL(search: SearchParams): void {
@@ -120,6 +107,18 @@ export class ContactsComponent implements OnInit {
     // check if the id already exists - update, else insert
     if (this.selectedContact.Id !== undefined) {
       console.log('update contact component id ', contact.Id);
+      this.apiService.updateContact(contact).subscribe(
+        data => {
+          this.message = JSON.stringify(data);
+          this.log(`${this.message}`);
+          this.getContacts();
+        },
+        err => {
+          this.log('Contacts create error.' + err);
+        },
+        () => {
+          this.log('Contacts update operation completed successfully.');
+        });
     } else {
       console.log('create contact component id ', JSON.stringify(contact));
       this.apiService.createContact(contact).subscribe(

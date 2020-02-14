@@ -65,13 +65,19 @@ export class ApiService {
     );
   }
 
+  updateContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'updateContact';
+    this.log(new Date() + ': Updating contact.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
   createContact(contact: Contact): Observable<Contact[]> {
     const URL = 'createContact';
     this.log(new Date() + ': Creating contact.');
-    // return this.http.post(``, contact, httpOptions).pipe(
-    //   tap( (res) => {this.log(JSON.stringify(res)); }), catchError(this.handleApiError)
-    // );
-    //
     // @ts-ignore
     return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
