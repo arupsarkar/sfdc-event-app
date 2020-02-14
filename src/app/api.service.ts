@@ -10,6 +10,7 @@ import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
 import {Contact} from './model/Contact';
 import {SearchParams} from './model/Search';
+import {SOSLSearchResult} from './model/SOSLSearchResult';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,7 +41,7 @@ export class ApiService {
 
   }
 
-  searchSOSL(searchParam: SearchParams): Observable<SearchParams[]> {
+  searchSOSL(searchParam: SearchParams): Observable<SOSLSearchResult[]> {
     console.log('api.service.ts : ', searchParam);
     const URL = 'searchSOSL';
     this.log(new Date() + ': Search SOSL from salesforce.');

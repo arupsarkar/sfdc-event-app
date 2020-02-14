@@ -152,7 +152,7 @@ router.post('/searchSOSL', (req, res, next) => {
   conn.search("FIND {" + req.body.searchValue + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
     function(err, result) {
       if (err) { return console.error(err); }
-      console.log(result);
+      console.log(JSON.stringify(result));
       res.status(200).json(result);
     }
   );
