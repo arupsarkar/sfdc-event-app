@@ -62,8 +62,8 @@ export class ContactsComponent implements OnInit {
   searchSOSL(search: SearchParams): void {
     console.log('Search Params : ', JSON.stringify(search));
     this.apiService.searchSOSL(search).subscribe(
-      data => {
-        this.searchResults = data;
+      searchResults => {
+        this.searchResults = searchResults;
         this.message = JSON.stringify(this.searchResults);
         this.log(`${this.message}`);
       },

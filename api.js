@@ -159,6 +159,30 @@ router.post('/searchSOSL', (req, res, next) => {
 
 });
 
+router.post('/updateContact', (req, res, next) => {
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+// Single record update
+  conn.sobject("Contact").update({
+    Id : req.body.Id,
+    FirstName : req.body.FirstName,
+    LastName : req.body.LastName,
+    MobilePhone : req.body.MobilePhone,
+    Email : req.body.Email,
+  }, function(err, ret) {
+    if (err || !ret.success) { return console.error(err, ret); }
+    console.log('Updated Successfully : ' + ret.id);
+    res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
+  });
+});
+
 // delete contact
 router.post('/deleteContact', (req, res, next) => {
   console.log('---> DEBUG: SERVER: /deleteContact: Request query - ', req.query);
