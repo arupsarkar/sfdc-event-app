@@ -20,15 +20,7 @@
       </mat-card-header>
     </mat-card>
   </div>
-    <div *ngFor="let result of searchResults">
 
-      <mat-grid-list cols="4" rowHeight="60px" >
-        <p> {{result.attributes.type}} </p>
-        <p> {{result.attributes.url}} </p>
-        <p> {{result.Id}} </p>
-        <p> {{result.Name}} </p>
-      </mat-grid-list>
-    </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
 
