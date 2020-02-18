@@ -25,14 +25,14 @@ export class LoginComponent implements OnInit {
 
   private secret: string;
   headings: Tile[] = [
-    {text: 'Platform Event Integration', cols: 4, rows: 1, color: '#e3f2fd', disable: false}
+    {text: 'Extending Salesforce using REST API', cols: 4, rows: 1, color: '#e3f2fd', disable: false}
   ];
 
   loginTiles: Tile[] = [
-    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
+    {text: 'Extending Salesforce using REST API', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
   ];
   logoutTiles: Tile[] = [
-    {text: 'Platform Event Integration', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
+    {text: 'Extending Salesforce using REST API', cols: 1, rows: 1, color: '#e3f2fd', disable: false}
   ];
   middleSpaces: Tile[] = [
     {text: '', cols: 2, rows: 1, color: '#e3f2fd', disable: false}
