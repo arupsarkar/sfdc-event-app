@@ -195,7 +195,7 @@ router.post('/updateContact', (req, res, next) => {
     producer.send({
       topic: 'interactions',
       message: {
-        value: JSON.stringify(data)
+        value: JSON.stringify(ret)
       }
     });
 
