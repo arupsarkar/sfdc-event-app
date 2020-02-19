@@ -9,13 +9,20 @@ const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 
 const consumer = new kafka.SimpleConsumer();
 // data handler function can return a Promise
-var dataHandler = function (messageSet, topic, partition) {
+const dataHandler = function (messageSet, topic, partition) {
   messageSet.forEach(function (m) {
     console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
   });
 };
 consumer.subscribe('interactions', dataHandler);
 
+consumer.on('error', function(err) {
+  console.log("Kafka Error: Consumer - " + err);
+});
+
+consumer.on('message', function (message) {
+  console.log('kafka message : ', message);
+});
 
 const producer = new kafka.Producer({
   connectionString: brokerUrls,
@@ -206,6 +213,7 @@ router.post('/updateContact', (req, res, next) => {
       console.log('producer send() : ', 'start');
       producer.send({
         topic: 'interactions',
+        partition: 0,
         message: {
           value: JSON.stringify(ret)
         }
