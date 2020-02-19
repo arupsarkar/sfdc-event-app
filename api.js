@@ -2,6 +2,20 @@ const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
+
+const kafka = require('no-kafka');
+
+const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
+
+const producer = new kafka.Producer({
+  connectionString: brokerUrls,
+  ssl: {
+    certFile: process.env.KAFKA_CLIENT_CERT,
+    keyFile: process.env.KAFKA_CLIENT_CERT_KEY
+  }
+});
+
+producer.init();
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -177,6 +191,14 @@ router.post('/updateContact', (req, res, next) => {
     if (err || !ret.success) { res.status(200).json(err); }
     console.log('Updated Successfully : ' + ret.id);
     res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
+
+    producer.send({
+      topic: 'interactions',
+      message: {
+        value: JSON.stringify(data)
+      }
+    });
+
   });
 });
 
