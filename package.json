@@ -35,6 +35,7 @@
     "http-proxy": "^1.17.0",
     "jsforce": "^1.9.1",
     "ngx-cookie-service": "^2.0.0",
+    "no-kafka": "^3.4.3",
     "rxjs": "~6.3.3",
     "socket.io": "^2.2.0",
     "typescript": "~3.1.1",
