@@ -16,14 +16,6 @@ const dataHandler = function (messageSet, topic, partition) {
 };
 consumer.subscribe('interactions', dataHandler);
 
-consumer.on('error', function(err) {
-  console.log("Kafka Error: Consumer - " + err);
-});
-
-consumer.on('message', function (message) {
-  console.log('kafka message : ', message);
-});
-
 const producer = new kafka.Producer({
   connectionString: brokerUrls,
   ssl: {
