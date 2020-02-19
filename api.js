@@ -199,17 +199,14 @@ router.post('/updateContact', (req, res, next) => {
     Email : req.body.Email,
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
-    console.log('Updated Successfully : ' + ret.id);
-    res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
-
     producer.send({
       topic: 'interactions',
       message: {
         value: JSON.stringify(ret)
       }
-
     });
-
+    console.log('Updated Successfully : ' + ret.id);
+    res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
   });
 });
 
