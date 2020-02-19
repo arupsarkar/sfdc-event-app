@@ -16,18 +16,23 @@ const dataHandler = function (messageSet, topic, partition) {
 };
 consumer.subscribe('interactions', dataHandler);
 
-const producer = new kafka.Producer({
-  connectionString: brokerUrls,
-  ssl: {
-    certFile: process.env.KAFKA_CLIENT_CERT,
-    keyFile: process.env.KAFKA_CLIENT_CERT_KEY
-  }
-});
+const kafkaProducer = () => {
+  const producer = new kafka.Producer({
+    connectionString: brokerUrls,
+    ssl: {
+      certFile: process.env.KAFKA_CLIENT_CERT,
+      keyFile: process.env.KAFKA_CLIENT_CERT_KEY
+    }
+  });
+  console.log(new Date(), 'kafka producer init - start');
+  console.log(new Date(), 'process.env.KAFKA_CLIENT_CERT_KEY : ' + process.env.KAFKA_CLIENT_CERT_KEY);
+  producer.init();
+  console.log(new Date(), 'kafka producer init - end');
+};
 
-console.log(new Date(), 'kafka producer init - start');
-console.log(new Date(), 'process.env.KAFKA_CLIENT_CERT_KEY : ' + process.env.KAFKA_CLIENT_CERT_KEY);
-producer.init();
-console.log(new Date(), 'kafka producer init - end');
+
+
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -210,6 +215,7 @@ router.post('/updateContact', (req, res, next) => {
           value: JSON.stringify(ret)
         }
       });
+      kafkaProducer();
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());
