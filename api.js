@@ -7,6 +7,16 @@ const kafka = require('no-kafka');
 
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 
+const consumer = new kafka.SimpleConsumer();
+// data handler function can return a Promise
+var dataHandler = function (messageSet, topic, partition) {
+  messageSet.forEach(function (m) {
+    console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+  });
+};
+consumer.subscribe('interactions', dataHandler);
+
+
 const producer = new kafka.Producer({
   connectionString: brokerUrls,
   ssl: {
@@ -197,6 +207,7 @@ router.post('/updateContact', (req, res, next) => {
       message: {
         value: JSON.stringify(ret)
       }
+
     });
 
   });
