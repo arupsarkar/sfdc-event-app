@@ -3,30 +3,6 @@ const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
 
-const kafka = require('no-kafka');
-const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
-const consumer = new kafka.SimpleConsumer();
-
-// let producer = new kafka.Producer({
-//   connectionString: brokerUrls,
-//   ssl: {
-//     certFile: process.env.KAFKA_CLIENT_CERT,
-//     keyFile: process.env.KAFKA_CLIENT_CERT_KEY
-//   }
-// });
-//
-// producer.init();
-
-// data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition) {
-  messageSet.forEach(function (m) {
-    console.log('topic : ', topic);
-    console.log('partition : ', partition);
-    console.log('message : ', m.message.value.toString('utf8'));
-  });
-};
-consumer.subscribe('interactions', dataHandler).then(r => {console.log('---> subscribe : ', r)});
-
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -201,7 +177,7 @@ router.post('/updateContact', (req, res, next) => {
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
-      console.log('producer send() : ', 'start');
+      console.log('producer send() : ', 'start' + JSON.stringify(req.producer));
       req.producer.send({
         topic: 'interactions',
         message: {
