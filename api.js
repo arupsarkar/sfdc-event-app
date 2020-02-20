@@ -191,7 +191,7 @@ router.post('/updateContact', (req, res, next) => {
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
-      console.log('producer send() : ', 'start' + JSON.stringify(req.producer));
+      console.log('producer send() : ', 'start' + req.producer);
       req.producer.init().then( function () {
         req.producer.send({
           topic: 'interactions',
@@ -203,7 +203,7 @@ router.post('/updateContact', (req, res, next) => {
       })
         .then( function (result) {
           console.log(new Date(), ' producer : ' + result);
-          console.log('consumer subscribe() : ', 'start' + JSON.stringify(req.consumer));
+          console.log('consumer subscribe() : ', 'start' + req.consumer);
           req.consumer.init().then( function() {
             req.consumer.subscribe('interactions', dataHandler).then(
               (data) => { console.log(new Date(), ' data ' + data)},
