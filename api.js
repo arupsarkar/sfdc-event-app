@@ -7,6 +7,15 @@ const bodyParser = require("body-parser");
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
+// data handler function can return a Promise
+const dataHandler = function (messageSet, topic, partition) {
+  messageSet.forEach(function (m) {
+    console.log('topic : ', topic);
+    console.log('partition : ', partition);
+    console.log('message : ', m.message.value.toString('utf8'));
+  });
+};
+
 router.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -184,6 +193,9 @@ router.post('/updateContact', (req, res, next) => {
           value: JSON.stringify(ret)
         }
       });
+      console.log('consumer subscribe() : ', 'start');
+      req.consumer.subscribe('interactions', dataHandler).then(r => {console.log('---> subscribe : ', r)});
+      console.log('consumer subscribe() : ', 'end');
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());

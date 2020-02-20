@@ -12,16 +12,6 @@ const kafka = require('no-kafka');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 const consumer = new kafka.SimpleConsumer();
 
-// data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition) {
-  messageSet.forEach(function (m) {
-    console.log('topic : ', topic);
-    console.log('partition : ', partition);
-    console.log('message : ', m.message.value.toString('utf8'));
-  });
-};
-consumer.subscribe('interactions', dataHandler).then(r => {console.log('---> subscribe : ', r)});
-
 let producer = new kafka.Producer({
   connectionString: brokerUrls,
   ssl: {
@@ -34,6 +24,7 @@ producer.init();
 console.log(new Date(), ' producer init() - end');
 app.use( function (req, res, next) {
   req.producer = producer;
+  req.consumer = consumer;
   next();
 });
 
