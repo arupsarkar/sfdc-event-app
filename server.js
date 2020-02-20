@@ -8,6 +8,23 @@ const app = express();
 const port = process.env.PORT || '3000';
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const kafka = require('no-kafka');
+const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
+
+let producer = new kafka.Producer({
+  connectionString: brokerUrls,
+  ssl: {
+    certFile: process.env.KAFKA_CLIENT_CERT,
+    keyFile: process.env.KAFKA_CLIENT_CERT_KEY
+  }
+});
+console.log(new Date(), ' producer init().');
+producer.init();
+console.log(new Date(), ' producer init().' + JSON.stringify(producer));
+app.use( function (req, res, next) {
+  req.producer = producer;
+  next();
+});
 
 app.use(function(req, res, next) {
   req.io = io;

@@ -7,15 +7,15 @@ const kafka = require('no-kafka');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 const consumer = new kafka.SimpleConsumer();
 
-let producer = new kafka.Producer({
-  connectionString: brokerUrls,
-  ssl: {
-    certFile: process.env.KAFKA_CLIENT_CERT,
-    keyFile: process.env.KAFKA_CLIENT_CERT_KEY
-  }
-});
-
-producer.init();
+// let producer = new kafka.Producer({
+//   connectionString: brokerUrls,
+//   ssl: {
+//     certFile: process.env.KAFKA_CLIENT_CERT,
+//     keyFile: process.env.KAFKA_CLIENT_CERT_KEY
+//   }
+// });
+//
+// producer.init();
 
 // data handler function can return a Promise
 const dataHandler = function (messageSet, topic, partition) {
@@ -202,7 +202,7 @@ router.post('/updateContact', (req, res, next) => {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
       console.log('producer send() : ', 'start');
-      producer.send({
+      req.producer.send({
         topic: 'interactions',
         message: {
           value: JSON.stringify(ret)
