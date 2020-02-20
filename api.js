@@ -191,10 +191,10 @@ router.post('/updateContact', (req, res, next) => {
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
-      console.log('producer send() : ', 'start');
+      console.log('producer send() : ', 'start' + JSON.stringify(req.producer));
       req.producer.init().then( function () {
         req.producer.send({
-          topic: 'james-29939.interactions',
+          topic: 'interactions',
           partition: 0,
           message: {
             value: 'Hello!'
@@ -203,11 +203,11 @@ router.post('/updateContact', (req, res, next) => {
       })
         .then( function (result) {
           console.log(new Date(), ' producer : ' + result);
-          console.log('consumer subscribe() : ', 'start');
+          console.log('consumer subscribe() : ', 'start' + JSON.stringify(req.consumer));
           req.consumer.init().then( function() {
-            req.consumer.subscribe('james-29939.interactions', dataHandler).then(
+            req.consumer.subscribe('interactions', dataHandler).then(
               (data) => { console.log(new Date(), ' data ' + data)},
-              (error) => { console.log(new Date(), error)}
+              (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
             );
           });
           console.log('consumer subscribe() : ', 'end');
