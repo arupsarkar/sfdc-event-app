@@ -194,7 +194,7 @@ router.post('/updateContact', (req, res, next) => {
       console.log('producer send() : ', 'start');
       req.producer.init().then( function () {
         req.producer.send({
-          topic: 'interactions',
+          topic: 'james-29939.interactions',
           partition: 0,
           message: {
             value: 'Hello!'
@@ -203,28 +203,15 @@ router.post('/updateContact', (req, res, next) => {
       })
         .then( function (result) {
           console.log(new Date(), ' producer : ' + result);
+          console.log('consumer subscribe() : ', 'start');
+          req.consumer.init().then( function() {
+            req.consumer.subscribe('james-29939.interactions', dataHandler).then(
+              (data) => { console.log(new Date(), ' data ' + data)},
+              (error) => { console.log(new Date(), error)}
+            );
+          });
+          console.log('consumer subscribe() : ', 'end');
         });
-      // req.producer.send({
-      //   topic: 'interactions',
-      //   partition: 0,
-      //   message: {
-      //     value: JSON.stringify(ret)
-      //   }
-      // });
-      console.log('consumer subscribe() : ', 'start');
-
-      req.consumer.init().then( function() {
-        req.consumer.subscribe('interactions', dataHandler).then(
-          (data) => { console.log(new Date(), ' data ' + data)},
-          (error) => { console.log(new Date(), error)}
-          );
-      });
-
-      // req.consumer.subscribe('interactions', dataHandler).then (
-      //   (data) => {console.log('---> subscribe : ', data)},
-      //   (error) => {console.log(new Date(), error)}
-      //   );
-      console.log('consumer subscribe() : ', 'end');
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());
