@@ -192,12 +192,25 @@ router.post('/updateContact', (req, res, next) => {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
       console.log('producer send() : ', 'start');
-      req.producer.send({
-        topic: 'interactions',
-        message: {
-          value: JSON.stringify(ret)
-        }
-      });
+      req.producer.init().then( function () {
+        req.producer.send({
+          topic: 'interactions',
+          partition: 0,
+          message: {
+            value: 'Hello!'
+          }
+        })
+      })
+        .then( function (result) {
+          console.log(new Date(), ' producer : ' + result);
+        });
+      // req.producer.send({
+      //   topic: 'interactions',
+      //   partition: 0,
+      //   message: {
+      //     value: JSON.stringify(ret)
+      //   }
+      // });
       console.log('consumer subscribe() : ', 'start');
 
       req.consumer.init().then( function() {
