@@ -8,15 +8,8 @@ const kafka = require('no-kafka');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 
 const consumer = new kafka.SimpleConsumer();
-// data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition) {
-  messageSet.forEach(function (m) {
-    console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
-  });
-};
-consumer.subscribe('interactions', dataHandler);
 
-const kafkaProducer = () => {
+
   const producer = new kafka.Producer({
     connectionString: brokerUrls,
     ssl: {
@@ -28,7 +21,6 @@ const kafkaProducer = () => {
   console.log(new Date(), 'process.env.KAFKA_CLIENT_CERT_KEY : ' + process.env.KAFKA_CLIENT_CERT_KEY);
   producer.init();
   console.log(new Date(), 'kafka producer init - end');
-};
 
 
 
@@ -215,7 +207,13 @@ router.post('/updateContact', (req, res, next) => {
           value: JSON.stringify(ret)
         }
       });
-      kafkaProducer();
+// data handler function can return a Promise
+      const dataHandler = function (messageSet, topic, partition) {
+        messageSet.forEach(function (m) {
+          console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+        });
+      };
+      consumer.subscribe('interactions', 0, dataHandler).then(r => {console.log('---> subscribe : ', r)});
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());
