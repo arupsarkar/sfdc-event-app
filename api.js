@@ -9,11 +9,16 @@ const bodyParser = require("body-parser");
  */
 // data handler function can return a Promise
 const dataHandler = function (messageSet, topic, partition) {
-  messageSet.forEach(function (m) {
-    console.log('topic : ', topic);
-    console.log('partition : ', partition);
-    console.log('message : ', m.message.value.toString('utf8'));
-  });
+  try{
+    messageSet.forEach(function (m) {
+      console.log('topic : ', topic);
+      console.log('partition : ', partition);
+      console.log('message : ', m.message.value.toString('utf8'));
+    });
+  }catch(e) {
+    console.log(new Date(), 'Error dataHandler() ' + e.toLocaleString());
+  }
+
 };
 
 router.use(bodyParser.urlencoded({
@@ -194,10 +199,18 @@ router.post('/updateContact', (req, res, next) => {
         }
       });
       console.log('consumer subscribe() : ', 'start');
-      req.consumer.subscribe('interactions', dataHandler).then (
-        (data) => {console.log('---> subscribe : ', data)},
-        (error) => {console.log(new Date(), error)}
-        );
+
+      req.consumer.init().then( function() {
+        req.consumer.subscribe('interactions', [0, 1], {offset: 20}, dataHandler).then(
+          (data) => { console.log(new Date(), ' data ' + data)},
+          (error) => { console.log(new Date(), error)}
+          );
+      });
+
+      // req.consumer.subscribe('interactions', dataHandler).then (
+      //   (data) => {console.log('---> subscribe : ', data)},
+      //   (error) => {console.log(new Date(), error)}
+      //   );
       console.log('consumer subscribe() : ', 'end');
       console.log('producer send() : ', 'end');
     }catch(e) {
