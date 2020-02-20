@@ -194,7 +194,10 @@ router.post('/updateContact', (req, res, next) => {
         }
       });
       console.log('consumer subscribe() : ', 'start');
-      req.consumer.subscribe('interactions', dataHandler).then(r => {console.log('---> subscribe : ', r)});
+      req.consumer.subscribe('interactions', dataHandler).then (
+        (data) => {console.log('---> subscribe : ', data)},
+        (error) => {console.log(new Date(), error)}
+        );
       console.log('consumer subscribe() : ', 'end');
       console.log('producer send() : ', 'end');
     }catch(e) {
