@@ -4,27 +4,8 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 
 const kafka = require('no-kafka');
-
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
-
 const consumer = new kafka.SimpleConsumer();
-
-
-  const producer = new kafka.Producer({
-    connectionString: brokerUrls,
-    ssl: {
-      certFile: process.env.KAFKA_CLIENT_CERT,
-      keyFile: process.env.KAFKA_CLIENT_CERT_KEY
-    }
-  });
-  console.log(new Date(), 'kafka producer init - start');
-  console.log(new Date(), 'process.env.KAFKA_CLIENT_CERT_KEY : ' + process.env.KAFKA_CLIENT_CERT_KEY);
-  producer.init();
-  console.log(new Date(), 'kafka producer init - end');
-
-
-
-
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -200,7 +181,7 @@ router.post('/updateContact', (req, res, next) => {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
       console.log('producer send() : ', 'start');
-      producer.send({
+      req.producer.send({
         topic: 'interactions',
         partition: 0,
         message: {
