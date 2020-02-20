@@ -210,7 +210,9 @@ router.post('/updateContact', (req, res, next) => {
 // data handler function can return a Promise
       const dataHandler = function (messageSet, topic, partition) {
         messageSet.forEach(function (m) {
-          console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+          console.log('topic : ', topic);
+          console.log('partition : ', partition);
+          console.log('message : ', m.message.value.toString('utf8'));
         });
       };
       consumer.subscribe('interactions', 0, dataHandler).then(r => {console.log('---> subscribe : ', r)});
