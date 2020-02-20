@@ -201,7 +201,7 @@ router.post('/updateContact', (req, res, next) => {
       console.log('consumer subscribe() : ', 'start');
 
       req.consumer.init().then( function() {
-        req.consumer.subscribe('interactions', [0, 1], {offset: 20}, dataHandler).then(
+        req.consumer.subscribe('interactions', dataHandler).then(
           (data) => { console.log(new Date(), ' data ' + data)},
           (error) => { console.log(new Date(), error)}
           );
