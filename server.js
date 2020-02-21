@@ -9,12 +9,26 @@ const port = process.env.PORT || '3000';
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const kafka = require('no-kafka');
+const Promise = require('bluebird');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
-const consumer = new kafka.SimpleConsumer({
+const consumer = new kafka.GroupConsumer({
   connectionString: brokerUrls
 });
 
 console.log(new Date(), brokerUrls);
+
+const dataHandler = function (messageSet, topic, partition) {
+  return Promise.each(messageSet, function (m){
+    console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
+      ", Message: " + m.message.value.toString('utf8'));
+    return consumer.commitOffset({topic: topic, partition: partition, offset: m.offset, metadata: 'optional'});
+  });
+};
+
+const strategies = [{
+  subscriptions: ['james-29939.interactions'],
+  handler: dataHandler
+}];
 
 let producer = new kafka.Producer({
   connectionString: brokerUrls,
@@ -25,6 +39,7 @@ let producer = new kafka.Producer({
 });
 console.log(new Date(), ' producer init() - start');
 producer.init();
+consumer.init(strategies);
 console.log(new Date(), ' producer init() - end');
 app.use( function (req, res, next) {
   req.producer = producer;
