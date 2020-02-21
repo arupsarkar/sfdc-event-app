@@ -202,7 +202,7 @@ router.post('/updateContact', (req, res, next) => {
         }
       }).then(
         (data) => {
-          console.log(new Date(), 'producer data : ' + data);
+          console.log(new Date(), 'producer data : ' + JSON.stringify(data));
         },
         (err) => {
           console.log(new Date(), 'producer err : ' + err);
@@ -213,7 +213,7 @@ router.post('/updateContact', (req, res, next) => {
         }
       ).finally(
         (result) => {
-          console.log(new Date(), 'finally producer result : ' + result);
+          console.log(new Date(), 'Producer send completed successfully.' + result);
         }
       );
 /*      console.log(new Date(), 'producer send() : end');*/
