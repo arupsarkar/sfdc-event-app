@@ -203,7 +203,7 @@ router.post('/updateContact', (req, res, next) => {
       })
         .then( function (result) {
           console.log(new Date(), ' producer : ' + result);
-          console.log('consumer subscribe() : ', 'start' + req.consumer);
+          console.log('consumer subscribe() : ', req.consumer);
           req.consumer.init().then( function() {
             req.consumer.subscribe('interactions', dataHandler).then(
               (data) => { console.log(new Date(), ' data ' + data)},
