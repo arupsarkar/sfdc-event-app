@@ -194,7 +194,7 @@ router.post('/updateContact', (req, res, next) => {
       console.log(new Date(), 'producer send() : start');
 
       req.producer.send({
-        topic: 'interactions',
+        topic: 'james-29939.interactions',
         message: {
           key: ret.id,
           value: JSON.stringify(ret)
@@ -211,8 +211,8 @@ router.post('/updateContact', (req, res, next) => {
           console.log(new Date(), 'producer error : ' + error);
         }
       ).finally(
-        (result) => {
-          console.log(new Date(), 'Producer send completed successfully.' + result);
+        () => {
+          console.log(new Date(), 'Producer send completed successfully.');
         }
       );
 /*      console.log(new Date(), 'producer send() : end');*/
