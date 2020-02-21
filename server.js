@@ -10,7 +10,9 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const kafka = require('no-kafka');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
-const consumer = new kafka.SimpleConsumer();
+const consumer = new kafka.SimpleConsumer({
+  connectionString: brokerUrls
+});
 
 console.log(new Date(), brokerUrls);
 
