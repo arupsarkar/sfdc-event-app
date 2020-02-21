@@ -2,23 +2,17 @@ const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
-
+const Promise = require('bluebird');
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
 // data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition) {
-  try{
-    messageSet.forEach(function (m) {
-      console.log('topic : ', topic);
-      console.log('partition : ', partition);
-      console.log('message : ', m.message.value.toString('utf8'));
-    });
-  }catch(e) {
-    console.log(new Date(), 'Error dataHandler() ' + e.toLocaleString());
-  }
-
+const dataHandler = function (messageSet, topic, partition ) {
+  return Promise.each(messageSet, function (m){
+    console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
+      ", Message: " + m.message.value.toString('utf8'));
+  });
 };
 
 router.use(bodyParser.urlencoded({
