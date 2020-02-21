@@ -200,18 +200,14 @@ router.post('/updateContact', (req, res, next) => {
         () => {
 // data handler function can return a Promise
           const dataHandler = function (messageSet, topic, partition ) {
+            console.log(new Date(), messageSet);
+            console.log(new Date(), topic);
+            console.log(new Date(), partition);
             return Promise.each(messageSet, function (m){
               console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
                 ", Message: " + m.message.value.toString('utf8'));
             });
           };
-          const strategies = [{
-            subscriptions: ['james-29939.interactions'],
-            handler: dataHandler
-          }];
-
-          req.consumer.init(strategies).then(r => {console.log(new Date(), r)});
-
           req.consumer.subscribe('james-29939.interactions',dataHandler)
             .then(
               (data) => {console.log(new Date(), 'consumer data : ' + JSON.stringify(data));}
