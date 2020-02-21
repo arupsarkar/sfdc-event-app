@@ -7,14 +7,6 @@ const Promise = require('bluebird');
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
-// data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition ) {
-  return Promise.each(messageSet, function (m){
-    console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
-      ", Message: " + m.message.value.toString('utf8'));
-  });
-};
-
 router.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -206,9 +198,23 @@ router.post('/updateContact', (req, res, next) => {
         }
       ).finally(
         () => {
+// data handler function can return a Promise
+          const dataHandler = function (messageSet, topic, partition ) {
+            return Promise.each(messageSet, function (m){
+              console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
+                ", Message: " + m.message.value.toString('utf8'));
+            });
+          };
+          const strategies = [{
+            subscriptions: ['james-29939.interactions'],
+            handler: dataHandler
+          }];
+
+          req.consumer.init(strategies).then(r => {console.log(new Date(), r)});
+
           req.consumer.subscribe('james-29939.interactions',dataHandler)
             .then(
-              (data) => {console.log(new Date(), 'consume data : ' + JSON.stringify(data));}
+              (data) => {console.log(new Date(), 'consumer data : ' + JSON.stringify(data));}
               // (err) => { console.log(new Date(), 'consume err : ' + JSON.stringify(err)); }
             )
             .catch(
