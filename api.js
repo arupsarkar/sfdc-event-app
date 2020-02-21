@@ -195,7 +195,6 @@ router.post('/updateContact', (req, res, next) => {
 
       req.producer.send({
         topic: 'interactions',
-        partition: 0,
         message: {
           key: ret.id,
           value: JSON.stringify(ret)
