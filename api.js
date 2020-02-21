@@ -191,7 +191,7 @@ router.post('/updateContact', (req, res, next) => {
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
-      console.log('producer send() : ', 'start' + req.producer);
+      console.log('producer send() : ', 'start' + req);
       req.producer.init().then( function () {
         req.producer.send({
           topic: 'interactions',
