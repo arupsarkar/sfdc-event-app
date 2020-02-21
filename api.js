@@ -207,10 +207,6 @@ router.post('/updateContact', (req, res, next) => {
         (err) => {
           console.log(new Date(), 'producer err : ' + err);
         }
-      ).catch(
-        (error) => {
-          console.log(new Date(), 'producer error : ' + error);
-        }
       ).finally(
         (result) => {
           console.log(new Date(), 'finally producer result : ' + result);
