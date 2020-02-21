@@ -207,12 +207,16 @@ router.post('/updateContact', (req, res, next) => {
         (err) => {
           console.log(new Date(), 'producer err : ' + err);
         }
+      ).catch(
+        (error) => {
+          console.log(new Date(), 'producer error : ' + error);
+        }
       ).finally(
         (result) => {
           console.log(new Date(), 'finally producer result : ' + result);
         }
       );
-      console.log(new Date(), 'producer send() : end');
+/*      console.log(new Date(), 'producer send() : end');*/
       // req.producer.init().then( function () {
       //   req.producer.send({
       //     topic: 'interactions',
@@ -232,8 +236,8 @@ router.post('/updateContact', (req, res, next) => {
       //         (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
       //       );
       //     });
-          console.log('consumer subscribe() : ', 'end');
-        });
+      //     console.log('consumer subscribe() : ', 'end');
+      //   });
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());
