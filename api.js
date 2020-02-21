@@ -191,26 +191,48 @@ router.post('/updateContact', (req, res, next) => {
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
     try{
-      console.log('producer send() : ', req.producer);
-      req.producer.init().then( function () {
-        req.producer.send({
-          topic: 'interactions',
-          partition: 0,
-          message: {
-            key: ret.id,
-            value: JSON.stringify(ret)
-          }
-        })
-      })
-        .then( function (result) {
-          console.log(new Date(), ' producer : ' + result);
-          console.log('consumer subscribe() : ', req.consumer);
-          req.consumer.init().then( function() {
-            req.consumer.subscribe('interactions', 0, {offset: 0}, dataHandler).then(
-              (data) => { console.log(new Date(), ' data ' + data)},
-              (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
-            );
-          });
+      console.log(new Date(), 'producer send() : start');
+
+      req.producer.send({
+        topic: 'interactions',
+        partition: 0,
+        message: {
+          key: ret.id,
+          value: JSON.stringify(ret)
+        }
+      }).then(
+        (data) => {
+          console.log(new Date(), 'producer data : ' + data);
+        }
+      ).catch(
+        (error) => {
+          console.log(new Date(), 'producer error : ' + error);
+        }
+      ).finally(
+        (result) => {
+          console.log(new Date(), 'finally producer result : ' + result);
+        }
+      );
+      console.log(new Date(), 'producer send() : end');
+      // req.producer.init().then( function () {
+      //   req.producer.send({
+      //     topic: 'interactions',
+      //     partition: 0,
+      //     message: {
+      //       key: ret.id,
+      //       value: JSON.stringify(ret)
+      //     }
+      //   }).then(r => { console.log(new Date(), '---> r ' + r)} ).catch(err)
+      // })
+      //   .then( function (result) {
+      //     console.log(new Date(), ' producer : ' + result);
+      //     console.log('consumer subscribe() : ', req.consumer);
+      //     req.consumer.init().then( function() {
+      //       req.consumer.subscribe('interactions', 0, {offset: 0}, dataHandler).then(
+      //         (data) => { console.log(new Date(), ' data ' + data)},
+      //         (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
+      //       );
+      //     });
           console.log('consumer subscribe() : ', 'end');
         });
       console.log('producer send() : ', 'end');
