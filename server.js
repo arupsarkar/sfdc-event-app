@@ -12,6 +12,8 @@ const kafka = require('no-kafka');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 const consumer = new kafka.SimpleConsumer();
 
+console.log(new Date(), brokerUrls);
+
 let producer = new kafka.Producer({
   connectionString: brokerUrls,
   ssl: {
