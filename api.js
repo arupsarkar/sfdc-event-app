@@ -197,7 +197,8 @@ router.post('/updateContact', (req, res, next) => {
           topic: 'interactions',
           partition: 0,
           message: {
-            value: 'Hello!'
+            key: ret.id,
+            value: JSON.stringify(ret)
           }
         })
       })
@@ -205,7 +206,7 @@ router.post('/updateContact', (req, res, next) => {
           console.log(new Date(), ' producer : ' + result);
           console.log('consumer subscribe() : ', req.consumer);
           req.consumer.init().then( function() {
-            req.consumer.subscribe('interactions', dataHandler).then(
+            req.consumer.subscribe('interactions', 0, {offset: 0}, dataHandler).then(
               (data) => { console.log(new Date(), ' data ' + data)},
               (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
             );
@@ -218,7 +219,7 @@ router.post('/updateContact', (req, res, next) => {
     }
 
     console.log('Updated Successfully : ' + ret.id);
-    res.status(200).json({'status': 'Updated successfully : ' + ret.Id});
+    res.status(200).json({'status': 'Updated successfully : ' + ret.id});
   });
 });
 
