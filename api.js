@@ -208,7 +208,7 @@ router.post('/updateContact', (req, res, next) => {
       ).finally(
         () => {
           req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions', dataHandler.call()).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+            req.consumer.subscribe('james-29939.interactions',[0,1], {}, dataHandler).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
 
           // req.consumer.subscribe('james-29939.interactions',dataHandler)
