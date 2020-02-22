@@ -206,7 +206,9 @@ router.post('/updateContact', (req, res, next) => {
             return Promise.each(messageSet, function (m){
               console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
                 ", Message: " + m.message.value.toString('utf8'));
+              return req.consumer.commitOffset({topic: topic, partition: partition, offset: m.offset, metadata: 'optional'});
             });
+
           };
           req.consumer.subscribe('james-29939.interactions',dataHandler)
             .then(
