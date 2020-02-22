@@ -3,6 +3,24 @@ const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const Promise = require('bluebird');
+
+const { Kafka } = require('kafkajs');
+const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: brokerUrls
+});
+
+const consumer = kafka.consumer({ groupId: 'test-group' });
+await consumer.connect();
+await consumer.subscribe({ topic: 'james-29939.interactions', fromBeginning: true });
+await consumer.run({
+  eachMessage: async ({ topic, partition, message }) => {
+    console.log({
+      value: message.value.toString(),
+    })
+  },
+});
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
