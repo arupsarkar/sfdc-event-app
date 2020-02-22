@@ -10,6 +10,9 @@ const Promise = require('bluebird');
  */
 // data handler function can return a Promise
 let dataHandler = function (messageSet, topic, partition ) {
+  console.log(new Date(), topic);
+  console.log(new Date(), partition);
+  console.log(new Date(), messageSet);
   messageSet.forEach(function (m) {
     console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
   });
@@ -209,7 +212,7 @@ router.post('/updateContact', (req, res, next) => {
       ).finally(
         () => {
           req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+            req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind.call).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
 
           // req.consumer.subscribe('james-29939.interactions',dataHandler)
