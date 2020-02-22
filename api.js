@@ -8,10 +8,7 @@ const { Kafka } = require('kafkajs');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 const kafka = new Kafka({
   clientId: 'my-app',
-  ssl: {
-    certFile: process.env.KAFKA_CLIENT_CERT,
-    keyFile: process.env.KAFKA_CLIENT_CERT_KEY
-  },
+  ssl: true,
   brokers: brokerUrls
 });
 
