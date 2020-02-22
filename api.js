@@ -210,17 +210,22 @@ router.post('/updateContact', (req, res, next) => {
             });
 
           };
-          req.consumer.subscribe('james-29939.interactions',dataHandler)
-            .then(
-              (data) => {console.log(new Date(), 'consumer data : ' + JSON.stringify(data));}
-              // (err) => { console.log(new Date(), 'consume err : ' + JSON.stringify(err)); }
-            )
-            .catch(
-              (error) => { console.log(new Date(), 'consumer error : ' + JSON.stringify(error)); }
-            )
-            .finally(
-              () => { console.log(new Date(), ' Consumer completed successfully.'); }
-              );
+
+          req.consumer.init().then(() => {
+            req.consumer.subscribe('james-29939.interactions', dataHandler).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+          });
+
+          // req.consumer.subscribe('james-29939.interactions',dataHandler)
+          //   .then(
+          //     (data) => {console.log(new Date(), 'consumer data : ' + JSON.stringify(data));}
+          //     // (err) => { console.log(new Date(), 'consume err : ' + JSON.stringify(err)); }
+          //   )
+          //   .catch(
+          //     (error) => { console.log(new Date(), 'consumer error : ' + JSON.stringify(error)); }
+          //   )
+          //   .finally(
+          //     () => { console.log(new Date(), ' Consumer completed successfully.'); }
+          //     );
           console.log(new Date(), 'Producer send completed successfully.');
         }
       );
