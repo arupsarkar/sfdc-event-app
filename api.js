@@ -12,15 +12,15 @@ const kafka = new Kafka({
 });
 
 const consumer = kafka.consumer({ groupId: 'test-group' });
-await consumer.connect();
-await consumer.subscribe({ topic: 'james-29939.interactions', fromBeginning: true });
-await consumer.run({
-  eachMessage: async ({ topic, partition, message }) => {
+consumer.connect().then(r => {console.log(new Date(), r)} );
+consumer.subscribe({topic: 'james-29939.interactions', fromBeginning: true}).then(r => { console.log(new Date(), r)} );
+consumer.run({
+  eachMessage: async ({topic, partition, message}) => {
     console.log({
       value: message.value.toString(),
     })
   },
-});
+}).then(r => { console.log(new Date(), r)} );
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
