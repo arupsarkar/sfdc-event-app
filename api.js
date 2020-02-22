@@ -9,16 +9,12 @@ const Promise = require('bluebird');
  * and exposes the resulting object (containing the keys and values) on req.body
  */
 // data handler function can return a Promise
-const dataHandler = function (messageSet, topic, partition ) {
-  console.log(new Date(), messageSet);
-  console.log(new Date(), topic);
-  console.log(new Date(), partition);
-  return Promise.each(messageSet, function (m){
-    console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
-      ", Message: " + m.message.value.toString('utf8'));
+let dataHandler = function (messageSet, topic, partition ) {
+  messageSet.forEach(function (m) {
+    console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
   });
 };
-let dataHandlerfunc = dataHandler.bind();
+
 
 router.use(bodyParser.urlencoded({
   extended: true
@@ -212,7 +208,7 @@ router.post('/updateContact', (req, res, next) => {
       ).finally(
         () => {
           req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions', this.dataHandler).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+            req.consumer.subscribe('james-29939.interactions', dataHandler.call()).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
 
           // req.consumer.subscribe('james-29939.interactions',dataHandler)
