@@ -8,8 +8,13 @@ const { Kafka } = require('kafkajs');
 const brokerUrls = process.env.KAFKA_URL.replace(/ + ssl/g,'');
 const kafka = new Kafka({
   clientId: 'my-app',
-  ssl: true,
-  brokers: brokerUrls
+  brokers: brokerUrls,
+  ssl: {
+    rejectUnauthorized: false,
+    ca: process.env.KAFKA_TRUSTED_CERT,
+    key: process.env.KAFKA_CERT_KEY,
+    cert: process.env.KAFKA_CLIENT_CERT
+  },
 });
 
 const consumer = kafka.consumer({ groupId: 'test-group' });
