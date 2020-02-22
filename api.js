@@ -15,6 +15,7 @@ let dataHandler = function (messageSet, topic, partition ) {
   });
 };
 
+let dataHandlerBind = dataHandler.bind();
 
 router.use(bodyParser.urlencoded({
   extended: true
@@ -208,7 +209,7 @@ router.post('/updateContact', (req, res, next) => {
       ).finally(
         () => {
           req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions',[0,1], {}, dataHandler).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+            req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
 
           // req.consumer.subscribe('james-29939.interactions',dataHandler)

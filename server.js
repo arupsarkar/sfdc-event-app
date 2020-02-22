@@ -42,11 +42,14 @@ let producer = new kafka.Producer({
   }
 });
 console.log(new Date(), ' producer init() - start');
-producer.init();
+producer
+  .init()
+  .then(r => { console.log(new Date()) , ' producer initialized ' + r})
+  .catch((err) => { console.log(new Date()) , ' producer error ' + err} );
 consumer
   .init()
-  .catch((err) => { console.log(new Date() , err)})
-  .then(() =>  { console.log(new Date()) });
+  .catch((err) => { console.log(new Date() , ' producer error ' + err)})
+  .then(() =>  { console.log(new Date()), 'consumer initialized ' });
 
 console.log(new Date(), ' producer init() - end');
 app.use( function (req, res, next) {
