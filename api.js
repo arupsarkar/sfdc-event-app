@@ -16,8 +16,9 @@ const dataHandler = function (messageSet, topic, partition ) {
     console.log("Topic: " + topic, ", Partition: " + partition, ", Offset: " + m.offset,
       ", Message: " + m.message.value.toString('utf8'));
   });
-
 };
+let dataHandlerfunc = dataHandler.bind();
+
 router.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -210,7 +211,7 @@ router.post('/updateContact', (req, res, next) => {
       ).finally(
         () => {
           req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions', dataHandler).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+            req.consumer.subscribe('james-29939.interactions', dataHandlerfunc).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
 
           // req.consumer.subscribe('james-29939.interactions',dataHandler)
