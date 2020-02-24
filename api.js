@@ -172,8 +172,8 @@ router.post('/searchSOSL', (req, res, next) => {
 
 router.post('/publishKafkaEvents', (req, res, next) => {
   try {
-    console.log(new Date(), 'producer send() : start');
-
+    console.log(new Date(), 'post producer send() : start');
+    console.log(new Date(), 'post producer req.body ' + req.body);
     req.producer.send({
       topic: 'james-29939.interactions',
       partition: 0,
@@ -185,21 +185,21 @@ router.post('/publishKafkaEvents', (req, res, next) => {
         console.log(new Date(), 'producer data : ' + JSON.stringify(data));
       },
       (err) => {
-        console.log(new Date(), 'producer err : ' + err);
+        console.log(new Date(), 'post producer err : ' + err);
       }
     ).catch(
       (error) => {
-        console.log(new Date(), 'producer error : ' + error);
+        console.log(new Date(), 'post producer error : ' + error);
       }
     ).finally(
       () => {
         req.consumer.init().then(() => {
-          req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+          req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'post consumer data : ' + JSON.stringify(r))});
         });
-        console.log(new Date(), 'Producer send completed successfully.');
+        console.log(new Date(), 'Post Producer send completed successfully.');
       }
     );
-    console.log('producer send() : ', 'end');
+    console.log('post producer send() : ', 'end');
   }catch(e) {
     console.log('ERROR: ', e.toLocaleString());
   }
