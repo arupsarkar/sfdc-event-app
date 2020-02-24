@@ -170,7 +170,7 @@ router.post('/searchSOSL', (req, res, next) => {
 
 });
 
-router.get('/publishKafkaEvents', (req, res, next) => {
+router.post('/publishKafkaEvents', (req, res, next) => {
   try {
     console.log(new Date(), 'producer send() : start');
 
