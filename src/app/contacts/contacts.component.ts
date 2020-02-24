@@ -112,6 +112,20 @@ export class ContactsComponent implements OnInit {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
           this.getContacts();
+
+          // now publish the vent to a kafka queue
+          this.apiService.publishKafkaEvents(data.toLocaleString()).subscribe(
+            res => {
+              this.message = JSON.stringify(res);
+              this.log(`${this.message}`);
+            },
+            err => {
+              this.log('Contacts publish create error.' + err);
+            },
+            () => {
+              this.log('Contacts publish event successfully.');
+            });
+
         },
         err => {
           this.log('Contacts create error.' + err);
@@ -119,6 +133,7 @@ export class ContactsComponent implements OnInit {
         () => {
           this.log('Contacts update operation completed successfully.');
         });
+
     } else {
       console.log('create contact component id ', JSON.stringify(contact));
       this.apiService.createContact(contact).subscribe(

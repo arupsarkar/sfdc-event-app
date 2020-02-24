@@ -12,6 +12,7 @@ import {Contact} from './model/Contact';
 import {SearchParams} from './model/Search';
 import {SOSLSearchResult} from './model/SOSLSearchResult';
 
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -60,6 +61,16 @@ export class ApiService {
     this.log(new Date() + ': Deleting contact.');
     // @ts-ignore
     return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
+  publishKafkaEvents(data: string): Observable<string> {
+    const URL = 'publishKafkaEvents';
+    this.log(new Date() + ': publish kafka events.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, data, httpOptions).pipe(
       tap((res) => { this.log( JSON.stringify(res) ); }),
       catchError(this.handleApiError)
     );

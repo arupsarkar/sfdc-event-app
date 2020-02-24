@@ -170,6 +170,41 @@ router.post('/searchSOSL', (req, res, next) => {
 
 });
 
+router.get('/publishKafkaEvents', (req, res, next) => {
+  try {
+    console.log(new Date(), 'producer send() : start');
+
+    req.producer.send({
+      topic: 'james-29939.interactions',
+      partition: 0,
+      message: {
+        value: req.body
+      }
+    }).then(
+      (data) => {
+        console.log(new Date(), 'producer data : ' + JSON.stringify(data));
+      },
+      (err) => {
+        console.log(new Date(), 'producer err : ' + err);
+      }
+    ).catch(
+      (error) => {
+        console.log(new Date(), 'producer error : ' + error);
+      }
+    ).finally(
+      () => {
+        req.consumer.init().then(() => {
+          req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+        });
+        console.log(new Date(), 'Producer send completed successfully.');
+      }
+    );
+    console.log('producer send() : ', 'end');
+  }catch(e) {
+    console.log('ERROR: ', e.toLocaleString());
+  }
+});
+
 router.post('/updateContact', (req, res, next) => {
   const headers = req.headers.authorization;
   const params = headers.split('|');
@@ -189,7 +224,7 @@ router.post('/updateContact', (req, res, next) => {
     Email : req.body.Email,
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
-    try{
+    try {
       console.log(new Date(), 'producer send() : start');
 
       req.producer.send({
@@ -214,43 +249,9 @@ router.post('/updateContact', (req, res, next) => {
           req.consumer.init().then(() => {
             req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
           });
-
-          // req.consumer.subscribe('james-29939.interactions',dataHandler)
-          //   .then(
-          //     (data) => {console.log(new Date(), 'consumer data : ' + JSON.stringify(data));}
-          //     // (err) => { console.log(new Date(), 'consume err : ' + JSON.stringify(err)); }
-          //   )
-          //   .catch(
-          //     (error) => { console.log(new Date(), 'consumer error : ' + JSON.stringify(error)); }
-          //   )
-          //   .finally(
-          //     () => { console.log(new Date(), ' Consumer completed successfully.'); }
-          //     );
           console.log(new Date(), 'Producer send completed successfully.');
         }
       );
-/*      console.log(new Date(), 'producer send() : end');*/
-      // req.producer.init().then( function () {
-      //   req.producer.send({
-      //     topic: 'interactions',
-      //     partition: 0,
-      //     message: {
-      //       key: ret.id,
-      //       value: JSON.stringify(ret)
-      //     }
-      //   }).then(r => { console.log(new Date(), '---> r ' + r)} ).catch(err)
-      // })
-      //   .then( function (result) {
-      //     console.log(new Date(), ' producer : ' + result);
-      //     console.log('consumer subscribe() : ', req.consumer);
-      //     req.consumer.init().then( function() {
-      //       req.consumer.subscribe('interactions', 0, {offset: 0}, dataHandler).then(
-      //         (data) => { console.log(new Date(), ' data ' + data)},
-      //         (error) => { console.log(new Date(), 'Consumer Error : ' + error)}
-      //       );
-      //     });
-      //     console.log('consumer subscribe() : ', 'end');
-      //   });
       console.log('producer send() : ', 'end');
     }catch(e) {
       console.log('ERROR: ', e.toLocaleString());
