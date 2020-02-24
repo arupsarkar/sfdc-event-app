@@ -112,9 +112,9 @@ export class ContactsComponent implements OnInit {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
           this.getContacts();
-
+          const kafkaData = JSON.stringify(data);
           // now publish the vent to a kafka queue
-          this.apiService.publishKafkaEvents(data.toLocaleString()).subscribe(
+          this.apiService.publishKafkaEvents(kafkaData).subscribe(
             res => {
               this.message = JSON.stringify(res);
               this.log(`${this.message}`);
