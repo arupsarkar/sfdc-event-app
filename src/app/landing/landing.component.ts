@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router, Params} from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+
+  gotoContacts(): void {
+    this.router.navigate(['/contacts']).then(r => { console.log(new Date(), 'redirecting to contacts page ' + r ); });
+  }
+
+
+  gotoPlatformEvents(): void {
+    this.router.navigate(['/events']).then(r => { console.log(new Date(), 'redirecting to events page ' + r ); });
+  }
 }
