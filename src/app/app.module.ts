@@ -17,6 +17,7 @@ import {FormsModule} from '@angular/forms';
 import { MaterialModule} from './material/material.module';
 import { ContactsComponent } from './contacts/contacts.component';
 import {MatPaginatorModule, MatListModule, MatTableModule, MatSortModule} from '@angular/material';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatPaginatorModule, MatListModule, MatTableModule, MatSortModule} from '
     EventsComponent,
     MessagesComponent,
     EventDetailComponent,
-    ContactsComponent
+    ContactsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
