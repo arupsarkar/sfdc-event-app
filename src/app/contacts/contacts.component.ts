@@ -111,7 +111,7 @@ export class ContactsComponent implements OnInit {
   createContact(contact: Contact): void {
     console.log('Create contact ', JSON.stringify(contact));
     // check if the id already exists - update, else insert
-    if (this.selectedContact.Id !== undefined) {
+    if (this.selectedContact.Id !== undefined && this.selectedContact.Id.length > 1) {
       console.log('update contact component id ', contact.Id);
       this.apiService.updateContact(contact).subscribe(
         data => {
@@ -143,19 +143,22 @@ export class ContactsComponent implements OnInit {
 
     } else {
       console.log('create contact component id ', JSON.stringify(contact));
-      this.apiService.createContact(contact).subscribe(
-        data => {
-          this.message = JSON.stringify(data);
-          this.log(`${this.message}`);
-          this.getContacts();
-      },
-        err => {
-          this.log('Contacts create error.' + err);
-        },
-        () => {
-          this.formValues.resetForm();
-          this.log('Contacts create operation completed successfully.');
-        });
+      if(contact.LastName !== undefined && contact.LastName.length > 0) {
+        this.apiService.createContact(contact).subscribe(
+          data => {
+            this.message = JSON.stringify(data);
+            this.log(`${this.message}`);
+            this.getContacts();
+          },
+          err => {
+            this.log('Contacts create error.' + err);
+          },
+          () => {
+            this.formValues.resetForm();
+            this.log('Contacts create operation completed successfully.');
+          });
+      }
+
     }
 
   }
