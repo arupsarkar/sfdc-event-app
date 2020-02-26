@@ -49,17 +49,20 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(new Date(), 'ngOnInit() - Start');
     // Disable login once cookie value exists
-    if (this.cookieService.get('access_token').length <  1) {
-      this.loginTiles[0].disable = false;
-      this.logoutTiles[0].disable = true;
-    }
-
-    // Disable logout once logout is successful.
-    if (this.cookieService.get('access_token').length > 0) {
-      this.loginTiles[0].disable = true;
-      this.logoutTiles[0].disable = false;
-    }
+    // if (this.cookieService.get('access_token').length <  1) {
+    //   this.loginTiles[0].disable = false;
+    //   this.logoutTiles[0].disable = true;
+    // }
+    //
+    // // Disable logout once logout is successful.
+    // if (this.cookieService.get('access_token').length > 0) {
+    //   this.loginTiles[0].disable = true;
+    //   this.logoutTiles[0].disable = false;
+    // }
+    this.fetchCookie(this.cookieService);
+    console.log(new Date(), 'ngOnInit() - End');
   }
 
   sfdcLogout(): void {
@@ -82,11 +85,56 @@ export class LoginComponent implements OnInit {
   }
 
   sfdcLogin(): void {
+    console.log(new Date(), 'sfdcLogin() - Start');
     let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=';
     sfdc_url = sfdc_url + this.secret + '&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
     window.location.href = sfdc_url;
+    console.log(new Date(), 'sfdcLogin() - End');
   }
+
+  private fetchCookie(cookieService: CookieService): void {
+    const promise = new Promise( function(resolve, reject) {
+      console.log(new Date(), 'fetch cookie initiated. Start');
+      const accessToken = cookieService.get('access_token');
+      if (accessToken.length > 1) {
+        resolve(accessToken);
+      } else {
+        reject('no_access_token');
+      }
+    });
+    promise.then(
+      (data) => {
+        // console.log(new Date(), data);
+        if (data) {
+          this.loginTiles[0].disable = true;
+          this.logoutTiles[0].disable = false;
+        } else {
+          this.loginTiles[0].disable = false;
+          this.logoutTiles[0].disable = true;
+        }
+
+      },
+      (err) => {
+        console.log(new Date(), 'then error wrapper: ' + err);
+      }
+    );
+    promise.catch(
+      (err) => {
+        console.log(new Date(), err);
+        if (err) {
+            this.loginTiles[0].disable = false;
+            this.logoutTiles[0].disable = true;
+        }
+      }
+    );
+    promise.finally(
+      () => {
+        console.log(new Date(), 'fetch cookie service completed successfully');
+      }
+    );
+  }
+
   /** Log a EventService message with the MessageService */
   private log(message: string) {
     const d = new Date();
