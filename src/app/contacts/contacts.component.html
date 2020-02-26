@@ -140,7 +140,8 @@
 
     <div align="center">
 <!--      <button mat-flat-button color="primary" (click)="createContact(selectedContact); contactForm.reset() ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>-->
-      <button mat-flat-button color="primary" type="submit">Submit</button>
+      <button mat-flat-button color="primary" type="submit">Save</button>
+      <button mat-flat-button color="primary" (click)="clearForm()" type="submit">Cancel</button>
     </div>
   </form>
 
