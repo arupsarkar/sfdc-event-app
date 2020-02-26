@@ -10,7 +10,7 @@
   </div>
 
   <!--  placeholder for input end-->
-  <div style="display:flex" fxLayout="row wrap">
+  <div fxLayout="row wrap">
     <mat-card class="mt-2" *ngFor="let result of searchResults">
       <mat-card-header>
         <mat-card-title> {{result.attributes.type}} </mat-card-title>
@@ -85,14 +85,26 @@
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
         <label>
-          <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" [ngModelOptions]="{standalone: true}" required>
+          <input
+            id="FirstName"
+            name="FirstName"
+            matInput placeholder="First Name"
+            [(ngModel)]="selectedContact.FirstName"
+            [ngModelOptions]="{standalone: true}" required
+          >
         </label>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
         <label>
-          <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" [ngModelOptions]="{standalone: true}" required>
+          <input
+            id="LastName"
+            name="LastName"
+            matInput placeholder="Last Name"
+            [(ngModel)]="selectedContact.LastName"
+            [ngModelOptions]="{standalone: true}" required
+          >
         </label>
       </mat-form-field>
     </div>
@@ -101,14 +113,26 @@
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <label>
-          <input matInput placeholder="Email" [(ngModel)]="selectedContact.Email" [ngModelOptions]="{standalone: true}" required>
+          <input
+            id="Email"
+            name="Email"
+            matInput placeholder="Email"
+            [(ngModel)]="selectedContact.Email"
+            [ngModelOptions]="{standalone: true}" required
+          >
         </label>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Phone</mat-label>
         <label>
-          <input matInput placeholder="Mobile Phone" [(ngModel)]="selectedContact.MobilePhone" [ngModelOptions]="{standalone: true}" required>
+          <input
+            id="MobilePhone"
+            name="MobilePhone"
+            matInput placeholder="Mobile Phone"
+            [(ngModel)]="selectedContact.MobilePhone"
+            [ngModelOptions]="{standalone: true}" required
+          >
         </label>
       </mat-form-field>
 
