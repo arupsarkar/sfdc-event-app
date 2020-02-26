@@ -63,11 +63,7 @@ export class ContactsComponent implements OnInit {
   }
 
   clearForm(): void {
-    this.selectedContact.Id = undefined;
-    this.selectedContact.FirstName = undefined;
-    this.selectedContact.LastName = undefined;
-    this.selectedContact.Email = undefined;
-    this.selectedContact.MobilePhone = undefined;
+    this.selectedContact = new Contact();
   }
 
   getContacts(): void {

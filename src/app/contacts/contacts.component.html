@@ -10,7 +10,7 @@
   </div>
 
   <!--  placeholder for input end-->
-  <div style="display:flex">
+  <div style="display:flex" fxLayout="row wrap">
     <mat-card class="mt-2" *ngFor="let result of searchResults">
       <mat-card-header>
         <mat-card-title> {{result.attributes.type}} </mat-card-title>
@@ -79,78 +79,40 @@
   <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons></mat-paginator>
 
 <!--  setting up edit form-->
-  <div align="center">
-    <h2>Contact Details</h2>
-    <mat-form-field appearance="outline">
-      <mat-label>First Name</mat-label>
-      <label>
-        <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" required>
-      </label>
-    </mat-form-field>
+  <form #contactForm="ngForm">
+    <div align="center">
+      <h2>Contact Details</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <label>
+          <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" required>
+        </label>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Last Name</mat-label>
-      <label>
-        <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" required>
-      </label>
-    </mat-form-field>
-  </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <label>
+          <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" required>
+        </label>
+      </mat-form-field>
+    </div>
 
-  <div align="center">
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" [(ngModel)]="selectedContact.Email" required>
-    </mat-form-field>
+    <div align="center">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" [(ngModel)]="selectedContact.Email" required>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Phone</mat-label>
-      <input matInput placeholder="Mobile Phone" [(ngModel)]="selectedContact.MobilePhone" required>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Mobile Phone" [(ngModel)]="selectedContact.MobilePhone" required>
+      </mat-form-field>
 
-  </div>
+    </div>
 
-  <div align="center">
-    <button mat-flat-button color="primary" (click)="createContact(selectedContact) ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>
-    <button mat-flat-button color="primary" (click)="clearForm()">Cancel</button>
-  </div>
+    <div align="center">
+      <button mat-flat-button color="primary" (click)="createContact(selectedContact); contactForm.reset() ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>
+    </div>
+  </form>
 
 </div>
-
-
-
-
-<!--<div *ngIf="!contactsExists">-->
-<!--  &lt;!&ndash; Show the heading &ndash;&gt;-->
-<!--  <div>-->
-<!--    <mat-grid-list cols="4" rowHeight="50px">-->
-<!--      <mat-grid-tile-->
-<!--        [colspan]="4"-->
-<!--        [rowspan]="1">-->
-<!--        <p class="a"> {{contactsExistHeader}}</p>-->
-<!--      </mat-grid-tile>-->
-<!--    </mat-grid-list>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<!--<div *ngIf="contactsExists">-->
-<!--  &lt;!&ndash; Show the heading &ndash;&gt;-->
-<!--  <div>-->
-<!--    <mat-grid-list cols="4" rowHeight="50px">-->
-<!--      <mat-grid-tile-->
-<!--        [colspan]="4"-->
-<!--        [rowspan]="1">-->
-<!--        <p class="a"> {{contactsExistHeader}}</p>-->
-<!--      </mat-grid-tile>-->
-<!--    </mat-grid-list>-->
-<!--  </div>-->
-
-<!--  <div *ngFor="let contact of contacts">-->
-<!--    <mat-grid-list cols="4" rowHeight="60px" >-->
-<!--      <p> {{contact.FirstName}} </p>-->
-<!--      <p> {{contact.LastName}} </p>-->
-<!--    </mat-grid-list>-->
-<!--  </div>-->
-
-
-<!--</div>-->
