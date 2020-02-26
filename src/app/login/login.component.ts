@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
     });
     promise.then(
       (data) => {
-        console.log(new Date(), data);
+        // console.log(new Date(), data);
         if (data) {
           this.loginTiles[0].disable = true;
           this.logoutTiles[0].disable = false;
@@ -131,7 +131,6 @@ export class LoginComponent implements OnInit {
     promise.finally(
       () => {
         console.log(new Date(), 'fetch cookie service completed successfully');
-        console.log(new Date(), 'fetch cookie initiated. Completed');
       }
     );
   }
