@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(new Date(), 'ngOnInit() - Start');
     // Disable login once cookie value exists
     if (this.cookieService.get('access_token').length <  1) {
       this.loginTiles[0].disable = false;
@@ -60,6 +61,8 @@ export class LoginComponent implements OnInit {
       this.loginTiles[0].disable = true;
       this.logoutTiles[0].disable = false;
     }
+    this.fetchCookie(this.cookieService);
+    console.log(new Date(), 'ngOnInit() - End');
   }
 
   sfdcLogout(): void {
@@ -82,11 +85,12 @@ export class LoginComponent implements OnInit {
   }
 
   sfdcLogin(): void {
+    console.log(new Date(), 'sfdcLogin() - Start');
     let sfdc_url = 'https://login.salesforce.com/services/oauth2/authorize?response_type=token&client_id=';
     sfdc_url = sfdc_url + this.secret + '&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
     window.location.href = sfdc_url;
-    this.fetchCookie(this.cookieService);
+    console.log(new Date(), 'sfdcLogin() - End');
   }
 
   private fetchCookie(cookieService: CookieService): void {
