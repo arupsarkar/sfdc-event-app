@@ -85,14 +85,14 @@
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
         <label>
-          <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" required>
+          <input matInput placeholder="First Name" [(ngModel)]="selectedContact.FirstName" [ngModelOptions]="{standalone: true}" required>
         </label>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
         <label>
-          <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" required>
+          <input matInput placeholder="Last Name" [(ngModel)]="selectedContact.LastName" [ngModelOptions]="{standalone: true}" required>
         </label>
       </mat-form-field>
     </div>
@@ -100,12 +100,16 @@
     <div align="center">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" [(ngModel)]="selectedContact.Email" required>
+        <label>
+          <input matInput placeholder="Email" [(ngModel)]="selectedContact.Email" [ngModelOptions]="{standalone: true}" required>
+        </label>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Phone</mat-label>
-        <input matInput placeholder="Mobile Phone" [(ngModel)]="selectedContact.MobilePhone" required>
+        <label>
+          <input matInput placeholder="Mobile Phone" [(ngModel)]="selectedContact.MobilePhone" [ngModelOptions]="{standalone: true}" required>
+        </label>
       </mat-form-field>
 
     </div>
