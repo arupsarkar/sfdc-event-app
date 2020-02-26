@@ -2,10 +2,24 @@ const express = require('express');
 const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
+const Promise = require('bluebird');
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
+// data handler function can return a Promise
+let dataHandler = function (messageSet, topic, partition ) {
+  console.log(new Date(), topic);
+  console.log(new Date(), partition);
+  console.log(new Date(), messageSet);
+  messageSet.forEach(function (m) {
+    console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+  });
+};
+
+let dataHandlerBind = dataHandler.bind();
+
 router.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -126,6 +140,228 @@ router.get('/getEvents', (req, res, next) => {
     res.status(400).json(err);
     return next(err);
   });
+});
+
+router.post('/searchSOSL', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /searchSOSL: Request body - ', req.body);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: searchSOSL Connection user info - ', conn.userInfo);
+  }
+
+  conn.search("FIND {" + req.body.searchValue + "*} IN ALL FIELDS RETURNING Contact(Id, Name), Account(Id, Name), Lead(Id, Name)",
+    function(err, result) {
+      if (err) { res.status(200).json(err); }
+      console.log(JSON.stringify(result));
+      res.status(200).json(result.searchRecords);
+    }
+  );
+
+});
+
+router.post('/publishKafkaEvents', (req, res, next) => {
+  try {
+    console.log(new Date(), 'post producer send() : start');
+    console.log(new Date(), 'post producer req.body ' + JSON.stringify(req.body));
+    req.producer.send({
+      topic: 'james-29939.interactions',
+      partition: 0,
+      message: {
+        value: JSON.stringify(req.body)
+      }
+    }).then(
+      (data) => {
+        console.log(new Date(), 'producer data : ' + JSON.stringify(data));
+      },
+      (err) => {
+        console.log(new Date(), 'post producer err : ' + err);
+      }
+    ).catch(
+      (error) => {
+        console.log(new Date(), 'post producer error : ' + error);
+      }
+    ).finally(
+      () => {
+        req.consumer.init().then(() => {
+          req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then();
+        });
+        console.log(new Date(), 'Post Producer send completed successfully.');
+      }
+    );
+    console.log('post producer send() : ', 'end');
+  }catch(e) {
+    console.log('ERROR: ', e.toLocaleString());
+  }
+});
+
+router.post('/updateContact', (req, res, next) => {
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+// Single record update
+  conn.sobject("Contact").update({
+    Id : req.body.Id,
+    FirstName : req.body.FirstName,
+    LastName : req.body.LastName,
+    MobilePhone : req.body.MobilePhone,
+    Email : req.body.Email,
+  }, function(err, ret) {
+    if (err || !ret.success) { res.status(200).json(err); }
+    try {
+      console.log(new Date(), 'producer send() : start');
+
+      req.producer.send({
+        topic: 'james-29939.interactions',
+        partition: 0,
+        message: {
+          value: '[{key: foo, value: bar}]'
+        }
+      }).then(
+        (data) => {
+          console.log(new Date(), 'producer data : ' + JSON.stringify(data));
+        },
+        (err) => {
+          console.log(new Date(), 'producer err : ' + err);
+        }
+      ).catch(
+        (error) => {
+          console.log(new Date(), 'producer error : ' + error);
+        }
+      ).finally(
+        () => {
+          req.consumer.init().then(() => {
+            req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
+          });
+          console.log(new Date(), 'Producer send completed successfully.');
+        }
+      );
+      console.log('producer send() : ', 'end');
+    }catch(e) {
+      console.log('ERROR: ', e.toLocaleString());
+    }
+
+    console.log('Updated Successfully : ' + ret.id);
+    res.status(200).json({'status': 'Updated successfully : ' + ret.id});
+  });
+});
+
+// delete contact
+router.post('/deleteContact', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /deleteContact: Request query - ', req.query);
+  console.log('---> DEBUG: SERVER: /deleteContact: Request params - ', req.params);
+  console.log('---> DEBUG: SERVER: /deleteContact: Request body - ', req.body);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: createContact Connection user info - ', conn.userInfo);
+  }
+// Single record deletion
+  conn.sobject("Contact").destroy(req.body.Id, function(err, ret) {
+    if (err || !ret.success) { res.status(200).json(err); }
+    console.log('Deleted Successfully : ' + ret.id);
+    res.status(200).json({'Id': ret.Id});
+  });
+});
+// create contact
+router.post('/createContact', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /createContact: Request query - ', req.query);
+  console.log('---> DEBUG: SERVER: /createContact: Request params - ', req.params);
+  console.log('---> DEBUG: SERVER: /createContact: Request body - ', req.body);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: createContact Connection user info - ', conn.userInfo);
+  }
+  conn.sobject("Contact").create({
+    FirstName: req.body.FirstName,
+    LastName: req.body.LastName,
+    Email: req.body.Email,
+    MobilePhone: req.body.MobilePhone}, function(err, ret) {
+    console.log('Create Contact : ', JSON.stringify(ret));
+    if (err || !ret.success) {
+      res.status(200).json(err);
+    } else {
+      res.status(200).json({'Id': ret.Id});
+      console.log('Contact Id ', ret.id);
+    }
+  });
+
+});
+//get contacts
+router.get('/getContacts', (req, res, next) => {
+  console.log('---> DEBUG: SERVER: /getContacts: Request query - ', req.query);
+  console.log('---> DEBUG: SERVER: /getContacts: Request params - ', req.params);
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  // instantiate a connection to salesforce
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+  //check if conn object is undefined after a long response
+  if ( conn === undefined){
+    return next();
+  }else{
+    console.log('DEBUG: getContacts Connection user info - ', conn.userInfo);
+  }
+  let records = [];
+  let queryString = 'SELECT Id, FirstName, LastName, MobilePhone, Phone, Email FROM Contact ORDER BY LastModifiedDate DESC';
+  conn.query(queryString, function (err, result) {
+    if(err) {
+      return console.error(err);
+    }
+    console.log("total : " + result.totalSize);
+    console.log("fetched : " + result.records.length);
+    console.log("done ? : " + result.done);
+
+    if (!result.done) {
+      // you can use the locator to fetch next records set.
+      console.log("next records URL : " + result.nextRecordsUrl);
+    }else {
+      records = result.records;
+      res.status(200).json(records);
+    }
+  })
+
 });
 
 // Publish to platform events

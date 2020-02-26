@@ -15,6 +15,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import {FormsModule} from '@angular/forms';
 import { MaterialModule} from './material/material.module';
+import { ContactsComponent } from './contacts/contacts.component';
+import {MatPaginatorModule, MatListModule, MatTableModule, MatSortModule} from '@angular/material';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,9 @@ import { MaterialModule} from './material/material.module';
     CallbackComponent,
     EventsComponent,
     MessagesComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    ContactsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,11 @@ import { MaterialModule} from './material/material.module';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatListModule,
+    MatSortModule
   ],
   providers: [ApiService, CookieService, httpInterceptorProviders],
   bootstrap: [AppComponent],

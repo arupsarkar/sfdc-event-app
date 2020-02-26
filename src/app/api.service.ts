@@ -8,6 +8,10 @@ import {environment} from './environment/environment';
 import {MessageService} from './message.service';
 import { Event} from './model/Event';
 import { EventSchema } from './model/event-schema';
+import {Contact} from './model/Contact';
+import {SearchParams} from './model/Search';
+import {SOSLSearchResult} from './model/SOSLSearchResult';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,6 +41,69 @@ export class ApiService {
     }
 
   }
+
+  searchSOSL(searchParam: SearchParams): Observable<SOSLSearchResult[]> {
+    console.log('api.service.ts : ', searchParam);
+    const URL = 'searchSOSL';
+    this.log(new Date() + ': Search SOSL from salesforce.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, searchParam, httpOptions).pipe(
+      // tap((searchResults) => {
+      //   this.log( JSON.stringify(searchResults));
+      // }),
+      map( searchResults => searchResults),
+      catchError(this.handleApiError)
+    );
+  }
+
+  deleteContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'deleteContact';
+    this.log(new Date() + ': Deleting contact.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
+  publishKafkaEvents(data: string): Observable<string> {
+    const URL = 'publishKafkaEvents';
+    this.log(new Date() + ': publish kafka events.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, data, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
+  updateContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'updateContact';
+    this.log(new Date() + ': Updating contact.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
+  createContact(contact: Contact): Observable<Contact[]> {
+    const URL = 'createContact';
+    this.log(new Date() + ': Creating contact.');
+    // @ts-ignore
+    return this.http.post(`${environment.baseUrl}/${URL}`, contact, httpOptions).pipe(
+      tap((res) => { this.log( JSON.stringify(res) ); }),
+      catchError(this.handleApiError)
+    );
+  }
+
+  getContacts(): Observable<Contact[]> {
+    const URL = 'getContacts';
+    this.log(new Date() + ': Fetching contacts from salesforce.');
+    return this.http.get<Contact[]>(`${environment.baseUrl}/${URL}`, httpOptions).pipe(
+      map(contacts => contacts)
+    );
+  }
+
   getEvents(): Observable<Event[]> {
     const URL = 'getEvents';
     this.log('Fetched Platform Events');
