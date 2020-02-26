@@ -99,6 +99,8 @@ export class LoginComponent implements OnInit {
       const accessToken = cookieService.get('access_token');
       if (accessToken.length > 1) {
         resolve(accessToken);
+      } else {
+        reject('no_access_token');
       }
     });
     promise.then(
@@ -115,7 +117,13 @@ export class LoginComponent implements OnInit {
       }
     );
     promise.catch(
-      (err) => { console.log(new Date(), err); }
+      (err) => {
+        console.log(new Date(), err);
+        if (err) {
+            this.loginTiles[0].disable = true;
+            this.logoutTiles[0].disable = false;
+        }
+      }
     );
     promise.finally(
       () => {
