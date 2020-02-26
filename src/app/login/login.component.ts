@@ -120,8 +120,8 @@ export class LoginComponent implements OnInit {
       (err) => {
         console.log(new Date(), err);
         if (err) {
-            this.loginTiles[0].disable = true;
-            this.logoutTiles[0].disable = false;
+            this.loginTiles[0].disable = false;
+            this.logoutTiles[0].disable = true;
         }
       }
     );
