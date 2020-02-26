@@ -140,8 +140,8 @@
 
     <div align="center">
 <!--      <button mat-flat-button color="primary" (click)="createContact(selectedContact); contactForm.reset() ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>-->
-      <button mat-flat-button color="primary" type="submit">Save</button>
-      <button mat-flat-button color="primary" (click)="clearForm()" type="submit">Cancel</button>
+      <button mat-flat-button color="primary" [ngStyle]= "{'background-color':'#00C853', 'margin-left': '20px'}" type="submit">Save</button>
+      <button mat-flat-button color="warn" [ngStyle]= "{'margin-left': '20px'}" (click)="clearForm()">Clear</button>
     </div>
   </form>
 
