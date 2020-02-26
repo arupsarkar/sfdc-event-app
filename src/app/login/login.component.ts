@@ -86,7 +86,31 @@ export class LoginComponent implements OnInit {
     sfdc_url = sfdc_url + this.secret + '&redirect_uri=';
     sfdc_url = sfdc_url +  location.origin +  '/api/oauth2/callback';
     window.location.href = sfdc_url;
+    this.fetchCookie(this.cookieService);
   }
+
+  private fetchCookie(cookieService: CookieService): void {
+    const promise = new Promise( function(resolve, reject) {
+      console.log(new Date(), 'fetch cookie initiated. Start');
+      const accessToken = cookieService.get('access_token');
+      if (accessToken.length > 1) {
+        resolve(accessToken);
+      }
+    });
+    promise.then(
+      (data) => { console.log(new Date(), data); }
+    );
+    promise.catch(
+      (err) => { console.log(new Date(), err); }
+    );
+    promise.finally(
+      () => {
+        console.log(new Date(), 'fetch cookie service completed successfully');
+        console.log(new Date(), 'fetch cookie initiated. Completed');
+      }
+    );
+  }
+
   /** Log a EventService message with the MessageService */
   private log(message: string) {
     const d = new Date();
