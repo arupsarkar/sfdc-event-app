@@ -114,6 +114,9 @@ export class LoginComponent implements OnInit {
           this.logoutTiles[0].disable = true;
         }
 
+      },
+      (err) => {
+        console.log(new Date(), 'then error wrapper: ' + err);
       }
     );
     promise.catch(
