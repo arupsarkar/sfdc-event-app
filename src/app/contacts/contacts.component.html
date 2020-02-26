@@ -79,7 +79,7 @@
   <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons></mat-paginator>
 
 <!--  setting up edit form-->
-  <form #contactForm="ngForm">
+  <form #contactForm="ngForm" (ngSubmit)="createContact(contactForm.value)">
     <div align="center">
       <h2>Contact Details</h2>
       <mat-form-field appearance="outline">
@@ -139,7 +139,8 @@
     </div>
 
     <div align="center">
-      <button mat-flat-button color="primary" (click)="createContact(selectedContact); contactForm.reset() ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>
+<!--      <button mat-flat-button color="primary" (click)="createContact(selectedContact); contactForm.reset() ">{{(selectedContact.Id !== undefined)?'Update':'Create'}}</button>-->
+      <button mat-flat-button type="submit">Submit</button>
     </div>
   </form>
 

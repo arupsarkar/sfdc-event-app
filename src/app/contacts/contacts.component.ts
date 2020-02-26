@@ -14,6 +14,7 @@ import {SOSLSearchResult} from '../model/SOSLSearchResult';
 })
 export class ContactsComponent implements OnInit {
   // variables declaration
+  @ViewChild('contactForm') formValues;
   displayedColumns: string[] = ['Id', 'FirstName', 'LastName', 'MobilePhone', 'Email', 'Edit', 'Delete'] ;
   dataSource = new MatTableDataSource<Contact>();
   selectedContact: Contact = new Contact();
@@ -136,6 +137,7 @@ export class ContactsComponent implements OnInit {
           this.log('Contacts create error.' + err);
         },
         () => {
+          this.formValues.resetForm();
           this.log('Contacts update operation completed successfully.');
         });
 
@@ -151,6 +153,7 @@ export class ContactsComponent implements OnInit {
           this.log('Contacts create error.' + err);
         },
         () => {
+          this.formValues.resetForm();
           this.log('Contacts create operation completed successfully.');
         });
     }
