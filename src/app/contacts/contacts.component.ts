@@ -61,6 +61,11 @@ export class ContactsComponent implements OnInit {
         this.log('Search SOSL operation completed successfully.');
       });
   }
+
+  clearForm(): void {
+    this.selectedContact = null;
+  }
+
   getContacts(): void {
     this.apiService.getContacts().subscribe(
       contacts => {
