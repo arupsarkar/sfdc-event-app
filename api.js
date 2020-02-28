@@ -256,39 +256,6 @@ router.post('/updateContact', (req, res, next) => {
     Email : req.body.Email,
   }, function(err, ret) {
     if (err || !ret.success) { res.status(200).json(err); }
-    try {
-      console.log(new Date(), 'producer send() : start');
-
-      req.producer.send({
-        topic: 'james-29939.interactions',
-        partition: 0,
-        message: {
-          value: '[{key: foo, value: bar}]'
-        }
-      }).then(
-        (data) => {
-          console.log(new Date(), 'producer data : ' + JSON.stringify(data));
-        },
-        (err) => {
-          console.log(new Date(), 'producer err : ' + err);
-        }
-      ).catch(
-        (error) => {
-          console.log(new Date(), 'producer error : ' + error);
-        }
-      ).finally(
-        () => {
-          req.consumer.init().then(() => {
-            req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then(r => {console.log(new Date(), 'consumer data : ' + JSON.stringify(r))});
-          });
-          console.log(new Date(), 'Producer send completed successfully.');
-        }
-      );
-      console.log('producer send() : ', 'end');
-    }catch(e) {
-      console.log('ERROR: ', e.toLocaleString());
-    }
-
     console.log('Updated Successfully : ' + ret.id);
     res.status(200).json({'status': 'Updated successfully : ' + ret.id});
   });
