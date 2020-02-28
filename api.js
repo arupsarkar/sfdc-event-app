@@ -18,14 +18,23 @@ let T = new Twit({
 
 let stream = T.stream('statuses/filter', { track: 'mango' });
 
-stream.on('tweet', function (tweet) {
-  console.log('--------------- start -------------');
-  console.log(tweet);
-  console.log('--------------- end -------------');
-});
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+async function delayedTweetStream() {
+  stream.on('tweet', function (tweet) {
+    console.log('--------------- start -------------');
+    console.log(tweet);
+    console.log('--------------- end -------------');
+  });
+  await sleep(14400);
+}
 
+delayedTweetStream().then(r => { console.log( new Date(), r )});
 // Twitter integration - end
+
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
