@@ -16,7 +16,7 @@ let T = new Twit({
   strictSSL:            true,     // optional - requires SSL certificates to be valid.
 });
 
-let stream = T.stream('statuses/filter', { track: 'mango' });
+let stream = T.stream('statuses/filter', { track: '#salesforce', language: 'en' });
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -27,8 +27,9 @@ async function delayedTweetStream() {
     console.log('--------------- start -------------');
     console.log(tweet.text);
     console.log('--------------- end -------------');
+    sleep(14400);
   });
-  await sleep(14400);
+
 }
 
 delayedTweetStream().then(r => { console.log( new Date(), r )});
