@@ -19,7 +19,9 @@ let T = new Twit({
 let stream = T.stream('statuses/filter', { track: 'mango' });
 
 stream.on('tweet', function (tweet) {
-  console.log(tweet)
+  console.log('--------------- start -------------');
+  console.log(tweet);
+  console.log('--------------- end -------------');
 });
 
 
