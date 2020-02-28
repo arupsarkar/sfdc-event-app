@@ -3,7 +3,27 @@ const jsforce = require("jsforce");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const Promise = require('bluebird');
+const Twit = require('twit');
 
+// Twitter integration - start
+
+let T = new Twit({
+  consumer_key:         'OPOJ9s3m93GXsuY8EvYa9OozW',
+  consumer_secret:      'zmM5jvdnItCGskB2JpJd2yMU12d9OjtZ2x4lsBKymzcOyhSBvR',
+  access_token:         '114372291-eTN2hW4Nt3ZG2a9z5bDBB5FWU8REWOuDsLjAmU2o',
+  access_token_secret:  'pOP5oGaDjrwUkBxRk12Ijr63CWrEdGURW4c7aFRQkkiVa',
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+  strictSSL:            true,     // optional - requires SSL certificates to be valid.
+});
+
+let stream = T.stream('statuses/filter', { track: 'mango' });
+
+stream.on('tweet', function (tweet) {
+  console.log(tweet)
+});
+
+
+// Twitter integration - end
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
