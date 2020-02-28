@@ -25,7 +25,7 @@ function sleep(ms) {
 async function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
     console.log('--------------- start -------------');
-    console.log(tweet);
+    console.log(tweet.text);
     console.log('--------------- end -------------');
   });
   await sleep(14400);
