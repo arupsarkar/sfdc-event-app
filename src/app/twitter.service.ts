@@ -20,10 +20,10 @@ export class TwitterService {
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
 
-  getTwitterUserDetails(): Observable<Tweet[]> {
+  getTwitterUserDetails(): Observable<TwitterResponse> {
     const URL = 'getTwitterUserDetails';
     this.log(new Date() + ': Fetching user details from twitter.');
-    return this.http.get<Tweet[]>(`${environment.baseUrl}/${URL}`).pipe(
+    return this.http.get<TwitterResponse>(`${environment.baseUrl}/${URL}`).pipe(
       map(tweets => tweets)
     );
   }

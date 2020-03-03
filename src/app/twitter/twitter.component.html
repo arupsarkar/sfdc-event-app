@@ -1,3 +1,17 @@
-<p>
-  twitter works!
-</p>
+<clr-main-container>
+  <clr-header class="header-4">
+    <div class="branding">
+      <a class="nav-link">
+        <div class="title">kafka streaming integration</div>
+      </a>
+    </div>
+    <div class="header-actions" *ngIf="user">
+      <a class="nav-link">
+        <span class="nav-text">
+          <img [src]="user.profile_image_url_https" class="avatar"/>
+          @{{user.screen_name}}
+        </span>
+      </a>
+    </div>
+  </clr-header>
+</clr-main-container>
