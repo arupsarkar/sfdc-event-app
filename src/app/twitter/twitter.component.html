@@ -1,17 +1,10 @@
-<clr-main-container class="flex-container">
-  <clr-header class="header-4">
-    <div class="branding">
-      <a class="nav-link">
-        <div class="title">kafka streaming integration</div>
-      </a>
-    </div>
-    <div class="header-actions" *ngIf="user">
-      <a class="nav-link">
-        <span class="nav-text">
-          <img [src]="user.profile_image_url_https" class="avatar"/>
-          @{{user.screen_name}}
-        </span>
-      </a>
-    </div>
-  </clr-header>
-</clr-main-container>
+<div class="flex-container">
+
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>{{user.screen_name}}</mat-card-title>
+    </mat-card-header>
+    <img src="user.profile_image_url_https" mat-card-md-image alt="">
+  </mat-card>
+
+</div>

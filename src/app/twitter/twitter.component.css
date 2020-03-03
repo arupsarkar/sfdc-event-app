@@ -29,3 +29,7 @@
   font-size: 3em;
   text-align: center;
 }
+
+.profile-card {
+  max-width: 150px;
+}
