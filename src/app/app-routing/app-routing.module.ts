@@ -7,6 +7,7 @@ import {EventsComponent} from '../events/events.component';
 import {EventDetailComponent} from '../event-detail/event-detail.component';
 import {ContactsComponent} from '../contacts/contacts.component';
 import {LandingComponent} from '../landing/landing.component';
+import {TwitterComponent} from '../twitter/twitter.component';
 
 const ROUTES = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -16,6 +17,7 @@ const ROUTES = [
   {path: 'events', component: EventsComponent},
   {path: 'event-detail/:fullName', component: EventDetailComponent},
   {path: 'landing', component: LandingComponent},
+  {path: 'twitter', component: TwitterComponent}
 ];
 
 
