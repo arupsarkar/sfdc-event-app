@@ -33,3 +33,8 @@
 .profile-card {
   max-width: 150px;
 }
+
+.mat-content-card {
+  max-height: 300px;
+  overflow-y: auto;
+}
