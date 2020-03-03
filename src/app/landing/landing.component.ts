@@ -22,4 +22,8 @@ export class LandingComponent implements OnInit {
   gotoPlatformEvents(): void {
     this.router.navigate(['/events']).then(r => { console.log(new Date(), 'redirecting to events page ' + r ); });
   }
+
+  gotoTwitter(): void {
+    this.router.navigate(['/twitter']).then(r => { console.log(new Date(), 'redirecting to twitter page ' + r ); });
+  }
 }

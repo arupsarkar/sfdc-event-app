@@ -18,6 +18,7 @@ import { MaterialModule} from './material/material.module';
 import { ContactsComponent } from './contacts/contacts.component';
 import {MatPaginatorModule, MatListModule, MatTableModule, MatSortModule} from '@angular/material';
 import { LandingComponent } from './landing/landing.component';
+import { TwitterComponent } from './twitter/twitter.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LandingComponent } from './landing/landing.component';
     MessagesComponent,
     EventDetailComponent,
     ContactsComponent,
-    LandingComponent
+    LandingComponent,
+    TwitterComponent
   ],
   imports: [
     BrowserModule,

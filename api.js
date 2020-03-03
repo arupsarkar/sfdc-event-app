@@ -33,6 +33,15 @@ async function delayedTweetStream() {
 }
 
 delayedTweetStream().then(r => { console.log( new Date(), r )});
+
+router.get('/getTwitterUserDetails', (req, res, next) => {
+  T.get('account/verify_credentials').then(user => {
+    res.send(user)
+  }).catch(error => {
+    res.send(error);
+  });  
+});
+
 // Twitter integration - end
 
 
