@@ -24,24 +24,34 @@ function sleep(ms) {
 
 async function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
-    console.log('--------------- start -------------');
-    console.log(tweet.text);
-    console.log('--------------- end -------------');
-    sleep(14400);
+    return(tweet);
   });
 
 }
 
-delayedTweetStream().then(r => { console.log( new Date(), r )});
+
 
 router.get('/getTwitterUserDetails', (req, res, next) => {
   T.get('account/verify_credentials').then(user => {
     res.send(user)
   }).catch(error => {
     res.send(error);
-  });  
+  });
 });
 
+
+router.get('/getTweets', (req, res, next) => {
+  try{
+    let tweet = delayedTweetStream()
+      .then(r => { console.log( new Date(), r )})
+      .catch((err) => {  console.log( new Date(), err ) });
+
+    res.send(tweet);
+  }catch(ex) {
+    console.log(new Date() + 'Error getting tweets : ', ex);
+    res.send({'error': ex});
+  }
+});
 // Twitter integration - end
 
 

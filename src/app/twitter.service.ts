@@ -28,6 +28,13 @@ export class TwitterService {
     );
   }
 
+  getTweets(): Observable<TwitterResponse> {
+    const URL = 'getTweets';
+    this.log(new Date() + ': Fetching tweets from twitter.');
+    return this.http.get<TwitterResponse>(`${environment.baseUrl}/${URL}`).pipe(
+      map(tweets => tweets)
+    );
+  }
 
   private log(message: string) {
     const d = new Date();
