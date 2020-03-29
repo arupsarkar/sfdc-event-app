@@ -221,12 +221,12 @@ router.post('/searchSOSL', (req, res, next) => {
 
 });
 
-router.post('/publishKafkaEvents', (req, res, next) => {
+router.post('/publishKafkaEvents', async (req, res, next) => {
   try {
     console.log(new Date(), 'post producer send() : start');
     console.log(new Date(), 'post producer req.body ' + JSON.stringify(req.body));
-    req.producer.send({
-      topic: 'james-29939.interactions',
+    await req.producer.send({
+      topic: 'apalachicola-477.interactions',
       partition: 0,
       message: {
         value: JSON.stringify(req.body)
@@ -245,7 +245,7 @@ router.post('/publishKafkaEvents', (req, res, next) => {
     ).finally(
       () => {
         req.consumer.init().then(() => {
-          req.consumer.subscribe('james-29939.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then();
+          req.consumer.subscribe('apalachicola-477.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then();
         });
         console.log(new Date(), 'Post Producer send completed successfully.');
       }
