@@ -26,6 +26,15 @@ function sleep(ms) {
 function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
     console.log(new Date(), '---> Tweet JSON Data : ' + JSON.stringify(tweet.text));
+    producer.send({
+      topic: 'apalachicola-477.interactions',
+      partition: 0,
+      message: {
+        value: tweet.text
+      }
+    }).then(result => {
+      console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
+    } );
     return(tweet);
   });
 
