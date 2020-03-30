@@ -24,7 +24,7 @@ function sleep(ms) {
 }
 
 async function delayedTweetStream() {
-  stream.on('tweet', function (tweet) {
+  stream.on('tweet', await function (tweet) {
     console.log(new Date(), '---> delayed tweet ' + tweet);
     return(tweet);
   });
