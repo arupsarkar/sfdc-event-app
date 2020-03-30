@@ -40,11 +40,28 @@ router.get('/getTwitterUserDetails', (req, res, next) => {
   });
 });
 
+let publishToKafka = (data) => {
+  return producer.init().then(function(){
+    return producer.send({
+      topic: 'apalachicola-477.interactions',
+      partition: 0,
+      message: {
+        value: data
+      }
+    });
+  })
+    .then(function (result) {
+      console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
+    });
+};
 
 router.get('/getTweets', (req, res, next) => {
   try{
     let tweet = delayedTweetStream()
-      .then(r => { console.log( new Date(), r )})
+      .then(r => {
+        console.log( new Date(), r );
+        publishToKafka(r).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
+      })
       .catch((err) => {  console.log( new Date(), err ) });
 
     res.send(tweet);
@@ -237,7 +254,7 @@ router.post('/publishKafkaEvents', async (req, res, next) => {
       });
     })
       .then(await function (result) {
-        console.log(new Date(), ' producer then block ' + result );
+        console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
       });
 
     // await req.producer.send({
