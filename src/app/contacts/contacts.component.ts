@@ -119,7 +119,6 @@ export class ContactsComponent implements OnInit {
       },
       () => {
         this.log('Contacts publish event successfully.');
-        this.getContacts();
       });
   }
   createContact(contact: Contact): void {
@@ -154,7 +153,7 @@ export class ContactsComponent implements OnInit {
         () => {
           this.formValues.resetForm();
           this.log('Contacts update operation completed successfully.');
-          // this.publishToKafka(kafkaData).then(r => console.log(r));
+          this.publishToKafka(kafkaData).then(r => console.log(r));
         });
 
     } else {
