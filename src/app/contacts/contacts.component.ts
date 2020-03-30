@@ -108,6 +108,20 @@ export class ContactsComponent implements OnInit {
       });
   }
 
+  async publishToKafka(data) {
+    await this.apiService.publishKafkaEvents(data).subscribe(
+      res => {
+        this.message = JSON.stringify(res);
+        this.log(`${this.message}`);
+      },
+      err => {
+        this.log('Contacts publish create error.' + err);
+      },
+      () => {
+        this.log('Contacts publish event successfully.');
+        this.getContacts();
+      });
+  }
   createContact(contact: Contact): void {
     console.log('Create contact ', JSON.stringify(contact));
     // check if the id already exists - update, else insert
@@ -118,19 +132,20 @@ export class ContactsComponent implements OnInit {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
           const kafkaData = JSON.stringify(data);
-          // now publish the vent to a kafka queue
-          this.apiService.publishKafkaEvents(kafkaData).subscribe(
-            res => {
-              this.message = JSON.stringify(res);
-              this.log(`${this.message}`);
-            },
-            err => {
-              this.log('Contacts publish create error.' + err);
-            },
-            () => {
-              this.log('Contacts publish event successfully.');
-              this.getContacts();
-            });
+          this.publishToKafka(kafkaData).then(r => console.log(r));
+          // // now publish the vent to a kafka queue
+          // this.apiService.publishKafkaEvents(kafkaData).subscribe(
+          //   res => {
+          //     this.message = JSON.stringify(res);
+          //     this.log(`${this.message}`);
+          //   },
+          //   err => {
+          //     this.log('Contacts publish create error.' + err);
+          //   },
+          //   () => {
+          //     this.log('Contacts publish event successfully.');
+          //     this.getContacts();
+          //   });
 
         },
         err => {
