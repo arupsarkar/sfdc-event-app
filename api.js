@@ -26,7 +26,6 @@ function sleep(ms) {
 function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
     console.log(new Date(), '---> Tweet JSON Data : ' + JSON.stringify(tweet.text));
-    publishToKafka(tweet.text).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
     return(tweet);
   });
 
@@ -61,6 +60,9 @@ let publishToKafka = (data) => {
 router.get('/getTweets', (req, res, next) => {
   try{
     let tweet = delayedTweetStream();
+    if(tweet) {
+      publishToKafka(tweet.text).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
+    }
     res.send(tweet);
   }catch(ex) {
     console.log(new Date() + 'Error getting tweets : ', ex);
