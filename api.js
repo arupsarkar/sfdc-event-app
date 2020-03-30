@@ -17,7 +17,7 @@ let T = new Twit({
   strictSSL:            true,     // optional - requires SSL certificates to be valid.
 });
 
-let stream = T.stream('statuses/filter', { track: '#salesforce', language: 'en' });
+let stream = T.stream('statuses/filter', { track: 'salesforce'});
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -25,6 +25,7 @@ function sleep(ms) {
 
 async function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
+    console.log(new Date(), '---> delayed tweet ' + tweet);
     return(tweet);
   });
 
@@ -34,6 +35,7 @@ async function delayedTweetStream() {
 
 router.get('/getTwitterUserDetails', (req, res, next) => {
   T.get('account/verify_credentials').then(user => {
+    console.log(new Date(), '---> twitter user ' + JSON.stringify(user));
     res.send(user)
   }).catch(error => {
     res.send(error);
