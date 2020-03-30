@@ -17,7 +17,7 @@ let T = new Twit({
   strictSSL:            true,     // optional - requires SSL certificates to be valid.
 });
 
-let stream = T.stream('statuses/filter', { track: 'Salesforce'});
+let stream = T.stream('statuses/filter', { track: 'mango'});
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -25,7 +25,8 @@ function sleep(ms) {
 
 function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
-    console.log(new Date(), '---> Tweet JSON Data : ' + JSON.stringify(tweet));
+    console.log(new Date(), '---> Tweet JSON Data : ' + JSON.stringify(tweet.text));
+    publishToKafka(tweet.text).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
     return(tweet);
   });
 
@@ -62,10 +63,8 @@ router.get('/getTweets', (req, res, next) => {
     let tweet = delayedTweetStream()
       .then(r => {
         console.log( new Date(), '---> then getTweets() ' + JSON.stringify(r) );
-        publishToKafka(tweet.text).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
       })
       .catch((err) => {  console.log( new Date(), err ) });
-
     res.send(tweet);
   }catch(ex) {
     console.log(new Date() + 'Error getting tweets : ', ex);
