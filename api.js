@@ -35,7 +35,7 @@ function delayedTweetStream() {
       }
     }).then(result => {
       if(result) {
-        console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
+        console.log(new Date(), ' producer then block ' + result );
       }else {
         console.log(new Date(), ' producer then block, result is blank ' );
       }
