@@ -4,7 +4,8 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const Promise = require('bluebird');
 const Twit = require('twit');
-
+const Kafka = require('no-kafka');
+const producer = new Kafka.Producer();
 // Twitter integration - start
 
 let T = new Twit({
@@ -225,31 +226,45 @@ router.post('/publishKafkaEvents', async (req, res, next) => {
   try {
     console.log(new Date(), 'post producer send() : start');
     console.log(new Date(), 'post producer req.body ' + JSON.stringify(req.body));
-    await req.producer.send({
-      topic: 'apalachicola-477.interactions',
-      partition: 0,
-      message: {
-        value: JSON.stringify(req.body)
-      }
-    }).then(
-      (data) => {
-        console.log(new Date(), 'producer data : ' + JSON.stringify(data));
-      },
-      (err) => {
-        console.log(new Date(), 'post producer err : ' + err);
-      }
-    ).catch(
-      (error) => {
-        console.log(new Date(), 'post producer error : ' + error);
-      }
-    ).finally(
-      () => {
-        req.consumer.init().then(() => {
-          req.consumer.subscribe('apalachicola-477.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then();
-        });
-        console.log(new Date(), 'Post Producer send completed successfully.');
-      }
-    );
+
+    return producer.init().then(await function(){
+      return producer.send({
+        topic: 'apalachicola-477.interactions',
+        partition: 0,
+        message: {
+          value: JSON.stringify(req.body)
+        }
+      });
+    })
+      .then(await function (result) {
+        console.log(new Date(), ' producer then block ' + result );
+      });
+
+    // await req.producer.send({
+    //   topic: 'apalachicola-477.interactions',
+    //   partition: 0,
+    //   message: {
+    //     value: JSON.stringify(req.body)
+    //   }
+    // }).then(
+    //   (data) => {
+    //     console.log(new Date(), 'producer data : ' + JSON.stringify(data));
+    //   },
+    //   (err) => {
+    //     console.log(new Date(), 'post producer err : ' + err);
+    //   }
+    // ).catch(
+    //   (error) => {
+    //     console.log(new Date(), 'post producer error : ' + error);
+    //   }
+    // ).finally(
+    //   () => {
+    //     req.consumer.init().then(() => {
+    //       req.consumer.subscribe('apalachicola-477.interactions',[0,1,2,3,4,5,6,7], {}, dataHandlerBind).then();
+    //     });
+    //     console.log(new Date(), 'Post Producer send completed successfully.');
+    //   }
+    // );
     console.log('post producer send() : ', 'end');
   }catch(e) {
     console.log('ERROR: ', e.toLocaleString());
