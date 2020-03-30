@@ -62,7 +62,9 @@ router.get('/getTweets', (req, res, next) => {
   try{
     let tweet = delayedTweetStream()
       .then(r => {
-        console.log( new Date(), '---> then getTweets() ' + JSON.stringify(r) );
+        if(r) {
+          console.log( new Date(), '---> then getTweets() ' + JSON.stringify(r) );
+        }
       })
       .catch((err) => {  console.log( new Date(), err ) });
     res.send(tweet);
