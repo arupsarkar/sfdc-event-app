@@ -33,8 +33,12 @@ function delayedTweetStream() {
         value: tweet.text
       }
     }).then(result => {
-      console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
-    } );
+      console.log(new Date(), ' producer then block ' + result );
+    } ).catch((err) => {
+      console.log(new Date(), '---> error ' + err);
+    }).finally(() => {
+      console.log(new Date(), '---> kafka operation completed successfully. ')
+    });
     return(tweet);
   });
 
