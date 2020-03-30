@@ -66,12 +66,15 @@ export class ApiService {
     );
   }
 
-  publishKafkaEvents(data: string): Observable<string> {
+  async publishKafkaEvents(data: string) {
     const URL = 'publishKafkaEvents';
     this.log(new Date() + ': publish kafka events.');
+
     // @ts-ignore
-    return this.http.post(`${environment.baseUrl}/${URL}`, data, httpOptions).pipe(
-      tap((res) => { this.log( JSON.stringify(res) ); }),
+    return await this.http.post(`${environment.baseUrl}/${URL}`, data, httpOptions).pipe(
+      tap((res) => {
+        this.log(JSON.stringify(res));
+      }),
       catchError(this.handleApiError)
     );
   }
