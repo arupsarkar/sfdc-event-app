@@ -6,6 +6,7 @@ const Promise = require('bluebird');
 const Twit = require('twit');
 const Kafka = require('no-kafka');
 const producer = new Kafka.Producer();
+const consumer = new Kafka.SimpleConsumer();
 // Twitter integration - start
 
 let T = new Twit({
@@ -98,6 +99,8 @@ let dataHandler = function (messageSet, topic, partition ) {
     console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
   });
 };
+
+consumer.subscribe('apalachicola-477.interactions', dataHandler).then(r => {console.log(new Date(), '---> consumer result ' + r )});
 
 let dataHandlerBind = dataHandler.bind();
 
