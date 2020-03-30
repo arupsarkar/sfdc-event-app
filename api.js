@@ -17,15 +17,15 @@ let T = new Twit({
   strictSSL:            true,     // optional - requires SSL certificates to be valid.
 });
 
-let stream = T.stream('statuses/filter', { track: 'salesforce'});
+let stream = T.stream('statuses/filter', { track: 'mango'});
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function delayedTweetStream() {
-  stream.on('tweet', await function (tweet) {
-    console.log(new Date(), '---> delayed tweet ' + tweet);
+function delayedTweetStream() {
+  stream.on('tweet', function (tweet) {
+    console.log(new Date(), '---> delayed tweet ' + JSON.stringify(tweet));
     return(tweet);
   });
 
