@@ -124,6 +124,7 @@ export class ContactsComponent implements OnInit {
   }
   createContact(contact: Contact): void {
     console.log('Create contact ', JSON.stringify(contact));
+    let kafkaData;
     // check if the id already exists - update, else insert
     if (this.selectedContact.Id !== undefined && this.selectedContact.Id.length > 1) {
       console.log('update contact component id ', contact.Id);
@@ -131,8 +132,8 @@ export class ContactsComponent implements OnInit {
         data => {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
-          const kafkaData = JSON.stringify(data);
-          this.publishToKafka(kafkaData).then(r => console.log(r));
+          // const kafkaData = JSON.stringify(data);
+          kafkaData = JSON.stringify(data);
           // // now publish the vent to a kafka queue
           // this.apiService.publishKafkaEvents(kafkaData).subscribe(
           //   res => {
@@ -146,7 +147,6 @@ export class ContactsComponent implements OnInit {
           //     this.log('Contacts publish event successfully.');
           //     this.getContacts();
           //   });
-
         },
         err => {
           this.log('Contacts create error.' + err);
@@ -154,6 +154,7 @@ export class ContactsComponent implements OnInit {
         () => {
           this.formValues.resetForm();
           this.log('Contacts update operation completed successfully.');
+          this.publishToKafka(kafkaData).then(r => console.log(r));
         });
 
     } else {
