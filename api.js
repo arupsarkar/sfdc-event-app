@@ -33,11 +33,11 @@ function delayedTweetStream() {
         value: tweet.text
       }
     }).then(result => {
-      console.log(new Date(), ' producer then block ' + result );
-    } ).catch((err) => {
-      console.log(new Date(), '---> error ' + err);
-    }).finally(() => {
-      console.log(new Date(), '---> kafka operation completed successfully. ')
+      if(result) {
+        console.log(new Date(), ' producer then block ' + result );
+      }else {
+        console.log(new Date(), ' producer then block, result is blank ' );
+      }
     });
     return(tweet);
   });
