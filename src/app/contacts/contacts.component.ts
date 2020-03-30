@@ -123,13 +123,13 @@ export class ContactsComponent implements OnInit {
             res => {
               this.message = JSON.stringify(res);
               this.log(`${this.message}`);
-              this.getContacts();
             },
             err => {
               this.log('Contacts publish create error.' + err);
             },
             () => {
               this.log('Contacts publish event successfully.');
+              this.getContacts();
             });
 
         },
