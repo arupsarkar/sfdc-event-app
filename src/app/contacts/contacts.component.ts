@@ -108,43 +108,6 @@ export class ContactsComponent implements OnInit {
       });
   }
 
-  async asyncCreateContact(contact: Contact) {
-    console.log('Create contact : ', JSON.stringify(contact));
-    console.log('Create selectedContact : ', JSON.stringify(this.selectedContact));
-    if (this.selectedContact.Id !== undefined && this.selectedContact.Id.length > 1) {
-      console.log('update contact component id ', contact.Id);
-      await this.apiService.updateContact(contact).subscribe(
-        data => {
-          this.message = JSON.stringify(data);
-          this.log(`${this.message}`);
-          this.getContacts();
-          const kafkaData = JSON.stringify(data);
-          // now publish the vent to a kafka queue
-          this.apiService.publishKafkaEvents(kafkaData).subscribe(
-            res => {
-              this.message = JSON.stringify(res);
-              this.log(`${this.message}`);
-            },
-            err => {
-              this.log('Contacts publish create error.' + err);
-            },
-            () => {
-              this.log('Contacts publish event successfully.');
-            });
-
-        },
-        err => {
-          this.log('Contacts create error.' + err);
-        },
-        () => {
-          this.formValues.resetForm();
-          this.log('Contacts update operation completed successfully.');
-        });
-    } else {
-      // insert contact
-    }
-  }
-
   createContact(contact: Contact): void {
     console.log('Create contact ', JSON.stringify(contact));
     // check if the id already exists - update, else insert
@@ -154,13 +117,13 @@ export class ContactsComponent implements OnInit {
         data => {
           this.message = JSON.stringify(data);
           this.log(`${this.message}`);
-          this.getContacts();
           const kafkaData = JSON.stringify(data);
           // now publish the vent to a kafka queue
           this.apiService.publishKafkaEvents(kafkaData).subscribe(
             res => {
               this.message = JSON.stringify(res);
               this.log(`${this.message}`);
+              this.getContacts();
             },
             err => {
               this.log('Contacts publish create error.' + err);
@@ -180,7 +143,7 @@ export class ContactsComponent implements OnInit {
 
     } else {
       console.log('create contact component id ', JSON.stringify(contact));
-      if(contact.LastName !== undefined && contact.LastName.length > 0) {
+      if (contact.LastName !== undefined && contact.LastName.length > 0) {
         this.apiService.createContact(contact).subscribe(
           data => {
             this.message = JSON.stringify(data);
