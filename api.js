@@ -100,7 +100,18 @@ let dataHandler = function (messageSet, topic, partition ) {
   });
 };
 
-consumer.subscribe('apalachicola-477.interactions', dataHandler).then(r => {console.log(new Date(), '---> consumer result ' + r )});
+consumer.init().then(function () {
+  console.log(new Date(), '---> Starting kafka consumer. ' ) ;
+  // Subscribe to all partitions in topic
+  consumer.subscribe('apalachicola-477.interactions', dataHandler)
+    .then(result => {
+      if(result) {
+        console.log(new Date(), '---> consumer result ' + result ) ;
+      }else {
+        console.log(new Date(), '---> consumer result is null.') ;
+      }
+    });
+});
 
 let dataHandlerBind = dataHandler.bind();
 
