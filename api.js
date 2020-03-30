@@ -60,13 +60,7 @@ let publishToKafka = (data) => {
 
 router.get('/getTweets', (req, res, next) => {
   try{
-    let tweet = delayedTweetStream()
-      .then(r => {
-        if(r) {
-          console.log( new Date(), '---> then getTweets() ' + JSON.stringify(r) );
-        }
-      })
-      .catch((err) => {  console.log( new Date(), err ) });
+    let tweet = delayedTweetStream();
     res.send(tweet);
   }catch(ex) {
     console.log(new Date() + 'Error getting tweets : ', ex);
