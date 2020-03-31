@@ -140,8 +140,6 @@ consumer.subscribe(kafkaPrefix + 'interactions', dataHandler).then(r => {
   }
 });
 
-//let dataHandlerBind = dataHandler.bind();
-
 router.use(bodyParser.urlencoded({
   extended: true
 }));
