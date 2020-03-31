@@ -132,7 +132,7 @@ let dataHandler = function (messageSet, topic, partition ) {
 
 };
 
-consumer.subscribe(kafkaPrefix + 'interactions', dataHandler()).then(r => {
+consumer.subscribe(kafkaPrefix + 'interactions', dataHandler).then(r => {
   if(r) {
     console.log(new Date(), '---> consumer result ' + r ) ;
   }else {
