@@ -123,9 +123,13 @@ let dataHandler = function (messageSet, topic, partition ) {
   console.log(new Date(), topic);
   console.log(new Date(), partition);
   console.log(new Date(), messageSet);
-  messageSet.forEach(function (m) {
-    console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
-  });
+  // check for null
+  if(messageSet) {
+    messageSet.forEach(function (m) {
+      console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+    });
+  }
+
 };
 
 consumer.subscribe(kafkaPrefix + 'interactions', dataHandler()).then(r => {
