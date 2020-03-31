@@ -9,6 +9,7 @@ const producer = new Kafka.Producer();
 const consumer = new Kafka.SimpleConsumer();
 // Twitter integration - start
 producer.init();
+consumer.init();
 let kafkaPrefix = process.env.KAFKA_PREFIX;
 if (kafkaPrefix === undefined) {
   kafkaPrefix = '';
@@ -127,20 +128,15 @@ let dataHandler = function (messageSet, topic, partition ) {
   });
 };
 
-// consumer.init().then(function () {
-//   console.log(new Date(), '---> Starting kafka consumer. ' ) ;
-//   // Subscribe to all partitions in topic
-//   consumer.subscribe('apalachicola-477.interactions', dataHandler)
-//     .then(result => {
-//       if(result) {
-//         console.log(new Date(), '---> consumer result ' + result ) ;
-//       }else {
-//         console.log(new Date(), '---> consumer result is null.') ;
-//       }
-//     });
-// });
+consumer.subscribe(kafkaPrefix + 'interactions', dataHandler()).then(r => {
+  if(r) {
+    console.log(new Date(), '---> consumer result ' + r ) ;
+  }else {
+    console.log(new Date(), '---> consumer result is null ') ;
+  }
+});
 
-let dataHandlerBind = dataHandler.bind();
+//let dataHandlerBind = dataHandler.bind();
 
 router.use(bodyParser.urlencoded({
   extended: true
