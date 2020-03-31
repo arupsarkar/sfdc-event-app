@@ -26,12 +26,12 @@ function sleep(ms) {
 
 function delayedTweetStream() {
   stream.on('tweet', function (tweet) {
-    console.log(new Date(), '---> Tweet JSON Data : ' + JSON.stringify(tweet.text));
+    console.log(new Date(), '---> Tweet JSON Data : ' + decodeURI(tweet.text));
     producer.send({
       topic: 'apalachicola-477.interactions',
       partition: 0,
       message: {
-        value: 'hello world !'
+        value: decodeURI(tweet.text)
       }
     }).then(result => {
       if(result) {
@@ -40,12 +40,17 @@ function delayedTweetStream() {
         console.log(new Date(), ' producer then block, result is blank ' );
       }
     });
+    publishTweetToChatter(decodeURI(tweet.text));
     return(tweet);
   });
 
 }
 
-
+function publishTweetToChatter(data) {
+  console.log(new Date(), '--> publishing post to chatter - Start');
+  console.log(new Date(), '--> chatter data ' + data);
+  console.log(new Date(), '--> publishing post to chatter - End');
+}
 
 router.get('/getTwitterUserDetails', (req, res, next) => {
   T.get('account/verify_credentials').then(user => {
