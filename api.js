@@ -8,7 +8,11 @@ const Kafka = require('no-kafka');
 const producer = new Kafka.Producer();
 const consumer = new Kafka.SimpleConsumer();
 // Twitter integration - start
-
+producer.init();
+let kafkaPrefix = process.env.KAFKA_PREFIX;
+if (kafkaPrefix === undefined) {
+  kafkaPrefix = '';
+}
 let T = new Twit({
   consumer_key:         'OPOJ9s3m93GXsuY8EvYa9OozW',
   consumer_secret:      'zmM5jvdnItCGskB2JpJd2yMU12d9OjtZ2x4lsBKymzcOyhSBvR',
@@ -27,19 +31,7 @@ function sleep(ms) {
 function delayedTweetStream(conn) {
   stream.on('tweet', function (tweet) {
     console.log(new Date(), '---> Tweet JSON Data : ' + decodeURI(tweet.text));
-    producer.send({
-      topic: 'apalachicola-477.interactions',
-      partition: 0,
-      message: {
-        value: decodeURI(tweet.text)
-      }
-    }).then(result => {
-      if(result) {
-        console.log(new Date(), ' producer then block ' + result );
-      }else {
-        console.log(new Date(), ' producer then block, result is blank ' );
-      }
-    });
+    publishToKafka(decodeURI(tweet.text));
     publishTweetToChatter(conn, decodeURI(tweet.text));
     return(tweet);
   });
@@ -78,18 +70,16 @@ router.get('/getTwitterUserDetails', (req, res, next) => {
 });
 
 let publishToKafka = (data) => {
-  return producer.init().then(function(){
-    return producer.send({
-      topic: 'apalachicola-477.interactions',
-      partition: 0,
-      message: {
-        value: data
-      }
-    });
-  })
-    .then(function (result) {
-      console.log(new Date(), ' producer then block ' + JSON.stringify(result) );
-    });
+ let tweet_data = {
+   date: Date.now(),
+   message: data
+ };
+ producer.send({
+   topic: kafkaPrefix + 'interactions',
+   message: {
+     value: JSON.stringify(tweet_data)
+   }
+ }).then(r => console.log(new Date() , '---> result ' + r));
 };
 
 router.get('/getTweets', (req, res, next) => {
