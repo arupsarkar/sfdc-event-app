@@ -77,11 +77,25 @@ let publishToKafka = (data) => {
 };
 
 router.get('/getTweets', (req, res, next) => {
+
+  const headers = req.headers.authorization;
+  const params = headers.split('|');
+  let accessToken = params[0];
+  let instanceURL= params[1];
+  let conn = new jsforce.Connection({
+    instanceUrl : instanceURL,
+    accessToken: accessToken
+  });
+
+  if ( conn === undefined){
+    console.log('DEBUG: getTweets Connection: conn object is null ');
+    return next();
+  }else{
+    console.log('DEBUG: getTweets Connection user info - ', conn.userInfo);
+  }
+
   try{
     let tweet = delayedTweetStream();
-    if(tweet) {
-      publishToKafka(tweet.text).then(r => {console.log(new Date() , '---> getTweets kafka wrapper ' + r)});
-    }
     res.send(tweet);
   }catch(ex) {
     console.log(new Date() + 'Error getting tweets : ', ex);
