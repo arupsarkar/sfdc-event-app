@@ -24,7 +24,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function delayedTweetStream() {
+function delayedTweetStream(conn) {
   stream.on('tweet', function (tweet) {
     console.log(new Date(), '---> Tweet JSON Data : ' + decodeURI(tweet.text));
     producer.send({
@@ -40,15 +40,31 @@ function delayedTweetStream() {
         console.log(new Date(), ' producer then block, result is blank ' );
       }
     });
-    publishTweetToChatter(decodeURI(tweet.text));
+    publishTweetToChatter(conn, decodeURI(tweet.text));
     return(tweet);
   });
 
 }
 
-function publishTweetToChatter(data) {
+function publishTweetToChatter(conn, data) {
   console.log(new Date(), '--> publishing post to chatter - Start');
   console.log(new Date(), '--> chatter data ' + data);
+  conn.chatter.resource('/feed-elements').create({
+    body: {
+      messageSegments: [{
+        type: 'Text',
+        text: data
+      }]
+    },
+    feedElementType : 'FeedItem',
+    subjectId: 'me'
+  }, function(err, result) {
+    if (err) { return console.error(err); }
+    console.log("Id: " + result.id);
+    console.log("URL: " + result.url);
+    console.log("Body: " + result.body.messageSegments[0].text);
+    console.log("Comments URL: " + result.capabilities.comments.page.currentPageUrl);
+  });
   console.log(new Date(), '--> publishing post to chatter - End');
 }
 
@@ -91,11 +107,13 @@ router.get('/getTweets', (req, res, next) => {
     console.log('DEBUG: getTweets Connection: conn object is null ');
     return next();
   }else{
+    console.log('DEBUG: getTweets access token  - ', accessToken);
+    console.log('DEBUG: getTweets instance url  - ', instanceURL);
     console.log('DEBUG: getTweets Connection user info - ', conn.userInfo);
   }
 
   try{
-    let tweet = delayedTweetStream();
+    let tweet = delayedTweetStream(conn);
     res.send(tweet);
   }catch(ex) {
     console.log(new Date() + 'Error getting tweets : ', ex);
