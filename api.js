@@ -31,7 +31,7 @@ function delayedTweetStream() {
       topic: 'apalachicola-477.interactions',
       partition: 0,
       message: {
-        value: tweet.text
+        value: 'hello world !'
       }
     }).then(result => {
       if(result) {
