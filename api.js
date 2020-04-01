@@ -33,7 +33,7 @@ function delayedTweetStream(conn) {
   stream.on('tweet', function (tweet) {
     console.log(new Date(), '---> Tweet JSON Data : ' + decodeURI(tweet.text));
     publishToKafka(decodeURI(tweet.text));
-    publishTweetToChatter(conn, decodeURI(tweet.text));
+    //publishTweetToChatter(conn, decodeURI(tweet.text));
     return(tweet);
   });
 
