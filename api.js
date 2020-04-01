@@ -31,8 +31,8 @@ function sleep(ms) {
 
 function delayedTweetStream(conn) {
   stream.on('tweet', function (tweet) {
-    console.log(new Date(), '---> Tweet JSON Data : ' + decodeURI(tweet.text));
-    publishToKafka(decodeURI(tweet.text));
+    console.log(new Date(), '---> Tweet JSON Data : ' + tweet.text);
+    publishToKafka(tweet.text);
     //publishTweetToChatter(conn, decodeURI(tweet.text));
     return(tweet);
   });
@@ -78,7 +78,7 @@ let publishToKafka = (data) => {
  producer.send({
    topic: kafkaPrefix + 'interactions',
    message: {
-     value: JSON.stringify(tweet_data)
+     value: JSON.stringify(data)
    }
  }).then(r => console.log(new Date() , '---> result ' + r));
 };
