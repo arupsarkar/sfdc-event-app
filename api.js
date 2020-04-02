@@ -21,6 +21,7 @@ let T = new Twit({
   access_token_secret:  'pOP5oGaDjrwUkBxRk12Ijr63CWrEdGURW4c7aFRQkkiVa',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
   strictSSL:            true,     // optional - requires SSL certificates to be valid.
+  tweet_mode: 'extended'
 });
 
 let stream = T.stream('statuses/filter', { track: 'salesforce'});
