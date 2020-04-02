@@ -31,8 +31,8 @@ function sleep(ms) {
 
 function delayedTweetStream(conn) {
   stream.on('tweet', function (tweet) {
-    console.log(new Date(), '---> Tweet JSON Data : ' + tweet.text);
-    publishToKafka(tweet.text);
+    console.log(new Date(), '---> Tweet JSON Data : ' + tweet);
+    publishToKafka(tweet);
     //publishTweetToChatter(conn, decodeURI(tweet.text));
     return(tweet);
   });
@@ -80,7 +80,12 @@ let publishToKafka = (data) => {
    message: {
      value: JSON.stringify(data)
    }
- }).then(r => console.log(new Date() , '---> result ' + r));
+ }).then(r => {
+      if(r) {
+        console.log(new Date() , '---> result ' + JSON.stringify(r));
+      }
+    }
+    );
 };
 
 router.get('/getTweets', (req, res, next) => {
@@ -126,7 +131,8 @@ let dataHandler = function (messageSet, topic, partition ) {
   // check for null
   if(messageSet) {
     messageSet.forEach(function (m) {
-      console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+      //console.log(topic, partition, m.offset, m.message.value.toString('utf8'));
+      console.log(JSON.stringify(m.message.value.toString('utf8')));
     });
   }
 
@@ -134,7 +140,7 @@ let dataHandler = function (messageSet, topic, partition ) {
 
 consumer.subscribe(kafkaPrefix + 'interactions', dataHandler).then(r => {
   if(r) {
-    console.log(new Date(), '---> consumer result ' + r ) ;
+    console.log(new Date(), '---> consumer result ' + JSON.stringify(r) ) ;
   }else {
     console.log(new Date(), '---> consumer result is null ') ;
   }
