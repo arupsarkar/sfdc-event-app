@@ -604,7 +604,13 @@ function eventBusChangeDataCapture(conn, fullName, req, res) {
       await bigqueryClient
         .dataset('sfdc_dataset')
         .table('crm_table')
-        .insert(rows);
+        .insert(rows)
+        .then((data) => {
+          console.log(' success loading data into big query : ' + JSON.stringify(data));
+        })
+        .catch((err) =>{
+          console.log(' error loading data in big query table : ' + JSON.stringify(err));
+        })
       console.log(`Inserted ${rows.length} rows`);
 
       req.io.sockets.emit('message', message);
