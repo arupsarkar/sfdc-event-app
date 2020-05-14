@@ -7,6 +7,9 @@ const Twit = require('twit');
 const Kafka = require('no-kafka');
 const producer = new Kafka.Producer();
 const consumer = new Kafka.SimpleConsumer();
+const {BigQuery} = require('@google-cloud/bigquery');
+//create a big query client
+const bigqueryClient = new BigQuery();
 // Twitter integration - start
 producer.init();
 consumer.init();
@@ -591,10 +594,19 @@ function eventBusListener(conn, fullName, req, res ){
 
 function eventBusChangeDataCapture(conn, fullName, req, res) {
   console.log('---> Event Bus change data capture Listener : ', ' Started' );
-  conn.streaming.topic('/data/ChangeEvents').subscribe( function ( message ){
+  conn.streaming.topic('/data/ChangeEvents').subscribe( async function ( message ){
     console.log( '---> CDC Event received - ', message );
     if (message !== undefined){
       console.log( '---> CDC Event fired  - ', message );
+      //insert in to google big query
+      const rows = [{payload: message}];
+      // Insert data into a table
+      await bigqueryClient
+        .dataset('sfdc_dataset')
+        .table('crm_table')
+        .insert(rows);
+      console.log(`Inserted ${rows.length} rows`);
+
       req.io.sockets.emit('message', message);
     }
   });
