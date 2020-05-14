@@ -595,7 +595,7 @@ function eventBusChangeDataCapture(conn, fullName, req, res) {
     console.log( '---> CDC Event received - ', message );
     if (message !== undefined){
       console.log( '---> CDC Event fired  - ', message );
-      req.io.sockets.emit('CDC message', message);
+      req.io.sockets.emit('message', message);
     }
   });
 }
