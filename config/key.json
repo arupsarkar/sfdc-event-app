@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dw-crm-codelab",
+  "private_key_id": "4b9d51e68b492569bdfa85291c74d06981be2aef",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC2Qt+zAKtKHvui\n0njox1Xh/RpAa0wOfcQBJktTHyys1q4puKg1cUnelH+lQCLsZMf8iHnLDiTZb6FZ\ngx+Ly3cXre4CFBfEF6OjBUmV7B44ELMZ4NixAm4tkbtFsFesFafLZAsrt5F7JxcZ\nh8yEtWvuVQQ9rREVF7DCoYsgau6FLxVp8ZcadOOoUvfAzQDNiFuDgEG0mW0jSU2w\n5LCCWAr6Jzx2ybwaDBmKJzQM2aegTbjoqkgnCmqleSbR13ubDE2HWF8sikZYl3pc\ngpkvGpHEi23D2r/fo4FeSD/qcqWoIhbg5efwtr5wQoW2ZqwWp3AJyyY/w/kWVQBG\nx8tbGc1ZAgMBAAECggEAWKPjaYocxBqXZROZjBRN92+B0eyc+7s8lRaLsaxKrPBn\nmZDd9cfYFjEAd1ze3zsQbAfvu8pwL3Nz9DWqJPHaRKDpTQd6m3qnscQDiq9f7wJo\nKGDK4iN9dBoZCwZ9TQrnJSrNqABJ96wGNvttguk8yZd9TYWa9jgkVjP8ltKKmCiA\nWU6sgrawsPq5reyoveaHYmKTb2igl7qkaWCfgo5ytuoRU/QfJP6ifq04cHu9rrTI\nQ0sJo1UWv6B+vOUk6hBpsdA/fE62c5HFpTkp/jvF/OkAm9jLVNniWBNXyjO2bhSP\nVP2IE+c479DKXhQf2H43QTEskZXs6xPWxrsL9Smi5QKBgQDnLXZhhqSgtUtPf6eP\n78x7EAt8O3hqsalczuCju3dRsWhvmO1NnNhncgi8dS5raz9pR1A9TgQzx/7gRlQP\n2dnpHtN9CY8TvVb5wS4YRjfJZba0TIneKmYlh+Ghf63ttnMnBEkDylK5aGR4DDd2\nlHt/N99KkfsM9nXess80Rl9tgwKBgQDJ1NBM6jgFpxfcO0e/adTtB5SQICSuGzU6\nclkuQJXO60vSbryHN+Ft5J7zwGe1udfa7S+w2wrfRZOrX7+lPLVamXta6mEHGoHZ\nFgCiCbrnFC7KLn7nI+7q+VFkQwv45kc1wj7MF0vgiqcS3thw9qhO7R0itvYY/ZPT\nUaERvfqe8wKBgQCsMDKSpaUNhruXdS+riCM4LlU/rVQdtEK/u9+aVNGk6Y0uQivO\nuVp+gnN7W5S9sd5DXjin0OpUX0y6Y+fM/qjOeIVyBqKpQ0f7MyZQMkzvF3GkjbXK\n4q2+mp02m1FDU7glgY2Y4yQGsXjT6dWN3z61HTqV4nGp0BEvVOP8vcXqXQKBgQCF\ndCg/k2dzpWbLgo8QbCQUjryXCAn47ZimitGZGa904HSEMiCKsFJo3ZCU0BZDPR0T\nb13nbQ6lT1YzLN6Fnby0qWO9W9jIX6iYKEpG2nQxM1E08sWKhGIIEM7WotaZv3o6\ne7QWMxlC4atTePJYz1++wF5Rg/T51UIXqpP8LUg4LQKBgQDX10AZfSNVIvmrX4xo\nMlWrr2RM6rO7Vhuxz8VHOipAoWI+3Bcw2cLdOckPwiRHNLxmQTJyZcRP86NVZAJv\n5wkOibfsollsr93+Zgq+DxlS8NojTLSo7sPXdLhldKaIfHIyET2gTNJeeNmNmDpJ\nDWXIKHTEarOllxIhRZlPsf9FJw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "my-bigquery-sa@dw-crm-codelab.iam.gserviceaccount.com",
+  "client_id": "115977296120355926514",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-bigquery-sa%40dw-crm-codelab.iam.gserviceaccount.com"
+}
