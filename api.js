@@ -599,7 +599,8 @@ function eventBusChangeDataCapture(conn, fullName, req, res) {
     if (message !== undefined){
       console.log( '---> CDC Event fired  - ', message );
       //insert in to google big query
-      const rows = [{crm_payload: `message`}];
+      let payload = message;
+      const rows = [{crm_payload: payload}];
       // Insert data into a table
       await bigqueryClient
         .dataset('sfdc_dataset')
