@@ -497,6 +497,9 @@ router.get('/getEventDetail/:fullName', (req, res, next) => {
   }
 
   eventBusListener(conn, req.params.fullName, req, res);
+  // change data capture listener
+  eventBusChangeDataCapture(conn, req.params.fullName, req, res);
+
 
   conn.metadata.read('CustomObject', fullNames, function(err, metadata) {
     if (err) {
@@ -585,6 +588,18 @@ function eventBusListener(conn, fullName, req, res ){
     }
   });
 }
+
+function eventBusChangeDataCapture(conn, fullName, req, res) {
+  console.log('---> Event Bus change data capture Listener : ', ' Started' );
+  conn.streaming.topic('/data/Account__ChangeEvent').subscribe( function ( message ){
+    console.log( '---> CDC Event received - ', message );
+    if (message !== undefined){
+      console.log( '---> CDC Event fired  - ', message );
+      req.io.sockets.emit('CDC message', message);
+    }
+  });
+}
+
 // Error handlers
 function logErrors (err, req, res, next) {
   console.error(err.stack);
