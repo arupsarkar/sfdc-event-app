@@ -591,7 +591,7 @@ function eventBusListener(conn, fullName, req, res ){
 
 function eventBusChangeDataCapture(conn, fullName, req, res) {
   console.log('---> Event Bus change data capture Listener : ', ' Started' );
-  conn.streaming.topic('/data/Account__ChangeEvent').subscribe( function ( message ){
+  conn.streaming.topic('/data/ChangeEvents').subscribe( function ( message ){
     console.log( '---> CDC Event received - ', message );
     if (message !== undefined){
       console.log( '---> CDC Event fired  - ', message );
