@@ -33,7 +33,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "http-proxy": "^1.17.0",
+    "http-proxy": "^1.18.1",
     "jsforce": "^1.9.1",
     "ngx-cookie-service": "^2.0.0",
     "no-kafka": "^3.4.3",
